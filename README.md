@@ -6,7 +6,7 @@
 ~~赶紧拿起电话订购吧！~~<br>
 
 > [!NOTE]
-> 本 README 文件内容为直白讲述，如果看不惯请查看 README_DEV 文件。<br>
+> 本 README 文件内容为直白讲述，如果看不惯请查看 [README_DEV](https://github.com/DuckDuckStudio/Chinese_git/blob/main/README_DEV.md) 文件。<br>
 > 如果你希望协助更新这些文档以及 中文Git ，请查看[CONTRIBUTING](https://github.com/DuckDuckStudio/Chinese_git/blob/main/CONTRIBUTING.md)文件。感谢您的支持！您的支持是我们继续维护的动力！<br>
 > 项目LICENSE：MIT<br>
 
