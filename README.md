@@ -1,5 +1,7 @@
 # 中文Git
 
+![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/porject_photos/Chinese_git.png)
+
 你还在为忘记 git 的命令而发愁吗？<br>
 你还要每次执行 git 命令都要去搜索吗？<br>
 机会来了！使用中文Git，这些统统不是问题!<br>
