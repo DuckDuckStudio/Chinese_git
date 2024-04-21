@@ -1,5 +1,9 @@
 import subprocess
 import sys
+import os
+
+script_path = os.path.dirname(__file__)
+full_path = os.path.join(script_path, "中文git.py")
 
 def git_command(command, *args):
     git_command_mapping = {
@@ -23,7 +27,8 @@ def git_command(command, *args):
     }
     if command == "帮助":
         print("使用方法:")
-        print("程序名 <中文指令> [参数]")
+        print("python 中文git.py <中文指令> [参数]")
+        print("即：python 中文git.py <你想干什么> [具体要啥]")
         print("支持的中文指令:")
         for cmd in git_command_mapping:
             print("-", cmd)
@@ -69,6 +74,7 @@ def git_command(command, *args):
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
                 print("版本：v1.1")
+                print("安装在", full_path)
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             elif command == "删除提交":
                 if not args:
@@ -101,4 +107,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         git_command(sys.argv[1], *sys.argv[2:])
     else:
-        print("用法: python 中文git.py <中文指令>")
+        print("使用方法:")
+        print("python 中文git.py <中文指令> [参数]")
+        print("即：python 中文git.py <你想干什么> [具体要啥]")
