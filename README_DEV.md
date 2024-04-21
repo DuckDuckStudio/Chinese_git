@@ -98,7 +98,7 @@ notepad $PROFILE
 
 以下是中文Git支持的命令列表。如果您需要的Git命令不在列表中，请[提交Issues](https://github.com/DuckDuckStudio/Chinese_git/issues)告诉我们！<br>
 
-| 现在叫啥     | 原来长啥样          | 用来干啥                           |
+| 在中文Git中的命令 | 在Git中的命令    | 用途                               |
 | ------------ | ------------------- | ---------------------------------- |
 | 拉取         | pull                | 从远程仓库拉取源码                 |
 | 推送         | push                | 将本地仓库中的提交推送到远程仓库中 |
@@ -114,6 +114,7 @@ notepad $PROFILE
 | 查看远程分支 | branch -r           | 查看远程仓库的分支列表             |
 | 版本         | -v                  | 显示中文Git版本和Git版本           |
 | 删除提交     | reset --hard HEAD~n | 撤销n次提交                        |
+| 克隆         | clone               | 克隆远程仓库到本地                 |
 
 ### 示例
 

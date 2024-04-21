@@ -22,7 +22,8 @@ def git_command(command, *args):
         "远程更新": "remote update",
         "查看远程分支": "branch -r",
         "版本": "-v",
-        "删除提交": "reset --hard HEAD~"
+        "删除提交": "reset --hard HEAD~",
+        "克隆": "clone"
         # 可根据需要添加更多映射
     }
     if command == "帮助":
@@ -75,7 +76,7 @@ def git_command(command, *args):
                     print("删除分支命令只接受一个参数。")
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print("版本：v1.1")
+                print("版本：v1.2")
                 print("安装在", full_path)
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             elif command == "删除提交":
@@ -93,6 +94,12 @@ def git_command(command, *args):
                             return
                     else:
                         result = subprocess.run(['git', git_command, args[0]], capture_output=True, text=True)
+            elif command == "克隆":
+                if not args:
+                    repository = input("请输入远程仓库链接(以.git结尾)：")
+                    result = subprocess.run(['git', git_command, repository], capture_output=True, text=True)
+                else:
+                    result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             else:
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
                 
