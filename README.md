@@ -7,7 +7,8 @@
 
 > [!NOTE]
 > 本 README 文件内容为直白讲述，如果看不惯请查看 README_DEV 文件。<br>
-> 如果你希望协助更新这些文档以及 中文Git ，请提交 Issues 或者 pr 。感谢您的支持！您的支持是我们继续维护的动力！
+> 如果你希望协助更新这些文档以及 中文Git ，请提交 Issues 或者 pr 。感谢您的支持！您的支持是我们继续维护的动力！<br>
+> 项目LICENSE：MIT<br>
 
 ## 项目介绍
 中文Git 是一个使用中文命令操作 Git 的简单工具，旨在使不熟悉英文的用户更轻松地使用 Git。<br>
@@ -94,5 +95,14 @@ $ python 中文git.py 推送
 输出如下：<br>
 
 ```
+[Power by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 暂存 所有
 
+[Power by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 提交 更新README
+[main 11bef48] 更新README
+ 2 files changed, 200 insertions(+), 1 deletion(-)
+ create mode 100644 "\344\270\255\346\226\207git.py"
+
+[Power by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 推送
+错误: fatal: unable to access 'https://github.com/DuckDuckStudio/Chinese_git.git/': Failure when receiving data from the peer
 ```
+~~可以看到推送失败了(倒~~<br>
