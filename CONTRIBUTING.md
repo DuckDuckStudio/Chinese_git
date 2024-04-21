@@ -11,6 +11,7 @@
 ├── README.md
 ├── README_DEV.md
 ├── 中文git.py
+├── 中文git.exe
 ├── .gitignore
 └── CONTRIBUTING.md
 ```
@@ -18,6 +19,7 @@
 * `README.md`: 项目的直白话用户指南，用于向用户介绍如何使用中文Git。
 * `README_DEV.md`: 项目的详细用户指南，用于向看不惯`README.md`的用户介绍如何使用中文Git
 * `中文git.py`: 中文Git的主要代码文件，包含了中文Git的核心功能。
+* `中文git.exe`: 中文Git的主要代码文件的打包版(使用Nuitka打包)，包含了中文Git的核心功能。
 * `CONTRIBUTING.md`(本文件): 开发者文档，用于开发人员了解项目的内部结构和如何贡献。
 
 ## 如何开始贡献
