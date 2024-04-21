@@ -46,6 +46,8 @@ def git_command(command, *args):
             elif command == "暂存":
                 if args and args[0] == "所有":
                     result = subprocess.run(['git', 'add', '.'], capture_output=True, text=True)
+                elif not args:
+                    print("[错误]你要暂存什么你没告诉我啊")
                 else:
                     result = subprocess.run(['git', 'add'] + list(args), capture_output=True, text=True)
             elif command == "切换分支":
