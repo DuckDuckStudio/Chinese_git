@@ -58,8 +58,12 @@ python 中文git.py 命令
 ```
 如果你使用的是打包好的 中文Git ，请用以下命令来使用 中文Git :<br>
 ```bash
-中文git.exe 命令
+path\to\中文git.exe 命令
 ```
+
+> [!NOTE]
+> 在使用 python 运行 中文Git 时，请确保 中文git.py 的路径正确！可以使用相对路径。<br>
+> 在使用 打包后的中文Git.exe 运行时，请使用绝对路径<br>
 
 ## 如何更新
 
