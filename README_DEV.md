@@ -73,6 +73,23 @@ path\to\中文git.exe 命令
 > 在使用 python 运行 中文Git 时，请确保 中文git.py 的路径正确！可以使用相对路径。<br>
 > 在使用 打包后的中文Git.exe 运行时，请使用绝对路径<br>
 
+如果你希望在使用 打包后的中文Git.exe 时不用每次都输入绝对路径，请执行以下代码：<br>
+在 PowerShell 中:<br>
+```powershell
+New-Alias 中文git "中文git.exe的绝对路径"
+```
+在 cmd 中:<br>
+```bash
+doskey 中文git="中文git.exe的绝对路径"
+```
+仅本次会话有效，除非将以上代码添加进配置文件。<br>
+PowerShell 的配置文件请在 PowerShell 中运行以下命令打开:<br>
+```powershell
+notepad $PROFILE
+```
+如果文件不存在，请在`C:\Users\user_name\Documents\WindowsPowerShell\`中创建一个叫`Microsoft.PowerShell_profile.ps1`的文件，然后再试一次(文件夹也不存在的也是新建)。<br>
+如果出现错误：请参考[[Power by 虚空终端]项目的描述](https://github.com/DuckDuckStudio/power_by_akasha_terminal/blob/main/README.md#if-error)<div id="tp-point"></div>(其实就是懒得再写遍文档)<br>
+
 ## 如何更新
 
 将旧版中文Git替换为新版中文Git即可。<br>
