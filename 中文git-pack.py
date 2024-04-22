@@ -69,7 +69,7 @@ def git_command(command, *args):
                 elif len(args) == 1:
                     result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
                 else:
-                    print("切换分支命令只接受一个参数。")
+                    print("多余的参数")
             elif command == "新建分支":
                 if not args:
                     new_branch = input("请输入新分支名称: ")
@@ -77,17 +77,22 @@ def git_command(command, *args):
                 elif len(args) == 1:
                     result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
                 else:
-                    print("新建分支命令只接受一个参数。")
+                    print("多余的参数")
             elif command == "删除分支":
                 if not args:
                     print("删除分支命令需要指定要删除的分支名称。")
-                elif len(args) == 1:
-                    result = subprocess.run(['git', git_command, args[0]], capture_output=True, text=True)
+                elif len(args) > 2:
+                    print("多余的参数")
+                    return
+                elif len(args) == 2 and args[1] == "+确认":
+                    git_command = "git branch -d"
                 else:
-                    print("删除分支命令只接受一个参数。")
+                    print("无效的附加参数")
+                    return
+                result = subprocess.run(['git', git_command, args[0]], capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print("版本：v1.3")
+                print("版本：v1.4")
                 print("安装在", full_path)
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             elif command == "删除提交":

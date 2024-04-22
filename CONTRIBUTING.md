@@ -13,6 +13,7 @@
 ├── 中文git.py
 ├── 中文git.exe
 ├── .gitignore
+├── ico.ico
 └── CONTRIBUTING.md
 ```
 
@@ -21,6 +22,7 @@
 * `中文git.py`: 中文Git的主要代码文件，包含了中文Git的核心功能。
 * `中文git.exe`: 中文Git的主要代码文件的打包版(使用Nuitka打包)，包含了中文Git的核心功能。
 * `CONTRIBUTING.md`(本文件): 开发者文档，用于开发人员了解项目的内部结构和如何贡献。
+* `ico.ico`: 中文Git 项目*临时*图标
 
 ## 如何开始贡献
 
