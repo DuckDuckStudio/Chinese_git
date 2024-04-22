@@ -152,6 +152,12 @@ def git_command(command, *args):
                 else:
                     print("无效的参数")
                 result = subprocess.run(['git', git_command], capture_output=True, text=True)
+            elif command == "合并":
+                if not args:
+                    branch = input("请输入需要合并到当前分支的分支：")
+                    result = subprocess.run(['git', git_command, branch], capture_output=True, text=True)
+                else:
+                    result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             else:
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
                 
