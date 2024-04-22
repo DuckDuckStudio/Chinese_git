@@ -27,6 +27,7 @@ def git_command(command, *args):
         "配置": "config",
         "签出到": "checkout",
         "查看图形化日志" :"log --graph",
+        "是否忽略": "check-ignore -v",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
@@ -127,6 +128,12 @@ def git_command(command, *args):
                 if config_subcommand:# 如果存在配置范围
                     git_config_command.insert(2, git_config_subcommands[config_subcommand])
                 result = subprocess.run(git_config_command, capture_output=True, text=True)
+            elif command == "是否忽略":
+                if not args:
+                    file = input("请输入需要检查的文件/文件夹：")
+                    result = subprocess.run(['git', git_command, file], capture_output=True, text=True)
+                else:
+                    result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             else:
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
                 
