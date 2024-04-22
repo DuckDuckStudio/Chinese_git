@@ -1,6 +1,8 @@
 # 中文Git
 
-[![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/porject_photos/Chinese_git.png)](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)
+[![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/porject_photos/Chinese_git.png)](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)<br>
+
+项目网站：[[点我前往]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)<br>
 
 你还在为忘记 git 的命令而发愁吗？<br>
 你还要每次执行 git 命令都要去搜索吗？<br>
