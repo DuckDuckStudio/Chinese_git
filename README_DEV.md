@@ -108,7 +108,7 @@ notepad $PROFILE
 | 推送         | push                | 将本地仓库中的提交推送到远程仓库中 |
 | 提交         | commit -m           | 提交您的更改                       |
 | 新建分支     | checkout -b         | 创建一个全新的分支                 |
-| 切换分支 / 签出到 | checkout            | 切换到另一个分支                   |
+| 切换分支 / 签出到 | checkout        | 切换到另一个分支                   |
 | 合并         | merge               | 合并分支（可能会产生冲突）         |
 | 暂存         | add                 | 暂存您的修改以备提交               |
 | 查看状态     | status              | 查看当前仓库状态                   |
@@ -121,6 +121,7 @@ notepad $PROFILE
 | 克隆         | clone               | 克隆远程仓库到本地                 |
 | 配置         | config              | 配置 Git 的命令行工具              |
 | 查看图形化日志 | log --graph        | 查看图形化的提交日志                |
+| 是否忽略      | check-ignore -v    | 检查文件/文件夹是否被`.gitignore`忽略 |
 
 > [!NOTE]
 > 对于`配置`命令，请将配置范围放在第三个参数<br>
