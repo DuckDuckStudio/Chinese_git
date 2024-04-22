@@ -34,7 +34,7 @@ Python 3.12.0
 ```
 如果你无法运行指令，请参阅芙芙工具箱文档(懒得再写一个文档了)中的[[Q：我该如何添加python到系统PATH环境变量]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A/%E4%B8%BB%E7%A8%8B%E5%BA%8F/#add-python-to-path)<br>
 
-对于实在是不会配置(或者根本就是懒)的人，也有个备选方案，你可以前往仓库发行版下载最新版本的已经打包好的 中文Git 程序，但在执行命令时可能会不一样，详细请参阅下面的[如何执行命令](#如何执行命令)。<br>
+对于实在是不会配置(或者根本就是懒)的人，也有个备选方案，你可以前往仓库发行版下载最新版本的压缩包，里面包含打包好的 中文Git.exe 程序。但在执行命令时可能会不一样，详细请参阅下面的[如何执行命令](#如何执行命令)。<br>
 
 ### Git
 请确保你的设备中已配置 Git 。<br>
@@ -149,4 +149,5 @@ $ python 中文git.py 推送
 
 以下是 中文Git 目前的已知问题：<br>
 * [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
-* 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用Nuitka打包
+* 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用 Nuitka 打包
+* 在非 utf-8 编码的设备上解压版本发行版压缩包可能会出现乱码 - 可能的解决方案：使用 Bandizip 解压
