@@ -23,8 +23,13 @@ def git_command(command, *args):
         "查看远程分支": "branch -r",
         "版本": "-v",
         "删除提交": "reset --hard HEAD~",
-        "克隆": "clone"
+        "克隆": "clone",
+        "配置": "config",
         # 可根据需要添加更多映射
+    }
+    git_config_subcommands = {
+        "全局": "--global",
+        "系统": "--system"
     }
     if command == "帮助":
         print("使用方法:")
@@ -101,6 +106,25 @@ def git_command(command, *args):
                     result = subprocess.run(['git', git_command, repository], capture_output=True, text=True)
                 else:
                     result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+            elif command == "配置":
+                if not args:
+                    print("配置命令需要指定配置选项和值。")
+                elif len(args) == 1:
+                    print("配置命令需要指定配置值。")
+                else:
+                    config_option = args[0]
+                    config_value = args[1]
+                    config_subcommand = None
+                # 检查是否存在配置范围
+                if len(args) == 3:
+                    config_subcommand = args[2]
+                    if config_subcommand not in git_config_subcommands:
+                        print("配置范围错误，可选范围为：全局、系统。")
+                        return
+                git_config_command = ['git', git_command, config_option, config_value]
+                if config_subcommand:# 如果存在配置范围
+                    git_config_command.insert(2, git_config_subcommands[config_subcommand])
+                result = subprocess.run(git_config_command, capture_output=True, text=True)
             else:
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
                 
