@@ -24,6 +24,8 @@
 * `CONTRIBUTING.md`(本文件): 开发者文档，用于开发人员了解项目的内部结构和如何贡献。
 * `ico.ico`: 中文Git 项目*临时*图标
 
+本程序**按原样**提供。<br>
+
 ## 如何开始贡献
 
 欢迎各种形式的贡献，无论是提交bug报告、提出改进建议还是直接提交代码修复问题。以下是贡献步骤：
@@ -53,9 +55,23 @@ git push
 
 ## 项目许可
 
-中文Git采用MIT许可证，详情请参阅[LICENSE](https://github.com/DuckDuckStudio/Chinese_git/blob/main/LICENSE)文件。
+中文Git采用 GPL 2.0 许可证，详情请参阅[LICENSE](https://github.com/DuckDuckStudio/Chinese_git/blob/main/LICENSE)文件。
 
 感谢您的支持和贡献！
+
+## 如何打包
+
+本项目有两种从py到exe的打包方式：<br>
+1. pyinstaller<br>
+打包命令为:<br>
+```bash
+pyinstaller --onefile -i "D:\path\to\Chinese_git\ico.ico" --distpath=. 中文git-pack.py
+```
+2. Nuitka<br>
+打包命令为:<br>
+```bash
+python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico="D:\path\to\Chinese_git\ico.ico" --onefile --remove-output 中文git-pack.py
+```
 
 ## 已知问题
 
