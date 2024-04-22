@@ -28,6 +28,7 @@ def git_command(command, *args):
         "签出到": "checkout",
         "查看图形化日志": "log --graph",
         "是否忽略": "check-ignore -v",
+        "初始化": "init",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {

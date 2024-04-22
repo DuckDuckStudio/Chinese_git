@@ -122,6 +122,7 @@ notepad $PROFILE
 | 配置         | config              | 配置 Git 的命令行工具              |
 | 查看图形化日志 | log --graph        | 查看图形化的提交日志                |
 | 是否忽略      | check-ignore -v    | 检查文件/文件夹是否被`.gitignore`忽略 |
+| 初始化        | init               | 初始化一个新的 Git 仓库             |
 
 > [!NOTE]
 > 对于`配置`命令，请将配置范围放在第三个参数<br>

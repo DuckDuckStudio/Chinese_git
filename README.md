@@ -112,6 +112,7 @@ notepad $PROFILE
 | 配置 | config | 听我说~ |
 | 查看图形化日志 | log --graph | 查看图形化的提交日志 |
 | 是否忽略 | check-ignore -v | 看看我有没有把你丢掉 |
+| 初始化 | init | 新 宠 |
 
 > [!NOTE]
 > 对于`配置`命令，请将配置范围放在第三个参数<br>
