@@ -135,3 +135,8 @@ $ python 中文git.py 推送
 错误: fatal: unable to access 'https://github.com/DuckDuckStudio/Chinese_git.git/': Failure when receiving data from the peer
 ```
 ~~可以看到推送失败了(倒~~<br>
+
+## 已知问题
+
+以下是 中文Git 目前的已知问题：<br>
+* [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)

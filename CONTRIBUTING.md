@@ -54,3 +54,8 @@ git push
 中文Git采用MIT许可证，详情请参阅[LICENSE](https://github.com/DuckDuckStudio/Chinese_git/blob/main/LICENSE)文件。
 
 感谢您的支持和贡献！
+
+## 已知问题
+
+以下是 中文Git 目前的已知问题：<br>
+* [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
