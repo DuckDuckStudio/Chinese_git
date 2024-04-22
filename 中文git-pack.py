@@ -33,7 +33,7 @@ def git_command(command, *args):
         print("支持的中文指令:")
         for cmd in git_command_mapping:
             print("-", cmd)
-                print("详细支持命令请查看README_DEV文件：https://github.com/DuckDuckStudio/Chinese_git/blob/main/README_DEV.md#可用命令")
+            print("详细支持命令请查看README_DEV文件：https://github.com/DuckDuckStudio/Chinese_git/blob/main/README_DEV.md#可用命令")
         return
 
     git_command = git_command_mapping.get(command)
