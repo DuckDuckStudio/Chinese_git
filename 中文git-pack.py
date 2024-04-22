@@ -26,6 +26,7 @@ def git_command(command, *args):
         "克隆": "clone",
         "配置": "config",
         "签出到": "checkout",
+        "查看图形化日志": "log --graph",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
