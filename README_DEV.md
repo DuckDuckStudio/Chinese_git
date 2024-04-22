@@ -1,5 +1,7 @@
 # 中文Git
 
+[![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/porject_photos/Chinese_git.png)](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)
+
 > [!NOTE]
 > 想要贡献更新这些文档以及中文Git项目？请查看[CONTRIBUTING](https://github.com/DuckDuckStudio/Chinese_git/blob/main/CONTRIBUTING.md)文件。感谢您的支持！您的支持是我们持续维护的动力！<br>
 > 项目遵循MIT许可协议。<br>
