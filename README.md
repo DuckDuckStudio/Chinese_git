@@ -98,7 +98,7 @@ notepad $PROFILE
 | 推送 | push | 将本地仓库中的提交推送到远程仓库中 |
 | 提交 | commit -m | 提交你的更改 |
 | 新建分支 | checkout -b | 创建一个全新的分支 |
-| 切换分支 | checkout | 我不在这个分支写了！我要去另一个分支写！ |
+| 切换分支 / 签出到 | checkout | 我不在这个分支写了！我要去另一个分支写！ |
 | 合并 | merge | 混合在一起~ (可能有问题) |
 | 暂存 | add | ~~我就只暂存，就是不提交。欸~就是玩~~ 将你的修改暂时存起来以备提交 |
 | 查看状态 | status | 让我看看！看看你是什么状态！ |
@@ -143,3 +143,4 @@ $ python 中文git.py 推送
 
 以下是 中文Git 目前的已知问题：<br>
 * [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
+* 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用Nuitka打包

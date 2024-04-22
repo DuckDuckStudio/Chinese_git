@@ -25,6 +25,7 @@ def git_command(command, *args):
         "删除提交": "reset --hard HEAD~",
         "克隆": "clone",
         "配置": "config",
+        "签出到": "checkout",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
@@ -57,7 +58,7 @@ def git_command(command, *args):
                     print("[错误]你要暂存什么你没告诉我啊")
                 else:
                     result = subprocess.run(['git', 'add'] + list(args), capture_output=True, text=True)
-            elif command == "切换分支":
+            elif command == "切换分支" or command == "签出到":
                 if not args:
                     branch = input("请输入需要切换的分支：")
                     result = subprocess.run(['git', git_command, branch], capture_output=True, text=True)
