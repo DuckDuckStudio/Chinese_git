@@ -33,6 +33,7 @@ def git_command(command, *args):
         print("支持的中文指令:")
         for cmd in git_command_mapping:
             print("-", cmd)
+        print("详细支持命令请查看README_DEV文件：https://github.com/DuckDuckStudio/Chinese_git/blob/main/README_DEV.md#可用命令")
         return
 
     git_command = git_command_mapping.get(command)
@@ -76,7 +77,7 @@ def git_command(command, *args):
                     print("删除分支命令只接受一个参数。")
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print("版本：v1.2")
+                print("版本：v1.3")
                 print("安装在", full_path)
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             elif command == "删除提交":
