@@ -142,7 +142,7 @@ def git_command(command, *args):
                 else:
                     result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             elif command == "查看本地分支":
-                if len(args) != 1:
+                if len(args) > 2:
                     print("多余的参数")
                     return
                 elif args[0] == "+最后提交":
