@@ -29,6 +29,7 @@ def git_command(command, *args):
         "查看图形化日志" :"log --graph",
         "是否忽略": "check-ignore -v",
         "初始化": "init",
+        "查看本地分支": "branch",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
@@ -58,7 +59,7 @@ def git_command(command, *args):
                 if args and args[0] == "所有":
                     result = subprocess.run(['git', 'add', '.'], capture_output=True, text=True)
                 elif not args:
-                    print("[错误]你要暂存什么你没告诉我啊")
+                    print("你要暂存什么你没告诉我啊")
                 else:
                     result = subprocess.run(['git', 'add'] + list(args), capture_output=True, text=True)
             elif command == "切换分支" or command == "签出到":
@@ -135,6 +136,17 @@ def git_command(command, *args):
                     result = subprocess.run(['git', git_command, file], capture_output=True, text=True)
                 else:
                     result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+            elif command == "查看本地分支":
+                if len(args) != 1:
+                    print("多余的参数")
+                    return
+                elif args[0] == "+最后提交":
+                    git_command = "branch -v"
+                elif (args[0] == "+最后提交" and args[1] == "+与上游分支关系") or (args[0] == "+与上游分支关系" and args[1] == "+最后提交"):
+                    git_command = "branch -vv"
+                else:
+                    print("无效的参数")
+                result = subprocess.run(['git', git_command], capture_output=True, text=True)
             else:
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
                 
