@@ -115,6 +115,10 @@ notepad $PROFILE
 | 版本         | -v                  | 显示中文Git版本和Git版本           |
 | 删除提交     | reset --hard HEAD~n | 撤销n次提交                        |
 | 克隆         | clone               | 克隆远程仓库到本地                 |
+| 配置         | config              | 配置 Git 的命令行工具              |
+
+> [!NOTE]
+> 对于`配置`命令，请将配置范围放在第三个参数
 
 ### 示例
 
