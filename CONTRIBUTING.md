@@ -79,3 +79,12 @@ python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico="D:\p
 * [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
 * 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用 Nuitka 打包
 * 在非 utf-8 编码的设备上解压版本发行版压缩包可能会出现乱码 - 可能的解决方案：使用 Bandizip 解压
+* 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
+
+## 关于翻译
+如果你希协助 中文Git 进行更多语言的本地化，你可以将新的本地化语言放在 other_language 中。<br>
+对于新语言的要求：<br>
+1. 可以为非中文语言，但请不要使用英语，这是 Git 所使用的语言。
+2. 新语言的翻译必须遵循 简体中文 的翻译，除非 简体中文 的翻译出错
+3. 翻译完成后请提交 PR 而非新建仓库另外分发
+4. 在翻译时也请同时翻译`README_DEV.md`与`USER_HANDBOOK.md`
