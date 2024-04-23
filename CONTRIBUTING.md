@@ -8,21 +8,32 @@
 
 ```
 中文Git/
-├── README.md
-├── README_DEV.md
-├── 中文git.py
-├── 中文git.exe
+├── zh-tw
 ├── .gitignore
+├── 中文git-pack.py
+├── 中文git.exe
+├── 中文git.py
+├── ABOUT_TRANSLATION.md
+├── CONTRIBUTING.md
 ├── ico.ico
-└── CONTRIBUTING.md
+├── LICENSE
+├── README_DEV.md
+├── README.md
+└── USER_HANDBOOK.md
 ```
 
-* `README.md`: 项目的直白话用户指南，用于向用户介绍如何使用中文Git。
-* `README_DEV.md`: 项目的详细用户指南，用于向看不惯`README.md`的用户介绍如何使用中文Git
+* `zh-tw`: 项目的 繁体中文 翻译
+* `.gitignore`: Git 忽略文件
+* `中文git-pack.py`: 中文Git的打包版的主要代码文件，包含了中文Git的核心功能。
+* `中文git.exe`: 中文Git的主要代码文件的打包版(使用Pyinstaller打包)，包含了中文Git的核心功能。
 * `中文git.py`: 中文Git的主要代码文件，包含了中文Git的核心功能。
-* `中文git.exe`: 中文Git的主要代码文件的打包版(使用Nuitka打包)，包含了中文Git的核心功能。
+* `ABOUT_TRANSLATION.md`: 项目的翻译进度展示文件
 * `CONTRIBUTING.md`(本文件): 开发者文档，用于开发人员了解项目的内部结构和如何贡献。
 * `ico.ico`: 中文Git 项目*临时*图标
+* `LICENSE`: 开源许可文件(GPL 2.0)
+* `README_DEV.md`: 项目的详细用户指南，用于向看不惯`README.md`的用户介绍中文Git
+* `README.md`: 项目的直白话用户指南，用于向用户介绍中文Git。
+* `USER_HANDBOOK.md`: 项目的用户手册，用于向用户详细介绍如何使用
 
 本程序**按原样**提供。<br>
 
@@ -82,9 +93,8 @@ python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico="D:\p
 * 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
 
 ## 关于翻译
-如果你希协助 中文Git 进行更多语言的本地化，你可以将新的本地化语言放在 other_language 中。<br>
-对于新语言的要求：<br>
-1. 可以为非中文语言，但请不要使用英语，这是 Git 所使用的语言。
-2. 新语言的翻译必须遵循 简体中文 的翻译，除非 简体中文 的翻译出错
-3. 翻译完成后请提交 PR 而非新建仓库另外分发
-4. 在翻译时也请同时翻译`README_DEV.md`与`USER_HANDBOOK.md`
+如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。<br>
+对于翻译的要求：<br>
+1. 翻译必须遵循 简体中文 的翻译，除非 简体中文 的翻译出错
+2. 翻译完成后请提交 PR 而非新建仓库另外分发
+3. 在翻译时也请同时翻译`README_DEV.md`与`USER_HANDBOOK.md`
