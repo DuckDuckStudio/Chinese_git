@@ -92,7 +92,7 @@ def git_command(command, *args):
                 result = subprocess.run(['git', git_command, args[0]], capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print("版本：v1.5-pack")
+                print("版本：v1.6-pack")
                 print("安装在", full_path)
                 result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
             elif command == "删除提交":
