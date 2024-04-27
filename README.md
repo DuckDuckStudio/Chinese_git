@@ -83,7 +83,7 @@ PowerShell 的配置文件请在 PowerShell 中运行以下命令打开:<br>
 notepad $PROFILE
 ```
 如果文件不存在，请在`C:\Users\user_name\Documents\WindowsPowerShell\`中创建一个叫`Microsoft.PowerShell_profile.ps1`的文件，然后再试一次(文件夹也不存在的也是新建)。<br>
-如果出现错误：请参考[[Power by 虚空终端]项目的描述](https://github.com/DuckDuckStudio/power_by_akasha_terminal/blob/main/README.md#if-error)<div id="tp-point"></div>(其实就是懒得再写遍文档)<br>
+如果出现错误：请参考[[Powered by 虚空终端]项目的描述](https://github.com/DuckDuckStudio/powered_by_akasha_terminal/blob/main/README.md#if-error)<div id="tp-point"></div>(其实就是懒得再写遍文档)<br>
 
 ## 如何更新
 
@@ -134,14 +134,14 @@ $ python 中文git.py 推送
 输出如下：<br>
 
 ```
-[Power by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 暂存 所有
+[Powered by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 暂存 所有
 
-[Power by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 提交 更新README
+[Powered by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 提交 更新README
 [main 11bef48] 更新README
  2 files changed, 200 insertions(+), 1 deletion(-)
  create mode 100644 "\344\270\255\346\226\207git.py"
 
-[Power by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 推送
+[Powered by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 推送
 错误: fatal: unable to access 'https://github.com/DuckDuckStudio/Chinese_git.git/': Failure when receiving data from the peer
 ```
 ~~可以看到推送失败了(倒~~<br>

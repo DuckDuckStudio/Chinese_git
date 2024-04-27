@@ -92,7 +92,7 @@ PowerShell 的配置文件请在 PowerShell 中运行以下命令打开:<br>
 notepad $PROFILE
 ```
 如果文件不存在，请在`C:\Users\user_name\Documents\WindowsPowerShell\`中创建一个叫`Microsoft.PowerShell_profile.ps1`的文件，然后再试一次(文件夹也不存在的也是新建)。<br>
-如果出现错误：请参考[[Power by 虚空终端]项目的描述](https://github.com/DuckDuckStudio/power_by_akasha_terminal/blob/main/README.md#if-error)<div id="tp-point"></div>(其实就是懒得再写遍文档)<br>
+如果出现错误：请参考[[Powered by 虚空终端]项目的描述](https://github.com/DuckDuckStudio/powered_by_akasha_terminal/blob/main/README.md#if-error)<div id="tp-point"></div>(其实就是懒得再写遍文档)<br>
 
 ## 如何更新
 
