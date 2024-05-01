@@ -1,6 +1,6 @@
 # 中文Git 用户手册
 
-[![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/porject_photos/Chinese_git.png)](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)<br>
+[![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/project_photos/Chinese_git.png)](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)<br>
 
 项目网站：[[点我前往]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)<br>
 
