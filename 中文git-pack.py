@@ -30,6 +30,7 @@ def git_command(command, *args):
         "是否忽略": "check-ignore -v",
         "初始化": "init",
         "查看本地分支": "branch",
+        "强推": "push --force",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
