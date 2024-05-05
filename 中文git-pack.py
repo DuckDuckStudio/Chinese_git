@@ -26,7 +26,7 @@ def git_command(command, *args):
         "克隆": "clone",
         "配置": "config",
         "签出到": "checkout",
-        "查看图形化日志": "log --graph",
+        "查看图形化日志" :"log --graph",
         "是否忽略": "check-ignore -v",
         "初始化": "init",
         "查看本地分支": "branch",
@@ -53,30 +53,30 @@ def git_command(command, *args):
             if command == "提交":
                 if not args:
                     commit_message = input("请输入提交信息: ")
-                    result = subprocess.run(['git', git_command, '-m', commit_message], capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' -m "' + commit_message + '"', capture_output=True, text=True)
                 else:
-                    result = subprocess.run(['git', git_command, '-m', args[0]], capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "暂存":
                 if args and args[0] == "所有":
-                    result = subprocess.run(['git', 'add', '.'], capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' --all', capture_output=True, text=True)
                 elif not args:
                     print("你要暂存什么你没告诉我啊")
                 else:
-                    result = subprocess.run(['git', 'add'] + list(args), capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "切换分支" or command == "签出到":
                 if not args:
                     branch = input("请输入需要切换的分支：")
-                    result = subprocess.run(['git', git_command, branch], capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + branch, capture_output=True, text=True)
                 elif len(args) == 1:
-                    result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 else:
                     print("多余的参数")
             elif command == "新建分支":
                 if not args:
                     new_branch = input("请输入新分支名称: ")
-                    result = subprocess.run(['git', git_command, new_branch], capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + new_branch, capture_output=True, text=True)
                 elif len(args) == 1:
-                    result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 else:
                     print("多余的参数")
             elif command == "删除分支":
@@ -86,37 +86,37 @@ def git_command(command, *args):
                     print("多余的参数")
                     return
                 elif len(args) == 2 and args[1] == "+确认":
-                    git_command = "git branch -d"
+                    git_command = "branch -d"
                 else:
                     print("无效的附加参数")
                     return
-                result = subprocess.run(['git', git_command, args[0]], capture_output=True, text=True)
+                result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print("版本：v1.6-pack")
+                print("版本：v1.6")
                 print("安装在", full_path)
-                result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+                result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "删除提交":
                 if not args:
                     print("请输入要删除的提交类型（最新提交/倒数第n个提交/具体某个提交）。")
                 else:
                     if args[0] == "最新提交":
-                        result = subprocess.run(['git', git_command, 'HEAD~1'], capture_output=True, text=True)
+                        result = subprocess.run('git ' + git_command + ' HEAD', capture_output=True, text=True)
                     elif args[0].startswith("倒数第"):
                         try:
                             num = int(args[0][3:])
-                            result = subprocess.run(['git', git_command, f'HEAD~{num}'], capture_output=True, text=True)
+                            result = subprocess.run(['git ', git_command, f'HEAD~{num}'], capture_output=True, text=True)
                         except ValueError:
                             print("参数错误，请输入倒数第n个提交，n为正整数。")
                             return
                     else:
-                        result = subprocess.run(['git', git_command, args[0]], capture_output=True, text=True)
+                        result = subprocess.run('git ' + git_command + ' ' + args[0], capture_output=True, text=True)
             elif command == "克隆":
                 if not args:
                     repository = input("请输入远程仓库链接(以.git结尾)：")
-                    result = subprocess.run(['git', git_command, repository], capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + repository, capture_output=True, text=True)
                 else:
-                    result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "配置":
                 if not args:
                     print("配置命令需要指定配置选项和值。")
@@ -132,16 +132,20 @@ def git_command(command, *args):
                     if config_subcommand not in git_config_subcommands:
                         print("配置范围错误，可选范围为：全局、系统。")
                         return
-                git_config_command = ['git', git_command, config_option, config_value]
+                git_config_command = ['git ', git_command, config_option, config_value]
                 if config_subcommand:# 如果存在配置范围
                     git_config_command.insert(2, git_config_subcommands[config_subcommand])
                 result = subprocess.run(git_config_command, capture_output=True, text=True)
             elif command == "是否忽略":
                 if not args:
                     file = input("请输入需要检查的文件/文件夹：")
-                    result = subprocess.run(['git', git_command, file], capture_output=True, text=True)
+                    if not file:
+                        print("文件/文件夹名不能为空")
+                        return
+                    result = subprocess.run('git ' + git_command + ' ' + file, capture_output=True, text=True)
+                    print (result)
                 else:
-                    result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "查看本地分支":
                 if len(args) > 2:
                     print("多余的参数")
@@ -152,15 +156,16 @@ def git_command(command, *args):
                     git_command = "branch -vv"
                 else:
                     print("无效的参数")
-                result = subprocess.run(['git', git_command], capture_output=True, text=True)
+                    return
+                result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "合并":
                 if not args:
                     branch = input("请输入需要合并到当前分支的分支：")
-                    result = subprocess.run(['git', git_command, branch], capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + branch, capture_output=True, text=True)
                 else:
-                    result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             else:
-                result = subprocess.run(['git', git_command] + list(args), capture_output=True, text=True)
+                result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 
             if result.returncode == 0:
                 print(result.stdout)
@@ -176,5 +181,5 @@ if __name__ == "__main__":
         git_command(sys.argv[1], *sys.argv[2:])
     else:
         print("使用方法:")
-        print(full_path, " <中文指令> [参数]")
-        print("即：", full_path, "<你想干什么> [具体要啥]")
+        print("python 中文git.py <中文指令> [参数]")
+        print("即：python 中文git.py <你想干什么> [具体要啥]")
