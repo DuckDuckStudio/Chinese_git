@@ -2,6 +2,8 @@
 
 [![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/project_photos/Chinese_git.png)](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)<br>
 
+[![GitHub Release](https://img.shields.io/github/release/DuckDuckStudio/Chinese_git?style=flat)](https://github.com/DuckDuckStudio/Chinese_git/releases/latest) [![Github All Releases](https://img.shields.io/github/downloads/DuckDuckStudio/Chinese_git/total.svg?style=flat)]() [![Github LICENSE](https://img.shields.io/github/license/DuckDuckStudio/Chinese_git?style=flat)]()  
+
 项目网站：[[点我前往]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)<br>
 
 你还在为忘记 git 的命令而发愁吗？<br>
