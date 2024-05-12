@@ -1,6 +1,81 @@
 import subprocess
+import requests
 import sys
 import os
+
+# ---------- 版本定义及更新 ----------
+# 定义版本号
+VERSION = 'v1.7'
+
+def check_for_updates():
+    # 提取版本号
+    current_version = VERSION.split('-')[0]  # 分离可能的 '-pack' 后缀
+
+    # GitHub releases API URL
+    url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
+
+    try:
+        response = requests.get(url)
+        data = response.json()
+        latest_version = data['tag_name']  # 从 GitHub 获取最新版本号
+
+        if latest_version != current_version:
+            print("发现新版本 {} 可用！".format(latest_version))
+            return latest_version
+        else:
+            print("您已安装最新版本 {}。".format(current_version))
+            return None
+    except Exception as e:
+        print("检查更新时出错：", e)
+        return None
+
+def download_update_file(version):
+    # 根据版本号是否包含 '-pack' 后缀来确定文件后缀名
+    file_extension = '.exe' if '-pack' in version else '.py'
+
+    # 根据版本确定下载 URL
+    download_url = 'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{}/Chinese_git{}'.format(version, file_extension)
+
+    try:
+        response = requests.get(download_url)
+        filename = response.headers['Content-Disposition'].split('=')[1]
+        
+        # 重命名下载的文件为"中文Git.exe" 或 "中文Git.py"
+        new_filename = '中文Git{}'.format(file_extension)
+        
+        with open(new_filename, 'wb') as f:
+            f.write(response.content)
+        
+        print("更新成功下载。")
+        
+        return new_filename
+    except Exception as e:
+        print("下载更新文件时出错：", e)
+        return None
+
+def replace_current_program(new_filename):
+    try:
+        # 用下载的文件替换当前程序
+        os.replace(new_filename, sys.argv[0])
+        print("程序已成功更新。")
+    except Exception as e:
+        print("替换当前程序时出错：", e)
+
+# 自动检查更新并提示用户安装
+def auto_update():
+    new_version = check_for_updates()
+
+    if new_version:
+        # 询问用户是否安装更新
+        choice = input("是否要安装此更新？ (是/否): ").lower()
+        if choice == '是':
+            new_filename = download_update_file(new_version)
+            if new_filename:
+                replace_current_program(new_filename)
+        else:
+            print("已跳过更新。")
+
+# ---------- 版本...更新 结束 ----------
 
 script_path = os.path.dirname(__file__)
 full_path = os.path.join(script_path, "中文git.py")
@@ -32,6 +107,9 @@ def git_command(command, *args):
         "查看本地分支": "branch",
         "强推": "push --force",
         "更名分支": "branch -m",
+        # --- 更新 ---
+        "更新": "update",
+        # --- 结束 ---
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
@@ -94,7 +172,7 @@ def git_command(command, *args):
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print("版本：v1.7")
+                print(f"版本：{VERSION}")
                 print("安装在", full_path)
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "删除提交":
@@ -178,6 +256,12 @@ def git_command(command, *args):
                     return
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
+            elif command == "更新":
+                print("中文Git by 鸭鸭「カモ」")
+                print(f"当前版本：{VERSION}")
+                print("正在检查更新...")
+                auto_update()
+                return
             else:
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 
