@@ -164,12 +164,14 @@ def git_command(command, *args):
                 elif len(args) > 2:
                     print("多余的参数")
                     return
-                elif len(args) == 2 and args[1] == "+确认":
-                    git_command = "branch -d"
+                elif len(args) == 2:
+                    if args[1] == "+确认":
+                        git_command = "branch -d"
+                    else:
+                        print("无效的附加参数")
+                        return
                 else:
-                    print("无效的附加参数")
-                    return
-                result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
                 print(f"版本：{VERSION}")
