@@ -31,6 +31,7 @@ def git_command(command, *args):
         "初始化": "init",
         "查看本地分支": "branch",
         "强推": "push --force",
+        "更名分支": "branch -m",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
@@ -93,7 +94,7 @@ def git_command(command, *args):
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print("版本：v1.6")
+                print("版本：v1.7")
                 print("安装在", full_path)
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "删除提交":
@@ -162,6 +163,19 @@ def git_command(command, *args):
                 if not args:
                     branch = input("请输入需要合并到当前分支的分支：")
                     result = subprocess.run('git ' + git_command + ' ' + branch, capture_output=True, text=True)
+                else:
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
+            elif command == "更名分支":
+                if not args:
+                    old_branch = input("请输入旧分支名:")
+                    new_branch = input("请输入新分支名:")
+                    if old_branch == new_branch:
+                        print("新旧分支名称相同")
+                        return
+                    result = subprocess.run('git ' + git_command + ' ' + old_branch + ' ' + new_branch, capture_output=True, text=True)
+                if args < 2:
+                    print("缺少参数")
+                    return
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             else:
