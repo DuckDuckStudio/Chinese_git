@@ -76,12 +76,12 @@ git push
 1. pyinstaller<br>
 打包命令为:<br>
 ```bash
-pyinstaller --onefile -i "D:\path\to\Chinese_git\ico.ico" --distpath=. 中文git-pack.py
+pyinstaller --onefile -i ico.ico --distpath=. 中文git-pack.py
 ```
 2. Nuitka<br>
 打包命令为:<br>
 ```bash
-python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico="D:\path\to\Chinese_git\ico.ico" --onefile --remove-output 中文git-pack.py
+python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git-pack.py
 ```
 
 ## 已知问题
@@ -91,6 +91,7 @@ python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico="D:\p
 * 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用 Nuitka 打包
 * 在非 utf-8 编码的设备上解压版本发行版压缩包可能会出现乱码 - 可能的解决方案：使用 Bandizip 解压
 * 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
+* [打包版无法使用更新命令更新 #5](https://github.com/DuckDuckStudio/Chinese_git/issues/5)
 
 ## 关于翻译
 如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。<br>

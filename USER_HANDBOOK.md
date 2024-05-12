@@ -136,6 +136,7 @@ python 中文git.py 命令
 * 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用 Nuitka 打包
 * 在非 utf-8 编码的设备上解压版本发行版压缩包可能会出现乱码 - 可能的解决方案：使用 Bandizip 解压
 * 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
+* [打包版无法使用更新命令更新 #5](https://github.com/DuckDuckStudio/Chinese_git/issues/5)
 
 ## 关于编码
 中文Git 的所有项目文件源码以及发行版文件均使用 UTF-8 编码，如出现乱码请使用 UTF-8 编码而非简体中文系统默认的 GBK 编码。
