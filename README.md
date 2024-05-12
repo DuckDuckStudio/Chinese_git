@@ -88,8 +88,11 @@ notepad $PROFILE
 如果出现错误：请参考[[Powered by 虚空终端]项目的描述](https://github.com/DuckDuckStudio/powered_by_akasha_terminal/blob/main/README.md#if-error)<div id="tp-point"></div>(其实就是懒得再写遍文档)  
 
 ## 如何更新
-
-把你旧的 中文Git 删掉换成新的 中文Git 就行。  
+- 对于`v1.6`及以下版本:  
+  把你旧的 中文Git 删掉换成新的 中文Git 就行。  
+- 对于`v1.7`及以上版本:  
+  运行命令`中文git 更新`。  
+  *(请将`中文git`替换为`中文Git.exe`的路径或`python 中文Git.py`)*  
 
 ## 可用命令
 
