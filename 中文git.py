@@ -5,7 +5,7 @@ import os
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v1.8'
+VERSION = 'v1.9'
 
 def check_for_updates():
     # 提取版本号
