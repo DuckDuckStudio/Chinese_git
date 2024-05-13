@@ -5,7 +5,7 @@ import os
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v1.8-pack'
+VERSION = 'v1.9-pack'
 
 def check_for_updates():
     # 提取版本号
@@ -77,7 +77,7 @@ def auto_update():
 
 # ---------- 版本...更新 结束 ----------
 
-script_path = os.path.dirname(__file__)
+script_path = os.path.dirname(os.path.realpath(sys.executable))
 full_path = os.path.join(script_path, "中文git.exe")
 
 def git_command(command, *args):
