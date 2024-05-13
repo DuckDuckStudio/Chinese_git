@@ -105,6 +105,11 @@ notepad $PROFILE
 
 以下是中文Git支持的命令列表。如果您需要的Git命令不在列表中，请[提交Issues](https://github.com/DuckDuckStudio/Chinese_git/issues)告诉我们！  
 
+> [!NOTE]
+> 这里的可用命令为仓库中最新版本的可用命令，每个Releases的可用命令请查看对应的tag的README/README_DEV/USER_HANDBOOK。  
+> 例如(v1.8的可用命令):  
+> [https://github.com/DuckDuckStudio/Chinese_git/blob/**v1.8**/USER_HANDBOOK.md#可用命令](https://github.com/DuckDuckStudio/Chinese_git/blob/v1.8/USER_HANDBOOK.md#可用命令)  
+
 | 在中文Git中的命令 | 在Git中的命令    | 用途                               |
 | ------------ | ------------------- | ---------------------------------- |
 | 拉取         | pull                | 从远程仓库拉取源码                 |
