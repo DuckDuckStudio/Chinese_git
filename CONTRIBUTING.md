@@ -35,7 +35,7 @@
 * `README.md`: 项目的直白话用户指南，用于向用户介绍中文Git。
 * `USER_HANDBOOK.md`: 项目的用户手册，用于向用户详细介绍如何使用
 
-本程序**按原样**提供。<br>
+本程序**按原样**提供。  
 
 ## 如何开始贡献
 
@@ -49,7 +49,7 @@
 git clone https://github.com/Your_Github_name/Chinese_git.git
 ```
 
-3. 在新仓库上进行修改和开发。
+3. 在新仓库上进行修改。
 4. 提交你的更改：
 
 ```bash
@@ -72,21 +72,21 @@ git push
 
 ## 如何打包
 
-本项目有两种从py到exe的打包方式：<br>
-1. pyinstaller<br>
-打包命令为:<br>
+本项目有两种从py到exe的打包方式：  
+1. pyinstaller  
+打包命令为:  
 ```bash
 pyinstaller --onefile -i ico.ico --distpath=. 中文git-pack.py
 ```
-2. Nuitka<br>
-打包命令为:<br>
+2. Nuitka  
+打包命令为:  
 ```bash
 python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git-pack.py
 ```
 
 ## 已知问题
 
-以下是 中文Git 目前的已知问题：<br>
+以下是 中文Git 目前的已知问题：  
 * [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
 * 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用 Nuitka 打包
 * 在非 utf-8 编码的设备上解压版本发行版压缩包可能会出现乱码 - 可能的解决方案：使用 Bandizip 解压
@@ -94,8 +94,8 @@ python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.i
 * [打包版无法使用更新命令更新 #5](https://github.com/DuckDuckStudio/Chinese_git/issues/5)
 
 ## 关于翻译
-如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。<br>
-对于翻译的要求：<br>
+如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。  
+对于翻译的要求：  
 1. 翻译必须遵循 简体中文 的翻译，除非 简体中文 的翻译出错
-2. 翻译完成后请提交 PR 而非新建仓库另外分发
+2. 翻译完成后请提交 PR
 3. 在翻译时也请同时翻译`README_DEV.md`与`USER_HANDBOOK.md`
