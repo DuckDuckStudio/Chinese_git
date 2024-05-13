@@ -97,7 +97,6 @@ def git_command(command, *args):
         "远程更新": "remote update",
         "查看远程分支": "branch -r",
         "版本": "-v",
-        "删除提交": "reset --hard HEAD~",
         "克隆": "clone",
         "配置": "config",
         "签出到": "checkout",
@@ -110,6 +109,7 @@ def git_command(command, *args):
         # --- 更新 ---
         "更新": "update",
         # --- 结束 ---
+        "还原": "revert",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
@@ -177,9 +177,9 @@ def git_command(command, *args):
                 print(f"版本：{VERSION}")
                 print("安装在", full_path)
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
-            elif command == "删除提交":
+            elif command == "还原":
                 if not args:
-                    print("请输入要删除的提交类型（最新提交/倒数第n个提交/具体某个提交）。")
+                    print("请输入要还原的提交（最新提交/倒数第n个提交/具体某个提交）: ")
                 else:
                     if args[0] == "最新提交":
                         result = subprocess.run('git ' + git_command + ' HEAD', capture_output=True, text=True)
