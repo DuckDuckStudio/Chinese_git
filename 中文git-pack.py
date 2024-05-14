@@ -110,6 +110,7 @@ def git_command(command, *args):
         "更新": "update",
         # --- 结束 ---
         "还原": "revert",
+        "重置": "reset",
         # 可根据需要添加更多映射
     }
     git_config_subcommands = {
@@ -123,7 +124,7 @@ def git_command(command, *args):
         print("支持的中文指令:")
         for cmd in git_command_mapping:
             print("-", cmd)
-            print("详细支持命令请查看README_DEV文件：https://github.com/DuckDuckStudio/Chinese_git/blob/main/README_DEV.md#可用命令")
+        print("详细支持命令请查看用户手册：https://github.com/DuckDuckStudio/Chinese_git/blob/main/USER_HANDBOOK.md#可用命令")
         return
 
     git_command = git_command_mapping.get(command)
@@ -161,6 +162,7 @@ def git_command(command, *args):
             elif command == "删除分支":
                 if not args:
                     print("删除分支命令需要指定要删除的分支名称。")
+                    return
                 elif len(args) > 2:
                     print("多余的参数")
                     return
@@ -264,6 +266,25 @@ def git_command(command, *args):
                 print("正在检查更新...")
                 auto_update()
                 return
+            elif command == "重置":
+                if not args:
+                    print("重置指令需要具体的参数。")
+                    return
+                elif len(args) > 2:
+                    print("多余的参数")
+                    return
+                elif len(args) == 2:
+                    if args[1] == "+取消暂存区":# 默认
+                        git_command = "reset --mixed"
+                    elif args[1] == "+保持不变":
+                        git_command = "reset --soft"
+                    elif args[1] == "+删除更改":
+                        git_command = "reset --hard"
+                    else:
+                        print("无效的附加参数")
+                        return
+                else:
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             else:
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 
