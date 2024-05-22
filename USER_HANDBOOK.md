@@ -33,7 +33,7 @@ git version 2.42.0.windows.1
 ### Python
 
 如果你希望从源码 (`中文git.py`) 使用 中文Git ，请先配置好 Python。  
-目前没有版本要求，因为所用的库只有`subprocess`、`sys`、`os`三个标准库。  
+目前没有版本要求，因为所用的库只有`subprocess`、`sys`、`os`三个标准库和`requests`库。  
 
 运行以下命令以检查:  
 
@@ -41,11 +41,17 @@ git version 2.42.0.windows.1
 python --version
 ```
 
-如果输出类似于以下内容，则说明无需进行更改：  
+你可能会看到类似这样的输出：  
 
 ```
 C:\Users\user_name>python --version
 Python 3.12.0
+```
+
+运行以下命令以安装更新所需库`requests`:  
+
+```bash
+pip install requests
 ```
 
 如果无法执行命令:  

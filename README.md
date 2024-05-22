@@ -25,16 +25,26 @@
 在使用 中文Git 前，请确保你有以下依赖，否则 中文Git 将变成废物。  
 
 ### Python
-请确保你的设备已配置 Python 环境并且已将 Python 添加到系统环境变量中。  
-运行以下命令以检查：
+请确保您的系统已配置Python环境，并已安装所需库。  
+运行以下命令检查Python版本：
+
 ```bash
 python --version
 ```
-如果你看到类似这样的输出则表明你不用管他了：  
+
+你可能会看到类似这样的输出：  
+
 ```
 C:\Users\user_name>python --version
 Python 3.12.0
 ```
+
+运行以下命令以安装更新所需库`requests`:  
+
+```bash
+pip install requests
+```
+
 如果你无法运行指令，请参阅芙芙工具箱文档(懒得再写一个文档了)中的[[Q：我该如何添加python到系统PATH环境变量]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A/%E4%B8%BB%E7%A8%8B%E5%BA%8F/#add-python-to-path)  
 
 对于实在是不会配置(或者根本就是懒)的人，也有个备选方案，你可以前往仓库发行版下载最新版本的压缩包，里面包含打包好的 中文Git.exe 程序。但在执行命令时可能会不一样，详细请参阅下面的[如何执行命令](#如何执行命令)。  

@@ -19,18 +19,24 @@
 
 ### Python
 
-请确保您的系统已配置Python环境，并已将Python添加到系统环境变量中。  
+请确保您的系统已配置Python环境，并已安装所需库。  
 运行以下命令检查Python版本：
 
 ```bash
 python --version
 ```
 
-如果输出类似于以下内容，则说明无需进行更改：  
+你可能会看到类似这样的输出：  
 
 ```
 C:\Users\user_name>python --version
 Python 3.12.0
+```
+
+运行以下命令以安装更新所需库`requests`:  
+
+```bash
+pip install requests
 ```
 
 如果无法运行命令，请参考芙芙工具箱文档中的[[Q：我该如何添加Python到系统PATH环境变量]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A/%E4%B8%BB%E7%A8%8B%E5%BA%8F/#add-python-to-path)  
