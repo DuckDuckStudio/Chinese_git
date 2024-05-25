@@ -39,10 +39,10 @@ C:\Users\user_name>python --version
 Python 3.12.0
 ```
 
-运行以下命令以安装更新所需库`requests`:  
+运行以下命令以安装所需库:  
 
 ```bash
-pip install requests
+pip install -r requirements.txt
 ```
 
 如果你无法运行指令，请参阅芙芙工具箱文档(懒得再写一个文档了)中的[[Q：我该如何添加python到系统PATH环境变量]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A/%E4%B8%BB%E7%A8%8B%E5%BA%8F/#add-python-to-path)  
@@ -129,7 +129,6 @@ notepad $PROFILE
 | 查看远程分支 | branch -r | 你在另一头(远程)有谁(哪些分支) |
 | 版本 | -v | 如命令所示，显示你使用的 中文Git 版本与 Git 版本 |
 | 克隆 | clone | 你的代码就是我的！我的代码还是我的！ |
-| 配置 | config | 听我说~ |
 | 查看图形化日志 | log --graph | 查看图形化的提交日志 |
 | 是否忽略 | check-ignore -v | 看看我有没有把你丢掉 |
 | 初始化 | init | 新 宠 |
@@ -138,10 +137,9 @@ notepad $PROFILE
 | 更名分支 | branch -m | 我不叫旧分支名了，我要叫新分支名！ |
 | 更新 | / | 我要玩新的中文Git嘛~ |
 | 还原 | revert | 还是以前的好 |
-| 重置 | reset | 把我推到过去，让我重来一次！ |
+| 重置 (+保留更改(默认)/+删除更改) | reset (--mixed/--hard) | 把我推到过去，让我重来一次！ |
 
 > [!NOTE]
-> 对于`配置`命令，请将配置范围放在**第三个参数**  
 > 对于`提交`命令，如果**提交信息带空格请用`"`将提交信息括起来**  
 > 对于`新建分支`命令，该命令会在新建完分支后**自动签出到新分支**  
 > 对于`查看本地分支`命令的参数，示例`$ 中文git 查看本地分支 +最新提交 +与上游分支关系`  

@@ -91,14 +91,12 @@ def git_command(command, *args):
         "暂存": "add",
         "查看状态": "status",
         "查看日志": "log",
-        "重置": "reset",
         "删除分支": "branch -D",
         "远程地址": "remote -v",
         "远程更新": "remote update",
         "查看远程分支": "branch -r",
         "版本": "-v",
         "克隆": "clone",
-        "配置": "config",
         "签出到": "checkout",
         "查看图形化日志" :"log --graph",
         "是否忽略": "check-ignore -v",
@@ -112,10 +110,6 @@ def git_command(command, *args):
         "还原": "revert",
         "重置": "reset",
         # 可根据需要添加更多映射
-    }
-    git_config_subcommands = {
-        "全局": "--global",
-        "系统": "--system"
     }
     if command == "帮助":
         print("使用方法:")
@@ -200,25 +194,6 @@ def git_command(command, *args):
                     result = subprocess.run('git ' + git_command + ' ' + repository, capture_output=True, text=True)
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
-            elif command == "配置":
-                if not args:
-                    print("配置命令需要指定配置选项和值。")
-                elif len(args) == 1:
-                    print("配置命令需要指定配置值。")
-                else:
-                    config_option = args[0]
-                    config_value = args[1]
-                    config_subcommand = None
-                # 检查是否存在配置范围
-                if len(args) == 3:
-                    config_subcommand = args[2]
-                    if config_subcommand not in git_config_subcommands:
-                        print("配置范围错误，可选范围为：全局、系统。")
-                        return
-                git_config_command = ['git ', git_command, config_option, config_value]
-                if config_subcommand:# 如果存在配置范围
-                    git_config_command.insert(2, git_config_subcommands[config_subcommand])
-                result = subprocess.run(git_config_command, capture_output=True, text=True)
             elif command == "是否忽略":
                 if not args:
                     file = input("请输入需要检查的文件/文件夹：")
@@ -274,17 +249,14 @@ def git_command(command, *args):
                     print("多余的参数")
                     return
                 elif len(args) == 2:
-                    if args[1] == "+取消暂存区":# 默认
+                    if args[1] == "+保留更改":# 默认
                         git_command = "reset --mixed"
-                    elif args[1] == "+保持不变":
-                        git_command = "reset --soft"
                     elif args[1] == "+删除更改":
                         git_command = "reset --hard"
                     else:
                         print("无效的附加参数")
                         return
-                else:
-                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
+                result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             else:
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 

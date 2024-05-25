@@ -33,10 +33,10 @@ C:\Users\user_name>python --version
 Python 3.12.0
 ```
 
-运行以下命令以安装更新所需库`requests`:  
+运行以下命令以安装所需库:  
 
 ```bash
-pip install requests
+pip install -r requirements.txt
 ```
 
 如果无法运行命令，请参考芙芙工具箱文档中的[[Q：我该如何添加Python到系统PATH环境变量]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A/%E4%B8%BB%E7%A8%8B%E5%BA%8F/#add-python-to-path)  
@@ -132,7 +132,6 @@ notepad $PROFILE
 | 查看远程分支 | branch -r           | 查看远程仓库的分支列表             |
 | 版本         | -v                  | 显示中文Git版本和Git版本           |
 | 克隆         | clone               | 克隆远程仓库到本地                 |
-| 配置         | config              | 配置 Git 的命令行工具              |
 | 查看图形化日志 | log --graph        | 查看图形化的提交日志                |
 | 是否忽略      | check-ignore -v    | 检查文件/文件夹是否被`.gitignore`忽略 |
 | 初始化        | init               | 初始化一个新的 Git 仓库             |
@@ -141,10 +140,9 @@ notepad $PROFILE
 | 更名分支      | branch -m          | 修改本地仓库分支名                  |
 | 更新          | /                  | 更新 中文Git                       |
 | 还原          | revert             | 新建一个提交来撤销指定提交所做的更改 |
-| 重置 (+取消暂存区/+保持不变/+删除更改) | reset | 移动 HEAD 指针以及修改暂存区和工作目录中的文件状态 |
+| 重置 (+保留更改(默认)/+删除更改) | reset (--mixed/--hard) | 移动 HEAD 指针以及修改暂存区和工作目录中的文件状态 |
 
 > [!NOTE]
-> 对于`配置`命令，请将配置范围放在第三个参数  
 > 对于`提交`命令，如果提交信息带空格请用`"`将提交信息括起来  
 > 对于`新建分支`命令，该命令会在新建完分支后自动签出到新分支  
 > 对于`查看本地分支`命令的参数，示例`$ 中文git 查看本地分支 +最新提交 +与上游分支关系`  
