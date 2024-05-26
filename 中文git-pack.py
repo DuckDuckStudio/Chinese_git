@@ -2,10 +2,27 @@ import subprocess
 import requests
 import sys
 import os
+from colorama import init, Fore
+
+init(autoreset=True)  # 初始化 Colorama，使颜色输出生效
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v1.9-pack'
+VERSION = 'v2.0-pack'
+
+def always_check():# 每次执行命令都要检查的
+    # ----------- 检查更新 ----------
+    current_version = VERSION.split('-')[0]
+    url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
+    try:
+        response = requests.get(url)
+        data = response.json()
+        latest_version = data['tag_name']  # 从 GitHub 获取最新版本号
+
+        if latest_version != current_version:
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.RED}{VERSION}{Fore.RESET} → {Fore.GREEN}{latest_version}{Fore.RESET}\n运行 {Fore.BLUE}中文git 更新{Fore.RESET} 命令以更新。")
+    except:
+        pass
 
 def check_for_updates():
     # 提取版本号
@@ -20,13 +37,13 @@ def check_for_updates():
         latest_version = data['tag_name']  # 从 GitHub 获取最新版本号
 
         if latest_version != current_version:
-            print("发现新版本 {} 可用！".format(latest_version))
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.GREEN}{latest_version}{Fore.RESET} 可用！")
             return latest_version
         else:
-            print("您已安装最新版本 {}。".format(current_version))
+            print(f"{Fore.GREEN}✓{Fore.RESET} 您已安装最新版本 {Fore.BLUE}{current_version}{Fore.RESET}。")
             return None
     except Exception as e:
-        print("检查更新时出错：", e)
+        print(f"{Fore.RED}✕{Fore.RESET} 检查更新时出错: {e}")
         return None
 
 def download_update_file(version):
@@ -35,6 +52,8 @@ def download_update_file(version):
 
     # 根据版本确定下载 URL
     download_url = 'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{}/Chinese_git{}'.format(version, file_extension)
+    if file_extension == '.py':# 仅供py版下载，且仅提供最新版
+        spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
 
     try:
         response = requests.get(download_url)
@@ -46,20 +65,37 @@ def download_update_file(version):
         with open(new_filename, 'wb') as f:
             f.write(response.content)
         
-        print("更新成功下载。")
+        print(f"{Fore.GREEN}✓{Fore.RESET} 更新成功下载。")
         
         return new_filename
     except Exception as e:
-        print("下载更新文件时出错：", e)
+        print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
+        choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否切换备用下载路线(是/否):").lower()
+        if choice in ['是', 'y']:
+            try:
+                response = requests.get(spare_download_url)
+                filename = response.headers['Content-Disposition'].split('=')[1]
+                
+                new_filename = '中文Git{}'.format(file_extension)
+                
+                with open(new_filename, 'wb') as f:
+                    f.write(response.content)
+                
+                print(f"{Fore.GREEN}✓{Fore.RESET} 更新成功下载。")
+                
+                return new_filename
+            except Exception as e:
+                print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
+                return None
         return None
 
 def replace_current_program(new_filename):
     try:
         # 用下载的文件替换当前程序
         os.replace(new_filename, sys.argv[0])
-        print("程序已成功更新。")
+        print(f"{Fore.GREEN}✓{Fore.RESET} 程序已成功更新。")
     except Exception as e:
-        print("替换当前程序时出错：", e)
+        print(f"{Fore.RED}✕{Fore.RESET} 替换当前程序时出错: {e}")
 
 # 自动检查更新并提示用户安装
 def auto_update():
@@ -67,13 +103,13 @@ def auto_update():
 
     if new_version:
         # 询问用户是否安装更新
-        choice = input("是否要安装此更新？ (是/否): ").lower()
-        if choice == '是':
+        choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否要安装此更新? (是/否): ").lower()
+        if choice in ['是','y']:
             new_filename = download_update_file(new_version)
             if new_filename:
                 replace_current_program(new_filename)
         else:
-            print("已跳过更新。")
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 已跳过更新。")
 
 # ---------- 版本...更新 结束 ----------
 
@@ -111,17 +147,13 @@ def git_command(command, *args):
         "重置": "reset",
         # 可根据需要添加更多映射
     }
-    git_config_subcommands = {
-        "全局": "--global",
-        "系统": "--system"
-    }
     if command == "帮助":
         print("使用方法:")
         print(full_path, " <中文指令> [参数]")
         print("即：", full_path, "<你想干什么> [具体要啥]")
         print("支持的中文指令:")
         for cmd in git_command_mapping:
-            print("-", cmd)
+            print("中文git ", cmd)
         print("详细支持命令请查看用户手册：https://github.com/DuckDuckStudio/Chinese_git/blob/main/USER_HANDBOOK.md#可用命令")
         return
 
@@ -138,7 +170,7 @@ def git_command(command, *args):
                 if args and args[0] == "所有":
                     result = subprocess.run('git ' + git_command + ' --all', capture_output=True, text=True)
                 elif not args:
-                    print("你要暂存什么你没告诉我啊")
+                    print(f"{Fore.RED}✕{Fore.RESET} 你要暂存什么你没告诉我啊")
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "切换分支" or command == "签出到":
@@ -148,7 +180,7 @@ def git_command(command, *args):
                 elif len(args) == 1:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 else:
-                    print("多余的参数")
+                    print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
             elif command == "新建分支":
                 if not args:
                     new_branch = input("请输入新分支名称: ")
@@ -156,30 +188,30 @@ def git_command(command, *args):
                 elif len(args) == 1:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 else:
-                    print("多余的参数")
+                    print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
             elif command == "删除分支":
                 if not args:
-                    print("删除分支命令需要指定要删除的分支名称。")
+                    print(f"{Fore.RED}✕{Fore.RESET} 删除分支命令需要指定要删除的分支名称")
                     return
                 elif len(args) > 2:
-                    print("多余的参数")
+                    print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
                     return
                 elif len(args) == 2:
                     if args[1] == "+确认":
                         git_command = "branch -d"
                     else:
-                        print("无效的附加参数")
+                        print(f"{Fore.RED}✕{Fore.RESET} 无效的附加参数")
                         return
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print(f"版本：{VERSION}")
-                print("安装在", full_path)
+                print(f"版本：{Fore.BLUE}{VERSION}{Fore.RESET}")
+                print(f"安装在: {Fore.BLUE}{full_path}{Fore.RESET}")
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "还原":
                 if not args:
-                    print("请输入要还原的提交（最新提交/倒数第n个提交/具体某个提交）: ")
+                    print(f"{Fore.RED}✕{Fore.RESET} 还原命令需要参数")
                 else:
                     if args[0] == "最新提交":
                         result = subprocess.run('git ' + git_command + ' HEAD', capture_output=True, text=True)
@@ -188,7 +220,7 @@ def git_command(command, *args):
                             num = int(args[0][3:])
                             result = subprocess.run(['git ', git_command, f'HEAD~{num}'], capture_output=True, text=True)
                         except ValueError:
-                            print("参数错误，请输入倒数第n个提交，n为正整数。")
+                            print(f"{Fore.RED}✕{Fore.RESET} 参数错误，请输入倒数第n个提交，n为正整数。")
                             return
                     else:
                         result = subprocess.run('git ' + git_command + ' ' + args[0], capture_output=True, text=True)
@@ -202,7 +234,7 @@ def git_command(command, *args):
                 if not args:
                     file = input("请输入需要检查的文件/文件夹：")
                     if not file:
-                        print("文件/文件夹名不能为空")
+                        print(f"{Fore.RED}✕{Fore.RESET} 文件/文件夹名不能为空")
                         return
                     result = subprocess.run('git ' + git_command + ' ' + file, capture_output=True, text=True)
                     print (result)
@@ -210,14 +242,14 @@ def git_command(command, *args):
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "查看本地分支":
                 if len(args) > 2:
-                    print("多余的参数")
+                    print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
                     return
                 elif args[0] == "+最后提交":
                     git_command = "branch -v"
                 elif (args[0] == "+最后提交" and args[1] == "+与上游分支关系") or (args[0] == "+与上游分支关系" and args[1] == "+最后提交"):
                     git_command = "branch -vv"
                 else:
-                    print("无效的参数")
+                    print(f"{Fore.RED}✕{Fore.RESET} 无效的参数")
                     return
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "合并":
@@ -231,26 +263,26 @@ def git_command(command, *args):
                     old_branch = input("请输入旧分支名:")
                     new_branch = input("请输入新分支名:")
                     if old_branch == new_branch:
-                        print("新旧分支名称相同")
+                        print(f"{Fore.RED}✕{Fore.RESET} 新旧分支名称相同")
                         return
                     result = subprocess.run('git ' + git_command + ' ' + old_branch + ' ' + new_branch, capture_output=True, text=True)
                 if args < 2:
-                    print("缺少参数")
+                    print(f"{Fore.RED}✕{Fore.RESET} 缺少参数")
                     return
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "更新":
                 print("中文Git by 鸭鸭「カモ」")
-                print(f"当前版本：{VERSION}")
+                print(f"当前版本：{Fore.BLUE}{VERSION}{Fore.RESET}")
                 print("正在检查更新...")
                 auto_update()
                 return
             elif command == "重置":
                 if not args:
-                    print("重置指令需要具体的参数。")
+                    print(f"{Fore.RED}✕{Fore.RESET} 重置指令需要具体的参数。")
                     return
                 elif len(args) > 2:
-                    print("多余的参数")
+                    print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
                     return
                 elif len(args) == 2:
                     if args[1] == "+保留更改":# 默认
@@ -258,20 +290,24 @@ def git_command(command, *args):
                     elif args[1] == "+删除更改":
                         git_command = "reset --hard"
                     else:
-                        print("无效的附加参数")
+                        print(f"{Fore.RED}✕{Fore.RESET} 无效的附加参数")
                         return
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             else:
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
-                
+
             if result.returncode == 0:
                 print(result.stdout)
             else:
-                print("错误:", result.stderr)
+                print(f"{Fore.RED}✕{Fore.RESET} 错误: {result.stderr}")
+            
+            always_check()# 自动检查更新
         except Exception as e:
-            print("执行git命令时出错:", e)
+            print(f"{Fore.RED}✕{Fore.RESET} 执行git命令时出错: {e}")
+            always_check()# 自动检查更新
     else:
         print("不支持的git命令:", command)
+        always_check()# 自动检查更新
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -280,3 +316,4 @@ if __name__ == "__main__":
         print("使用方法:")
         print("python 中文git.py <中文指令> [参数]")
         print("即：python 中文git.py <你想干什么> [具体要啥]")
+        always_check()
