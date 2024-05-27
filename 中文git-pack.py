@@ -1,14 +1,14 @@
-import subprocess
-import requests
-import sys
 import os
+import sys
+import requests
+import subprocess
 from colorama import init, Fore
 
 init(autoreset=True)  # 初始化 Colorama，使颜色输出生效
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.0-pack'
+VERSION = 'v2.1-pack'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -112,6 +112,73 @@ def auto_update():
             print(f"{Fore.BLUE}[!]{Fore.RESET} 已跳过更新。")
 
 # ---------- 版本...更新 结束 ----------
+# ---------- 公告获取 -----------------
+notice_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/notice/notice.txt'
+previous_notice_file = 'previous_notice.txt'# 显示过的公告
+
+def get_notice_content(url, manual=False):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            content = response.text
+            return content
+        else:
+            if manual:
+                print(f"{Fore.RED}✕{Fore.RESET} 获取最新公告失败！\n状态码: {Fore.BLUE}{response.status_code}{Fore.RESET}")
+            return None
+    except Exception as e:
+        if manual:
+            print(f"{Fore.RED}✕{Fore.RESET} 获取最新公告失败！\n错误信息: {Fore.RED}{e}{Fore.RESET}")
+        return None
+
+def save_previous_notice(content):
+    with open(previous_notice_file, 'w') as file:
+        file.write(content)
+
+def read_previous_notice():
+    try:
+        with open(previous_notice_file, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        return ""
+
+def display_notice(manual=False):
+    if manual:
+        content = get_notice_content(notice_url, True)
+    else:
+        content = get_notice_content(notice_url)
+
+    previous_notice = read_previous_notice()
+
+    if content:
+        lines = content.split('\n')
+        level_line = lines[0].strip()
+        level = int(level_line.split(':')[1])
+
+        if level == 1:
+            color = Fore.RED
+        elif level == 2:
+            color = Fore.YELLOW
+        elif level == 3:
+            color = Fore.GREEN
+        elif level == 4:
+            color = Fore.BLUE
+        else:
+            color = ''
+
+        if manual:
+            print(f"{color}[!最新公告({level}级)!]{Fore.RESET}")
+            for line in lines[1:]:
+                print(line)
+            print(f"{color}[!------------!]{Fore.RESET}")
+        else:
+            if content != previous_notice:
+                print(f"{color}[!有新公告({level}级)!]{Fore.RESET}")
+                for line in lines[1:]:
+                    print(line)
+                print(f"{color}[!------------!]{Fore.RESET}")
+                save_previous_notice(content)
+# ---------- 公告获取 结束 ------------
 
 script_path = os.path.dirname(os.path.realpath(sys.executable))
 full_path = os.path.join(script_path, "中文git.exe")
@@ -302,12 +369,15 @@ def git_command(command, *args):
                 print(f"{Fore.RED}✕{Fore.RESET} 错误: {result.stderr}")
             
             always_check()# 自动检查更新
+            display_notice() # 自动公告获取
         except Exception as e:
             print(f"{Fore.RED}✕{Fore.RESET} 执行git命令时出错: {e}")
             always_check()# 自动检查更新
+            display_notice() # 自动公告获取
     else:
         print("不支持的git命令:", command)
         always_check()# 自动检查更新
+        display_notice() # 自动公告获取
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -317,3 +387,4 @@ if __name__ == "__main__":
         print("python 中文git.py <中文指令> [参数]")
         print("即：python 中文git.py <你想干什么> [具体要啥]")
         always_check()
+        display_notice() # 自动公告获取
