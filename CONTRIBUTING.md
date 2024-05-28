@@ -81,7 +81,7 @@ pyinstaller --onefile -i ico.ico --distpath=. 中文git-pack.py
 2. Nuitka  
 打包命令为:  
 ```bash
-python311 -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git-pack.py
+python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git-pack.py
 ```
 
 ## 已知问题

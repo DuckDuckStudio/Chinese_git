@@ -4,11 +4,14 @@ import requests
 import subprocess
 from colorama import init, Fore
 
-init(autoreset=True)  # 初始化 Colorama，使颜色输出生效
+init(autoreset=True)
+os.chdir(os.path.dirname(sys.argv[0]))
+script_path = os.path.dirname(sys.argv[0])
+full_path = os.path.join(script_path, "中文git.exe")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.1-pack'
+VERSION = 'v2.2-pack'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -104,7 +107,7 @@ def auto_update():
     if new_version:
         # 询问用户是否安装更新
         choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否要安装此更新? (是/否): ").lower()
-        if choice in ['是','y']:
+        if choice in ['是','y','yes']:
             new_filename = download_update_file(new_version)
             if new_filename:
                 replace_current_program(new_filename)
@@ -179,9 +182,6 @@ def display_notice(manual=False):
                 print(f"{color}[!------------!]{Fore.RESET}")
                 save_previous_notice(content)
 # ---------- 公告获取 结束 ------------
-
-script_path = os.path.dirname(os.path.realpath(sys.executable))
-full_path = os.path.join(script_path, "中文git.exe")
 
 def git_command(command, *args):
     git_command_mapping = {

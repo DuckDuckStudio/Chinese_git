@@ -5,10 +5,13 @@ import subprocess
 from colorama import init, Fore
 
 init(autoreset=True)
+os.chdir(os.path.dirname(__file__))
+script_path = os.path.dirname(__file__)
+full_path = os.path.join(script_path, "中文git.py")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.1'
+VERSION = 'v2.2'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -71,7 +74,7 @@ def download_update_file(version):
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
         choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否切换备用下载路线(是/否):").lower()
-        if choice in ['是', 'y']:
+        if choice in ['是', 'y', 'yes']:
             try:
                 response = requests.get(spare_download_url)
                 filename = response.headers['Content-Disposition'].split('=')[1]
@@ -104,7 +107,7 @@ def auto_update():
     if new_version:
         # 询问用户是否安装更新
         choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否要安装此更新? (是/否): ").lower()
-        if choice in ['是','y']:
+        if choice in ['是','y','yes']:
             new_filename = download_update_file(new_version)
             if new_filename:
                 replace_current_program(new_filename)
@@ -179,9 +182,6 @@ def display_notice(manual=False):
                 print(f"{color}[!------------!]{Fore.RESET}")
                 save_previous_notice(content)
 # ---------- 公告获取 结束 ------------
-
-script_path = os.path.dirname(__file__)
-full_path = os.path.join(script_path, "中文git.py")
 
 def git_command(command, *args):
     git_command_mapping = {
