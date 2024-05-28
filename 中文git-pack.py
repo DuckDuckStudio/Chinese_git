@@ -198,7 +198,6 @@ def git_command(command, *args):
         "远程地址": "remote -v",
         "远程更新": "remote update",
         "查看远程分支": "branch -r",
-        "版本": "-v",
         "克隆": "clone",
         "签出到": "checkout",
         "查看图形化日志" :"log --graph",
@@ -207,8 +206,10 @@ def git_command(command, *args):
         "查看本地分支": "branch",
         "强推": "push --force",
         "更名分支": "branch -m",
-        # --- 更新 ---
+        # --- 特殊功能 ---
+        "版本": "-v",
         "更新": "update",
+        "公告": "notice",
         # --- 结束 ---
         "还原": "revert",
         "重置": "reset",
