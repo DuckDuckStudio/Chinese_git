@@ -11,7 +11,7 @@ full_path = os.path.join(script_path, "中文git.exe")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.2-pack'
+VERSION = 'v2.3-pack'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -128,10 +128,16 @@ def get_notice_content(url, manual=False):
         else:
             if manual:
                 print(f"{Fore.RED}✕{Fore.RESET} 获取最新公告失败！\n状态码: {Fore.BLUE}{response.status_code}{Fore.RESET}")
+                t = input(f"{Fore.BLUE}?{Fore.RESET} 是否读取本地最新公告({Fore.GREEN}是{Fore.RESET}/{Fore.RED}否{Fore.RESET}):").lower()
+                if t in ['是', 'y', 'yes']:
+                    display_notice('本地')
             return None
     except Exception as e:
         if manual:
             print(f"{Fore.RED}✕{Fore.RESET} 获取最新公告失败！\n错误信息: {Fore.RED}{e}{Fore.RESET}")
+            t = input(f"{Fore.BLUE}?{Fore.RESET} 是否读取本地最新公告({Fore.GREEN}是{Fore.RESET}/{Fore.RED}否{Fore.RESET}):").lower()
+            if t in ['是', 'y', 'yes']:
+                display_notice('本地')
         return None
 
 def save_previous_notice(content):
@@ -146,12 +152,18 @@ def read_previous_notice():
         return ""
 
 def display_notice(manual=False):
-    if manual:
+    if manual == True:
         content = get_notice_content(notice_url, True)
-    else:
+    elif manual == False:
         content = get_notice_content(notice_url)
 
-    previous_notice = read_previous_notice()
+    if manual == "本地":
+        content = read_previous_notice()
+        if content == "":
+            print(f"{Fore.RED}✕{Fore.RESET} 没有本地公告")
+            return
+    else:
+        previous_notice = read_previous_notice()
 
     if content:
         lines = content.split('\n')
@@ -169,8 +181,13 @@ def display_notice(manual=False):
         else:
             color = ''
 
-        if manual:
+        if manual == True:
             print(f"{color}[!最新公告({level}级)!]{Fore.RESET}")
+            for line in lines[1:]:
+                print(line)
+            print(f"{color}[!------------!]{Fore.RESET}")
+        elif manual == "本地":
+            print(f"{color}[!最新本地公告({level}级)!]{Fore.RESET}")
             for line in lines[1:]:
                 print(line)
             print(f"{color}[!------------!]{Fore.RESET}")
@@ -376,7 +393,7 @@ def git_command(command, *args):
             always_check()# 自动检查更新
             display_notice() # 自动公告获取
     else:
-        print("不支持的git命令:", command)
+        print("不支持的命令:", command)
         always_check()# 自动检查更新
         display_notice() # 自动公告获取
 
