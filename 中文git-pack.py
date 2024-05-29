@@ -362,6 +362,9 @@ def git_command(command, *args):
                 print("正在检查更新...")
                 auto_update()
                 return
+            elif command == "公告":
+                display_notice(True)
+                return
             elif command == "重置":
                 if not args:
                     print(f"{Fore.RED}✕{Fore.RESET} 重置指令需要具体的参数。")
