@@ -5,7 +5,6 @@ import subprocess
 from colorama import init, Fore
 
 init(autoreset=True)
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
 script_path = os.path.dirname(os.path.abspath(__file__))
 full_path = os.path.join(script_path, "中文git.py")
 
@@ -117,7 +116,7 @@ def auto_update():
 # ---------- 版本...更新 结束 ----------
 # ---------- 公告获取 -----------------
 notice_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/notice/notice.txt'
-previous_notice_file = 'previous_notice.txt'# 显示过的公告
+previous_notice_file = os.path.join(script_path, 'previous_notice.txt')# 显示过的公告
 
 def get_notice_content(url, manual=False):
     try:
@@ -193,7 +192,7 @@ def display_notice(manual=False):
             print(f"{color}[!------------!]{Fore.RESET}")
         else:
             if content != previous_notice:
-                print(f"{color}[!有新公告({level}级)!]{Fore.RESET}")
+                print(f"\n{color}[!有新公告({level}级)!]{Fore.RESET}")
                 for line in lines[1:]:
                     print(line)
                 print(f"{color}[!------------!]{Fore.RESET}")
