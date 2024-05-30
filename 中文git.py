@@ -10,11 +10,11 @@ full_path = os.path.join(script_path, "中文git.py")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.3'
+VERSION = 'v2.4'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
-    current_version = VERSION.split('-')[0]
+    current_version = VERSION
     url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
     try:
         response = requests.get(url)
@@ -22,7 +22,7 @@ def always_check():# 每次执行命令都要检查的
         latest_version = data['tag_name']  # 从 GitHub 获取最新版本号
 
         if latest_version != current_version:
-            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.RED}{VERSION}{Fore.RESET} → {Fore.GREEN}{latest_version}{Fore.RESET}\n运行 {Fore.BLUE}中文git 更新{Fore.RESET} 命令以更新。")
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.RED}{current_version}{Fore.RESET} → {Fore.GREEN}{latest_version}{Fore.RESET}\n运行 {Fore.BLUE}中文git 更新{Fore.RESET} 命令以更新。")
     except:
         pass
 
@@ -39,7 +39,7 @@ def check_for_updates():
         latest_version = data['tag_name']  # 从 GitHub 获取最新版本号
 
         if latest_version != current_version:
-            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.GREEN}{latest_version}{Fore.RESET} 可用！")
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.RED}{current_version}{Fore.RESET} → {Fore.GREEN}{latest_version}{Fore.RESET} 可用！")
             return latest_version
         else:
             print(f"{Fore.GREEN}✓{Fore.RESET} 您已安装最新版本 {Fore.BLUE}{current_version}{Fore.RESET}。")
@@ -50,19 +50,18 @@ def check_for_updates():
 
 def download_update_file(version):
     # 根据版本号是否包含 '-pack' 后缀来确定文件后缀名
-    file_extension = '.exe' if '-pack' in version else '.py'
+    file_extension = '.py'
 
     # 根据版本确定下载 URL
-    download_url = 'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{}/Chinese_git{}'.format(version, file_extension)
-    if file_extension == '.py':# 仅供py版下载，且仅提供最新版
-        spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
+    download_url = f'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{version}/Chinese_git.py'
+    spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
 
     try:
         response = requests.get(download_url)
         filename = response.headers['Content-Disposition'].split('=')[1]
         
         # 重命名下载的文件为"中文Git.exe" 或 "中文Git.py"
-        new_filename = '中文Git{}'.format(file_extension)
+        new_filename = '中文Git.py'
         
         with open(new_filename, 'wb') as f:
             f.write(response.content)
@@ -76,9 +75,8 @@ def download_update_file(version):
         if choice in ['是', 'y', 'yes']:
             try:
                 response = requests.get(spare_download_url)
-                filename = response.headers['Content-Disposition'].split('=')[1]
                 
-                new_filename = '中文Git{}'.format(file_extension)
+                new_filename = '中文git.py'
                 
                 with open(new_filename, 'wb') as f:
                     f.write(response.content)
@@ -229,6 +227,7 @@ def git_command(command, *args):
         # --- 结束 ---
         "还原": "revert",
         "重置": "reset",
+        "差异": "diff",
         # 可根据需要添加更多映射
     }
     if command == "帮助":

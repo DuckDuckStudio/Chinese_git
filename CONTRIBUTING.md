@@ -28,8 +28,10 @@
 * `中文git.exe`: 中文Git的主要代码文件的打包版(使用Pyinstaller打包)，包含了中文Git的核心功能。
 * `中文git.py`: 中文Git的主要代码文件，包含了中文Git的核心功能。
 * `ABOUT_TRANSLATION.md`: 项目的翻译进度展示文件
+* `Pack_Version_Update.py`: 中文Git的打包版的更新代码文件
+* `Pack_Version_Update.exe`: 中文Git的打包版的更新程序(使用Pyinstaller打包)
 * `CONTRIBUTING.md`(本文件): 开发者文档，用于开发人员了解项目的内部结构和如何贡献。
-* `ico.ico`: 中文Git 项目*临时*图标
+* `ico.ico`: 中文Git 项目图标
 * `LICENSE`: 开源许可文件(GPL 2.0)
 * `README_DEV.md`: 项目的详细用户指南，用于向看不惯`README.md`的用户介绍中文Git
 * `README.md`: 项目的直白话用户指南，用于向用户介绍中文Git。
@@ -88,10 +90,8 @@ python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico 
 
 以下是 中文Git 目前的已知问题：  
 * [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
-* 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用 Nuitka 打包
 * 在非 utf-8 编码的设备上解压版本发行版压缩包可能会出现乱码 - 可能的解决方案：使用 Bandizip 解压
 * 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
-* [打包版无法使用更新命令更新 #5](https://github.com/DuckDuckStudio/Chinese_git/issues/5)
 
 ## 关于翻译
 如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。  

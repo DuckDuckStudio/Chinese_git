@@ -164,11 +164,11 @@ cython_debug/
 .vscode/
 
 # Releases
-Chinese_git(sorce)/
-更新.md
+发行版/
 
 # copyright
 软著/
 
 # test
 previous_notice.txt
+Script/

@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import requests
 import subprocess
 from colorama import init, Fore
@@ -10,11 +11,11 @@ full_path = os.path.join(script_path, "中文git.exe")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.3-pack'
+VERSION = 'v2.4-pack'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
-    current_version = VERSION.split('-')[0]
+    current_version = VERSION.split('-')[0]# 分离-pack
     url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
     try:
         response = requests.get(url)
@@ -22,7 +23,7 @@ def always_check():# 每次执行命令都要检查的
         latest_version = data['tag_name']  # 从 GitHub 获取最新版本号
 
         if latest_version != current_version:
-            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.RED}{VERSION}{Fore.RESET} → {Fore.GREEN}{latest_version}{Fore.RESET}\n运行 {Fore.BLUE}中文git 更新{Fore.RESET} 命令以更新。")
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.RED}{current_version}{Fore.RESET} → {Fore.GREEN}{latest_version}{Fore.RESET}\n运行 {Fore.BLUE}中文git 更新{Fore.RESET} 命令以更新。")
     except:
         pass
 
@@ -39,7 +40,7 @@ def check_for_updates():
         latest_version = data['tag_name']  # 从 GitHub 获取最新版本号
 
         if latest_version != current_version:
-            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.GREEN}{latest_version}{Fore.RESET} 可用！")
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 发现新版本 {Fore.RED}{current_version}{Fore.RESET} → {Fore.GREEN}{latest_version}{Fore.RESET} 可用！")
             return latest_version
         else:
             print(f"{Fore.GREEN}✓{Fore.RESET} 您已安装最新版本 {Fore.BLUE}{current_version}{Fore.RESET}。")
@@ -47,57 +48,6 @@ def check_for_updates():
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 检查更新时出错: {e}")
         return None
-
-def download_update_file(version):
-    # 根据版本号是否包含 '-pack' 后缀来确定文件后缀名
-    file_extension = '.exe' if '-pack' in version else '.py'
-
-    # 根据版本确定下载 URL
-    download_url = 'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{}/Chinese_git{}'.format(version, file_extension)
-    if file_extension == '.py':# 仅供py版下载，且仅提供最新版
-        spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
-
-    try:
-        response = requests.get(download_url)
-        filename = response.headers['Content-Disposition'].split('=')[1]
-        
-        # 重命名下载的文件为"中文Git.exe" 或 "中文Git.py"
-        new_filename = '中文Git{}'.format(file_extension)
-        
-        with open(new_filename, 'wb') as f:
-            f.write(response.content)
-        
-        print(f"{Fore.GREEN}✓{Fore.RESET} 更新成功下载。")
-        
-        return new_filename
-    except Exception as e:
-        print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
-        choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否切换备用下载路线(是/否):").lower()
-        if choice in ['是', 'y']:
-            try:
-                response = requests.get(spare_download_url)
-                filename = response.headers['Content-Disposition'].split('=')[1]
-                
-                new_filename = '中文Git{}'.format(file_extension)
-                
-                with open(new_filename, 'wb') as f:
-                    f.write(response.content)
-                
-                print(f"{Fore.GREEN}✓{Fore.RESET} 更新成功下载。")
-                
-                return new_filename
-            except Exception as e:
-                print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
-                return None
-        return None
-
-def replace_current_program(new_filename):
-    try:
-        # 用下载的文件替换当前程序
-        os.replace(new_filename, sys.argv[0])
-        print(f"{Fore.GREEN}✓{Fore.RESET} 程序已成功更新。")
-    except Exception as e:
-        print(f"{Fore.RED}✕{Fore.RESET} 替换当前程序时出错: {e}")
 
 # 自动检查更新并提示用户安装
 def auto_update():
@@ -107,11 +57,70 @@ def auto_update():
         # 询问用户是否安装更新
         choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否要安装此更新? (是/否): ").lower()
         if choice in ['是','y','yes']:
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 正在尝试更新更新程序...")
             new_filename = download_update_file(new_version)
             if new_filename:
                 replace_current_program(new_filename)
+            for i in range(3, 0, -1):
+                t = '*' * i
+                print(f"\r{t}", end="")
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 检测到您使用的是打包版，请前往新窗口继续...")
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 正在启动更新程序...")
+            try:
+                os.system(f"start {script_path}\\中文git更新程序.exe --version {new_version}")
+                sys.exit()
+            except FileNotFoundError:
+                print(f"{Fore.RED}✕{Fore.RESET} 未找到更新程序，请前往发行版页手动下载补全！")
+            except Exception as e:
+                print(f"{Fore.RED}✕{Fore.RESET} 启动更新程序时出错: {Fore.RED}{e}{Fore.RESET}")
         else:
             print(f"{Fore.BLUE}[!]{Fore.RESET} 已跳过更新。")
+
+# ------- 更新更新程序 -------
+def download_update_file(version):
+    # 根据版本确定下载 URL
+    download_url = f'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{version}/Pack_Version_Update.exe'
+    #spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Pack_Version_Update.exe'
+
+    try:
+        response = requests.get(download_url)
+        
+        new_filename = '中文git更新程序.exe'
+        
+        with open(new_filename, 'wb') as f:
+            f.write(response.content)
+        
+        print(f"{Fore.GREEN}✓{Fore.RESET} 更新成功下载。")
+        
+        return new_filename
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
+        #choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否切换备用下载路线(是/否):").lower()
+        #if choice in ['是', 'y']:
+        #    try:
+        #        response = requests.get(spare_download_url)
+        #        filename = response.headers['Content-Disposition'].split('=')[1]
+        #        
+        #        new_filename = '中文Git.exe'
+        #        
+        #        with open(new_filename, 'wb') as f:
+        #            f.write(response.content)
+        #        
+        #        print(f"{Fore.GREEN}✓{Fore.RESET} 更新成功下载。")
+        #        
+        #        return new_filename
+        #    except Exception as e:
+        #        print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
+        #        return None
+        return None
+    
+def replace_current_program(new_filename):
+    try:
+        # 用下载的文件替换当前程序
+        os.replace(new_filename, os.path.join(os.path.dirname(sys.argv[0]), "中文git更新程序.exe"))
+        print(f"{Fore.GREEN}✓{Fore.RESET} 更新程序已成功更新。")
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 替换当前更新程序时出错: {e}")
 
 # ---------- 版本...更新 结束 ----------
 # ---------- 公告获取 -----------------
@@ -229,6 +238,7 @@ def git_command(command, *args):
         # --- 结束 ---
         "还原": "revert",
         "重置": "reset",
+        "差异": "diff",
         # 可根据需要添加更多映射
     }
     if command == "帮助":
@@ -357,7 +367,6 @@ def git_command(command, *args):
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "更新":
                 print("中文Git by 鸭鸭「カモ」")
-                print(f"当前版本：{Fore.BLUE}{VERSION}{Fore.RESET}")
                 print("正在检查更新...")
                 auto_update()
                 return

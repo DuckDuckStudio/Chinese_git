@@ -6,6 +6,10 @@
 
 这是 中文Git 的用户手册，你可以在这里找到一些关于 中文Git 的使用方法。  
 
+## 如何获取
+请前往[仓库发行版页](https://github.com/DuckDuckStudio/Chinese_git/releases/)下载最新版中文Git。  
+如果你已有中文Git，只是希望更新，请查看条目[如何更新中文Git](#如何更新)。  
+
 ## 依赖
 
 ### Git
@@ -64,31 +68,59 @@ pip install -r requirements.txt
 
 ## 如何使用
 ### 优化
-为了使 中文Git 更加易于使用，这边对使用打包后的 中文Git 的用户提出一些优化建议，以防止每次多余的击键。  
-你可以使用 PowerShell 中的配置文件来帮你执行一些操作。  
-输入以下命令打开 PowerShell 的配置文件：  
-```powershell
-notepad $PROFILE
-```
-如果文件不存在，请在`C:\Users\user_name\Documents\WindowsPowerShell\`中创建一个叫`Microsoft.PowerShell_profile.ps1`的文件，然后再试一次(文件夹也不存在的也是新建)。  
-然后在配置文件中添加以下代码:  
-```powershell
-New-Alias 中文git "中文git.exe的绝对路径"
-```
-请将代码中的`中文git.exe的绝对路径`换成你设备中的 中文Git(打包后的) 的路径。  
-路径要具体到文件名，例如`D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\中文git.exe`就是一个正确的路径。  
+每次都要输这么多的命令...烦死了。  
+我们来优化一下命令吧！  
+1. 新建一个文件夹，名称随意(这里假设叫`Chinese_git_Script`。~~很复杂也没事，反正命令用不到~~)
+2. 在文件夹中新建一个叫`中文git.ps1`的脚本，并在脚本中添加以下内容:  
+  - 对于 **py版** :  
+  ```powershell
+  param(
+      [string]$command,
+      [string[]]$inputArgs
+  )
+
+  python D:\中文Git的完整路径\中文git.py $command $inputArgs
+  ```
+  - 对于 **打包版** :  
+  ```powershell
+  param(
+      [string]$command,
+      [string[]]$inputArgs
+  )
+
+  D:\中文Git的完整路径\中文git.exe $command $inputArgs
+  ```
+  也可以对更新程序的命令进行简化，如果你有需要的话。新建一个`更新中文git.ps1`，并添加以下内容:  
+  ```powershell
+  param(
+      [string]$command,
+      [string[]]$inputArgs
+  )
+
+  D:\打包版中文Git的更新程序的完整路径\中文git更新程序.exe $command $inputArgs
+  ```
+3. 将我们前面新建好的目录添加到系统环境变量`PATH`中。  
+   类似的具体操作请参阅 [[芙芙工具箱] Q：我该如何添加python到系统PATH环境变量](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/常见问题Q&A/主程序/index.html#add-python-to-path)  
+4. 重启你的设备。
+5. 验证  
+   运行以下命令以验证配置:  
+   ```bash
+   中文git 版本
+   ```
+   你应该会看到如下输出:  
+   ```
+   中文Git by 鸭鸭「カモ」
+   版本：v2.x
+   安装在: D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\Script\中文git\中文git.py
+   git version 2.42.0.windows.1
+   
+   ```
+   *(版本不一样没关系)*  
+
 这样，你就可以不用在每次执行 中文Git 时都使用完整路径了，您只需使用以下代码即可:  
 ```powershell
 中文git 命令
 ```
-请将`命令`替换为你需要执行的 中文Git 的命令，详细可用命令请查看下方的 [可用命令](#可用命令) 条目  
-
-### 使用源码(中文git.py)的
-如果你使用 中文Git 的源码，则你必须按照以下命令格式使用 中文Git :  
-```bash
-python 中文git.py 命令
-```
-请将代码中的`中文git.py`替换成你设备中的 中文git(源码) 的路径(完整路径或相对路径均可)。  
 请将`命令`替换为你需要执行的 中文Git 的命令，详细可用命令请查看下方的 [可用命令](#可用命令) 条目  
 
 ## 可用命令
@@ -126,6 +158,7 @@ python 中文git.py 命令
 | 还原          | revert             | 新建一个提交来撤销指定提交所做的更改 |
 | 重置 (+保留更改(默认)/+删除更改) | reset (--mixed/--hard) | 移动 HEAD 指针以及修改暂存区和工作目录中的文件状态 |
 | 公告         | /                  | 显示中文Git版本的最新公告           |
+| 差异         | diff                | 显示文件间的差异                   |
 
 > [!NOTE]
 > 对于`提交`命令，如果提交信息带空格请用`"`将提交信息括起来  
@@ -136,17 +169,23 @@ python 中文git.py 命令
 ## 如何更新
 - 对于`v1.6`及以下版本:  
   把你旧的 中文Git 删掉换成新的 中文Git 就行。  
-- 对于`v1.7`及以上版本:  
+- 对于`v1.7`-`v2.3`版本:  
+  - py版  
   运行命令`中文git 更新`。  
-  *(请将`中文git`替换为`中文Git.exe`的路径或`python 中文Git.py`)*  
+  - 打包版  
+  把你旧的 中文Git 删掉换成新的 中文Git 就行。  
+- 对于`v2.4`及以上版本:  
+  运行命令`中文git 更新`。  
+
+> [!NOTE]
+> 如果你使用`v2.4`及以上版本的**打包版**中文Git，则你可以`cd`到安装目录后运行`.\Pack_Version_Update.exe --version vx.y`手动更新中文Git到指定版本，请将命令中的`vx.y`替换为你需要更新到的版本。  
 
 ## 已知问题
-以下是 中文Git 的已知问题，等待修复中...  
+
+以下是 中文Git 目前的已知问题：  
 * [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
-* 打包版在 Windows7 上可能无法运行 - 可能的解决方案：使用 Nuitka 打包
 * 在非 utf-8 编码的设备上解压版本发行版压缩包可能会出现乱码 - 可能的解决方案：使用 Bandizip 解压
 * 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
-* [打包版无法使用更新命令更新 #5](https://github.com/DuckDuckStudio/Chinese_git/issues/5)
 
 ## 关于编码
 中文Git 的所有项目文件源码以及发行版文件均使用 UTF-8 编码，如出现乱码请使用 UTF-8 编码而非简体中文系统默认的 GBK 编码。
