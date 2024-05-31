@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 import requests
 import subprocess
 from colorama import init, Fore
@@ -11,7 +10,7 @@ full_path = os.path.join(script_path, "中文git.exe")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.4-pack'
+VERSION = 'v2.5-pack'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -61,9 +60,8 @@ def auto_update():
             new_filename = download_update_file(new_version)
             if new_filename:
                 replace_current_program(new_filename)
-            for i in range(3, 0, -1):
-                t = '*' * i
-                print(f"\r{t}", end="")
+            else:
+                return
             print(f"{Fore.BLUE}[!]{Fore.RESET} 检测到您使用的是打包版，请前往新窗口继续...")
             print(f"{Fore.BLUE}[!]{Fore.RESET} 正在启动更新程序...")
             try:
@@ -243,12 +241,13 @@ def git_command(command, *args):
     }
     if command == "帮助":
         print("使用方法:")
-        print(full_path, " <中文指令> [参数]")
-        print("即：", full_path, "<你想干什么> [具体要啥]")
-        print("支持的中文指令:")
+        print("中文git <中文指令> [参数]")
+        print("即：中文git <你想干什么> [具体要啥]")
+        print("\n支持的中文指令:")
+        print("中文git", end=" ")
         for cmd in git_command_mapping:
-            print("中文git ", cmd)
-        print("详细支持命令请查看用户手册：https://github.com/DuckDuckStudio/Chinese_git/blob/main/USER_HANDBOOK.md#可用命令")
+            print(f"[{cmd}]", end=" ")
+        print("\n详细支持命令请查看用户手册：https://github.com/DuckDuckStudio/Chinese_git/blob/main/USER_HANDBOOK.md#可用命令")
         return
 
     git_command = git_command_mapping.get(command)
@@ -257,6 +256,10 @@ def git_command(command, *args):
             if command == "提交":
                 if not args:
                     commit_message = input("请输入提交信息: ")
+                    if not commit_message:
+                        # 还不输提交信息？玩我呢
+                        print(f"{Fore.RED}✕{Fore.RESET} 请提供提交信息")
+                        return
                     result = subprocess.run('git ' + git_command + ' -m "' + commit_message + '"', capture_output=True, text=True)
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
@@ -311,7 +314,11 @@ def git_command(command, *args):
                         result = subprocess.run('git ' + git_command + ' HEAD', capture_output=True, text=True)
                     elif args[0].startswith("倒数第"):
                         try:
-                            num = int(args[0][3:])
+                            if args[0].endswith('个提交'):
+                                num = args[0]
+                                num = num[3:-3]
+                            else:
+                                num = int(args[0][3:])
                             result = subprocess.run(['git ', git_command, f'HEAD~{num}'], capture_output=True, text=True)
                         except ValueError:
                             print(f"{Fore.RED}✕{Fore.RESET} 参数错误，请输入倒数第n个提交，n为正整数。")
@@ -388,7 +395,23 @@ def git_command(command, *args):
                     else:
                         print(f"{Fore.RED}✕{Fore.RESET} 无效的附加参数")
                         return
-                result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
+                    
+                if args[0] in ["最新提交", "HEAD"]:
+                    print(f"{Fore.YELLOW}⚠{Fore.RESET} 虽然您这样做不会出错，但这样做有意义吗(思考)")
+                    result = subprocess.run('git ' + git_command + ' HEAD', capture_output=True, text=True)
+                elif args[0].startswith("倒数第"):
+                    try:
+                        if args[0].endswith('个提交'):
+                            num = args[0]
+                            num = num[3:-3]
+                        else:
+                            num = int(args[0][3:])
+                        result = subprocess.run(['git ', git_command, f'HEAD~{num}'], capture_output=True, text=True)
+                    except ValueError:
+                        print(f"{Fore.RED}✕{Fore.RESET} 参数错误，请输入倒数第n个提交，n为正整数。")
+                        return
+                else:
+                    result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             else:
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
 
@@ -413,7 +436,7 @@ if __name__ == "__main__":
         git_command(sys.argv[1], *sys.argv[2:])
     else:
         print("使用方法:")
-        print("python 中文git.py <中文指令> [参数]")
-        print("即：python 中文git.py <你想干什么> [具体要啥]")
+        print("中文git <中文指令> [参数]")
+        print("即：中文git <你想干什么> [具体要啥]")
         always_check()
         display_notice() # 自动公告获取

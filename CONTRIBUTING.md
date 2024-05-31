@@ -90,7 +90,6 @@ python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico 
 
 以下是 中文Git 目前的已知问题：  
 * [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
-* 在非 utf-8 编码的设备上解压版本发行版压缩包可能会出现乱码 - 可能的解决方案：使用 Bandizip 解压
 * 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
 
 ## 关于翻译
