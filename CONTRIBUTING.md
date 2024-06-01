@@ -13,6 +13,8 @@
 ├── 中文git-pack.py
 ├── 中文git.exe
 ├── 中文git.py
+├── 中文git更新程序.py
+├── 中文git更新程序.exe
 ├── ABOUT_TRANSLATION.md
 ├── CONTRIBUTING.md
 ├── ico.ico
@@ -28,8 +30,8 @@
 * `中文git.exe`: 中文Git的主要代码文件的打包版(使用Pyinstaller打包)，包含了中文Git的核心功能。
 * `中文git.py`: 中文Git的主要代码文件，包含了中文Git的核心功能。
 * `ABOUT_TRANSLATION.md`: 项目的翻译进度展示文件
-* `Pack_Version_Update.py`: 中文Git的打包版的更新代码文件
-* `Pack_Version_Update.exe`: 中文Git的打包版的更新程序(使用Pyinstaller打包)
+* `中文git更新程序.py`: 中文Git的打包版的更新代码文件
+* `中文git更新程序.exe`: 中文Git的打包版的更新程序(使用Pyinstaller打包)
 * `CONTRIBUTING.md`(本文件): 开发者文档，用于开发人员了解项目的内部结构和如何贡献。
 * `ico.ico`: 中文Git 项目图标
 * `LICENSE`: 开源许可文件(GPL 2.0)
@@ -78,7 +80,7 @@ git push
 1. pyinstaller  
 打包命令为:  
 ```bash
-pyinstaller --onefile -i ico.ico --distpath=. 中文git-pack.py
+pyinstaller --onefile -i ico.ico --distpath=. --name=中文git.exe 中文git-pack.py
 ```
 2. Nuitka  
 打包命令为:  
@@ -89,7 +91,6 @@ python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico 
 ## 已知问题
 
 以下是 中文Git 目前的已知问题：  
-* [在未暂存任何内容时提交 中文Git 会提示错误但不给出任何错误信息 Issues#3](https://github.com/DuckDuckStudio/Chinese_git/issues/3)
 * 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
 
 ## 关于翻译

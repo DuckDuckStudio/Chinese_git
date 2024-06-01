@@ -205,6 +205,31 @@ def display_notice(manual=False):
                 print(f"{color}[!------------!]{Fore.RESET}")
                 save_previous_notice(content)
 # ---------- 公告获取 结束 ------------
+# ---------- 各命令函数 ---------------
+def check_git_stash():
+    staged_changes = False
+    unstaged_changes = False
+
+    git_stash = subprocess.run(["git", "stash", "show"], capture_output=True, text=True)
+    output_lines = git_stash.stdout.split('\n')
+
+    print(output_lines)
+
+    if output_lines != ['']:
+        staged_changes = True
+
+    # --------
+
+    git_stash = subprocess.run(["git", "diff", "--name-only"], capture_output=True, text=True)
+    output_lines = git_stash.stdout.split('\n')
+
+    print(output_lines)
+
+    if output_lines != ['']:
+        unstaged_changes = True
+
+    return staged_changes, unstaged_changes
+# ------------------------------------------
 
 def git_command(command, *args):
     git_command_mapping = {
@@ -254,6 +279,23 @@ def git_command(command, *args):
     if git_command:
         try:
             if command == "提交":
+                staged, unstaged = check_git_stash()
+                print("暂存的更改:", staged)
+                print("未暂存的更改:", unstaged)
+                if staged:
+                    print(f"{Fore.BLUE}[!]{Fore.BLUE} 将提交暂存区的内容")
+                elif unstaged:
+                    print(f"{Fore.YELLOW}⚠{Fore.RESET} 没有已暂存的更改，但检测到未暂存的更改")
+                    if input(f"{Fore.BLUE}?{Fore.RESET} 是否暂存所有并提交({Fore.GREEN}是{Fore.RESET}/{Fore.RED}否{Fore.RESET}):").lower() in ['y', 'yes', '是']:
+                        subprocess.run('git ' + 'add ' + '--all')
+                        print(f"{Fore.GREEN}✓{Fore.RESET} 已暂存所有更改")
+                    else:
+                        print(f"{Fore.RED}✕{Fore.RESET} 没有已暂存的更改")
+                        return
+                else:
+                    print(f"{Fore.RED}✕{Fore.RESET} 没有更改")
+                    return
+
                 if not args:
                     commit_message = input("请输入提交信息: ")
                     if not commit_message:
