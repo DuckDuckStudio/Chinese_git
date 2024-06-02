@@ -172,3 +172,6 @@ cython_debug/
 # test
 previous_notice.txt
 Script/
+
+# winget
+psc.py

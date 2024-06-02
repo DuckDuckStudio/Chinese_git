@@ -66,7 +66,7 @@ C:\Users\user_name>git -v
 git version 2.42.0.windows.1
 ```
 如果你无法运行命令，请[下载Git](https://git-scm.com/downloads)。如果你已下载Git还无法运行命令，请添加Git到环境变量。(看我干嘛，我又没在[官方文档](https://git-scm.com/book/zh/v2)中找到如何配置，上面的 Python 怎么配置的 Git 就怎么配置)
-> [!NOTE]
+> [!IMPORTANT]
 > 此项为必须，即使你使用打包版
 
 ## 如何执行命令
