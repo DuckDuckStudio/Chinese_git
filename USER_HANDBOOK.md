@@ -83,6 +83,16 @@ pip install -r requirements.txt
   ```
   > [!WARNING]
   > 如果你创建了虚拟Python环境，请将`python`改为虚拟环境中的`python.exe`。  
+  > 示例:  
+  > ```powershell
+  > param(
+  >     [string]$command,
+  >     [string[]]$inputArgs
+  > )
+  > $venv_python = "D:\虚拟环境路径\Scripts\python.exe"
+  > $scriptPath = "D:\完整路径\中文git.py"
+  > & $venv_python $scriptPath $command $inputArgs
+  > ```
   - 对于 **打包版** :  
   ```powershell
   param(
