@@ -139,7 +139,7 @@ pip install -r requirements.txt
 以下是 中文Git 目前的可用命令，如需添加更多命令请提交 Issues 或者 PR  
 关于如何贡献，请查看[CONTRIBUTING](https://github.com/DuckDuckStudio/Chinese_git/blob/main/CONTRIBUTING.md)文件。  
 
-> [!NOTE]
+> [!TIP]
 > 这里的可用命令为仓库中最新版本的可用命令，每个Releases的可用命令请查看对应的tag的README/README_DEV/USER_HANDBOOK。  
 > 例如(v1.8的可用命令):  
 > [https://github.com/DuckDuckStudio/Chinese_git/blob/**v1.8**/USER_HANDBOOK.md#可用命令](https://github.com/DuckDuckStudio/Chinese_git/blob/v1.8/USER_HANDBOOK.md#可用命令)  
