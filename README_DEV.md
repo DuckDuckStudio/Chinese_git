@@ -97,8 +97,10 @@ path\to\中文git.exe 命令
       [string[]]$inputArgs
   )
 
-  python D:\中文Git的完整路径\中文git.py $command $inputArgs
+  python "D:\中文Git的完整路径\中文git.py" $command $inputArgs
   ```
+  > [!WARNING]
+  > 如果你创建了虚拟Python环境，请将`python`改为虚拟环境中的`python.exe`。  
   - 对于 **打包版** :  
   ```powershell
   param(
