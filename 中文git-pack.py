@@ -156,6 +156,8 @@ def read_previous_notice():
             return file.read()
     except FileNotFoundError:
         return ""
+    except Exception:
+        return "" # 以防出现像 microsoft/winget-pkgs #156224 中的错误
 
 def display_notice(manual=False):
     if manual == True:
