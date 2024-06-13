@@ -6,6 +6,9 @@
 
 项目网站：[[点我前往]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)  
 
+> [!TIP]
+> 你可以使用 _winget_ 来安装中文Git了！！！  
+
 你还在为忘记 git 的命令而发愁吗？  
 你还要每次执行 git 命令都要去搜索吗？  
 机会来了！使用中文Git，这些统统不是问题!  
@@ -24,6 +27,17 @@
 ## 如何获取
 请前往[仓库发行版页](https://github.com/DuckDuckStudio/Chinese_git/releases/)下载最新版中文Git。  
 如果你已有中文Git，只是希望更新，请查看条目[如何更新中文Git](#如何更新)。  
+
+### 使用 winget
+你也可以使用 _winget_ 来获取中文Git，请留意支持 _winget_ 获取的版本。  
+使用以下命令安装:  
+```bash
+winget install DuckStudio.ChineseGit
+```
+输出类似这样:  
+![1718315176839](https://duckduckstudio.github.io/Chinese_Git/image/README/1718315176839.png)  
+支持 _winget_ 安装的版本有:  
+- v2.5 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.5) | [PR](https://github.com/microsoft/winget-pkgs/pull/156224)
 
 ## 项目依赖
 在使用 中文Git 前，请确保你有以下依赖，否则 中文Git 将变成废物。  
@@ -52,6 +66,8 @@ pip install -r requirements.txt
 如果你无法运行指令，请参阅芙芙工具箱文档(懒得再写一个文档了)中的[[Q：我该如何添加python到系统PATH环境变量]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98Q&A/%E4%B8%BB%E7%A8%8B%E5%BA%8F/#add-python-to-path)  
 
 对于实在是不会配置(或者根本就是懒)的人，也有个备选方案，你可以前往仓库发行版下载最新版本的压缩包，里面包含打包好的 中文Git.exe 程序。但在执行命令时可能会不一样，详细请参阅下面的[如何执行命令](#如何执行命令)。  
+> [!TIP]
+> 使用 _winget_ 获取的不用配置Python。  
 
 ### Git
 请确保你的设备中已配置 Git 。  
