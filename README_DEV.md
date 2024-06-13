@@ -27,7 +27,7 @@
 winget install DuckStudio.ChineseGit
 ```
 输出类似这样:  
-![1718315176839](https://duckduckstudio.github.io/Chinese_Git/image/README/1718315176839.png)  
+![1718315176839](https://duckduckstudio.github.io/Chinese_git/image/README/1718315176839.png)  
 
 > [!TIP]
 > 使用 _winget_ 获取的不用配置Python。  

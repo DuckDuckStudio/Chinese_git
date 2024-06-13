@@ -35,7 +35,7 @@
 winget install DuckStudio.ChineseGit
 ```
 输出类似这样:  
-![1718315176839](https://duckduckstudio.github.io/Chinese_Git/image/README/1718315176839.png)  
+![1718315176839](https://duckduckstudio.github.io/Chinese_git/image/README/1718315176839.png)  
 支持 _winget_ 安装的版本有:  
 - v2.5 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.5) | [PR](https://github.com/microsoft/winget-pkgs/pull/156224)
 
