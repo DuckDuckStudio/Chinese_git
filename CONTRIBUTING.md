@@ -90,10 +90,10 @@ python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico 
 python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git更新程序.py
 ```
 
-## 已知问题
-
-以下是 中文Git 目前的已知问题：  
-* 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
+## 关于winget包请求
+如果你发现最新发行版在winget包中不可用，请向[microsoft/winget](https://github.com/microsoft/winget-pkgs)提交程序清单。  
+在提交时还请 @DuckDuckStudio / @Luna-Grace ，感谢。  
+使用`winget search DuckStudio.ChineseGit`来查找可用源。  
 
 ## 关于翻译
 如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。  
@@ -101,3 +101,8 @@ python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico 
 1. 翻译必须遵循 简体中文 的翻译，除非 简体中文 的翻译出错
 2. 翻译完成后请提交 PR
 3. 在翻译时也请同时翻译`README_DEV.md`与`USER_HANDBOOK.md`
+
+## 已知问题
+
+以下是 中文Git 目前的已知问题：  
+* 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行

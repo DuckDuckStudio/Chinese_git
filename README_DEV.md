@@ -8,6 +8,9 @@
 > 想要贡献更新这些文档以及中文Git项目？请查看[CONTRIBUTING](https://github.com/DuckDuckStudio/Chinese_git/blob/main/CONTRIBUTING.md)文件。感谢您的支持！您的支持是我们持续维护的动力！  
 > 项目遵循 GPL-2.0 许可协议。  
 
+> [!TIP]
+> 你可以使用 _winget_ 来安装中文Git了！！！  
+
 ## 项目介绍
 
 中文Git是一个简单的工具，旨在使不熟悉英文的用户更轻松地使用Git。  
@@ -16,6 +19,21 @@
 ## 如何获取
 请前往[仓库发行版页](https://github.com/DuckDuckStudio/Chinese_git/releases/)下载最新版中文Git。  
 如果你已有中文Git，只是希望更新，请查看条目[如何更新中文Git](#如何更新)。  
+
+### 使用 winget
+你也可以使用 _winget_ 来获取中文Git，请留意支持 _winget_ 获取的版本。  
+使用以下命令安装:  
+```bash
+winget install DuckStudio.ChineseGit
+```
+输出类似这样:  
+![1718315176839](https://duckduckstudio.github.io/Chinese_Git/image/README/1718315176839.png)  
+
+> [!TIP]
+> 使用 _winget_ 获取的不用配置Python。  
+
+支持 _winget_ 安装的版本有:  
+- v2.5 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.5) | [PR](https://github.com/microsoft/winget-pkgs/pull/156224)
 
 ## 项目依赖
 
