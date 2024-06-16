@@ -10,7 +10,7 @@ full_path = os.path.join(script_path, "中文git.py")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.5'
+VERSION = 'v2.6'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -233,18 +233,18 @@ def git_command(command, *args):
         "切换分支": "checkout",
         "合并": "merge",
         "暂存": "add",
-        "查看状态": "status",
-        "查看日志": "log",
+        "状态": "status",
+        "日志": "log",
         "删除分支": "branch -D",
         "远程地址": "remote -v",
         "远程更新": "remote update",
-        "查看远程分支": "branch -r",
+        "远程分支": "branch -r",
         "克隆": "clone",
         "签出到": "checkout",
-        "查看图形化日志" :"log --graph",
+        "图形化日志" :"log --graph",
         "是否忽略": "check-ignore -v",
         "初始化": "init",
-        "查看本地分支": "branch",
+        "本地分支": "branch",
         "强推": "push --force",
         "更名分支": "branch -m",
         # --- 特殊功能 ---

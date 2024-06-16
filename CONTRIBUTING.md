@@ -81,7 +81,7 @@ git push
 打包命令为:  
 ```bash
 pyinstaller --onefile -i ico.ico --distpath=. --name=中文git.exe 中文git-pack.py
-pyinstaller --onefile -i ico.ico --distpath=. --name=中文git.exe 中文git更新程序.py
+pyinstaller --onefile -i ico.ico --distpath=. --name=中文git更新程序.exe 中文git更新程序.py
 ```
 2. Nuitka  
 打包命令为:  
