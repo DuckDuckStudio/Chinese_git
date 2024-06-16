@@ -255,6 +255,7 @@ def git_command(command, *args):
         "还原": "revert",
         "重置": "reset",
         "差异": "diff",
+        "清理本地分支": "remote prune origin",
         # 可根据需要添加更多映射
     }
     if command == "帮助":
