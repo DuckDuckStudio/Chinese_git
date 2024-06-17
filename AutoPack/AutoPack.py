@@ -150,3 +150,4 @@ def main():
 # ------------
 
 main()
+input("按 Enter 键退出...")
