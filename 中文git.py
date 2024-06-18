@@ -49,16 +49,12 @@ def check_for_updates():
         return None
 
 def download_update_file(version):
-    # 根据版本号是否包含 '-pack' 后缀来确定文件后缀名
-    file_extension = '.py'
-
     # 根据版本确定下载 URL
     download_url = f'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{version}/Chinese_git.py'
     spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
 
     try:
         response = requests.get(download_url)
-        filename = response.headers['Content-Disposition'].split('=')[1]
         
         # 重命名下载的文件为"中文Git.exe" 或 "中文Git.py"
         new_filename = '中文Git.py'
