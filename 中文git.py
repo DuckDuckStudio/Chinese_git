@@ -10,7 +10,7 @@ full_path = os.path.join(script_path, "中文git.py")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.6'
+VERSION = 'v2.7'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
