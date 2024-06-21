@@ -10,7 +10,7 @@ full_path = os.path.join(script_path, "中文git.py")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.6'
+VERSION = 'v2.7'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -49,16 +49,12 @@ def check_for_updates():
         return None
 
 def download_update_file(version):
-    # 根据版本号是否包含 '-pack' 后缀来确定文件后缀名
-    file_extension = '.py'
-
     # 根据版本确定下载 URL
     download_url = f'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{version}/Chinese_git.py'
     spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
 
     try:
         response = requests.get(download_url)
-        filename = response.headers['Content-Disposition'].split('=')[1]
         
         # 重命名下载的文件为"中文Git.exe" 或 "中文Git.py"
         new_filename = '中文Git.py'
@@ -255,7 +251,7 @@ def git_command(command, *args):
         "还原": "revert",
         "重置": "reset",
         "差异": "diff",
-        "清理本地分支": "remote prune origin",
+        "清理本地引用": "remote prune origin",
         # 可根据需要添加更多映射
     }
     if command == "帮助":

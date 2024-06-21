@@ -10,7 +10,7 @@ full_path = os.path.join(script_path, "中文git.exe")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.6-pack'
+VERSION = 'v2.7-pack'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -264,7 +264,7 @@ def git_command(command, *args):
         "还原": "revert",
         "重置": "reset",
         "差异": "diff",
-        "清理本地分支": "remote prune origin",
+        "清理本地引用": "remote prune origin",
         # 可根据需要添加更多映射
     }
     if command == "帮助":
