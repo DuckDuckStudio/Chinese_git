@@ -11,11 +11,12 @@ full_path = os.path.join(script_path, "中文git.py")
 # ---------- 版本定义及更新 ----------
 # 定义版本号
 VERSION = 'v2.7'
+# GitHub releases API URL
+url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
     current_version = VERSION
-    url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
     try:
         response = requests.get(url)
         data = response.json()
@@ -29,9 +30,6 @@ def always_check():# 每次执行命令都要检查的
 def check_for_updates():
     # 提取版本号
     current_version = VERSION.split('-')[0]  # 分离可能的 '-pack' 后缀
-
-    # GitHub releases API URL
-    url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
 
     try:
         response = requests.get(url)
@@ -52,6 +50,7 @@ def download_update_file(version):
     # 根据版本确定下载 URL
     download_url = f'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{version}/Chinese_git.py'
     spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
+    spare_download_version_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/info.json'
 
     try:
         response = requests.get(download_url)
@@ -70,18 +69,29 @@ def download_update_file(version):
         choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否切换备用下载路线(是/否):").lower()
         if choice in ['是', 'y', 'yes']:
             try:
-                response = requests.get(spare_download_url)
-                
-                new_filename = '中文git.py'
-                
-                with open(new_filename, 'wb') as f:
-                    f.write(response.content)
-                
-                print(f"{Fore.GREEN}✓{Fore.RESET} 更新成功下载。")
-                
-                return new_filename
+                spare_download_version = requests.get(spare_download_version_url)
+                data = spare_download_version.json()
+                spare_download_version = data['version']# 获取备用路线的程序的版本号
             except Exception as e:
-                print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
+                print(f"{Fore.RED}✕{Fore.RESET} 获取备用路线版本信息时出错: {e}")
+                return None
+            if spare_download_version == version:
+                try:
+                    response = requests.get(spare_download_url)
+                    
+                    new_filename = '中文git.py'
+                    
+                    with open(new_filename, 'wb') as f:
+                        f.write(response.content)
+                    
+                    print(f"{Fore.GREEN}✓{Fore.RESET} 更新成功下载。")
+                    
+                    return new_filename
+                except Exception as e:
+                    print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
+                    return None
+            else:
+                print(f"{Fore.RED}✕{Fore.RESET} 备用路线{Fore.YELLOW}版本不一致{Fore.RESET}\n备用路线版本为{Fore.BLUE}{spare_download_version}{Fore.RESET}，而GitHub Releases上的最新版为{Fore.BLUE}{version}{Fore.BLUE}\n{Fore.YELLOW}如果你遇到了这个错误，请前往GitHub提交Issue，感谢！{Fore.RESET}")
                 return None
         return None
 
