@@ -66,7 +66,7 @@ def download_update_file(version):
         return new_filename
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
-        choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否切换备用下载路线(是/否):").lower()
+        choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否切换备用下载路线(是/否): ").lower()
         if choice in ['是', 'y', 'yes']:
             try:
                 spare_download_version = requests.get(spare_download_version_url)
