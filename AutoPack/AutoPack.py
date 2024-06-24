@@ -1,4 +1,3 @@
-# 中文Git发行版自动打包程序
 import os
 import sys
 import py7zr
@@ -7,6 +6,7 @@ import shutil
 import requests
 import subprocess
 from colorama import init, Fore
+# 中文Git发行版自动打包程序
 
 # --- init ---
 init(autoreset=True)# 颜色显示
