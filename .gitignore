@@ -165,6 +165,7 @@ cython_debug/
 
 # Releases
 发行版/
+AutoPack/Releases/
 
 # copyright
 软著/
