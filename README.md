@@ -40,6 +40,7 @@ winget install DuckStudio.ChineseGit
 支持 _winget_ 安装的版本有:  
 - v2.5 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.5) | [PR](https://github.com/microsoft/winget-pkgs/pull/156224)
 - v2.6 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.6) | [PR](https://github.com/microsoft/winget-pkgs/pull/158058)
+- v2.7 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.7) | [PR](https://github.com/microsoft/winget-pkgs/pull/160675)
 
 ## 项目依赖
 在使用 中文Git 前，请确保你有以下依赖，否则 中文Git 将变成废物。  
