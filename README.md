@@ -37,10 +37,8 @@ winget install DuckStudio.ChineseGit
 输出类似这样:  
 ![1718315176839](https://duckduckstudio.github.io/Chinese_git/image/README/1718315176839.png)  
 
-支持 _winget_ 安装的版本有:  
-- v2.5 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.5) | [PR](https://github.com/microsoft/winget-pkgs/pull/156224)
-- v2.6 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.6) | [PR](https://github.com/microsoft/winget-pkgs/pull/158058)
-- v2.7 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.7) | [PR](https://github.com/microsoft/winget-pkgs/pull/160675)
+> [!TIP]
+> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.7$  
 
 ## 项目依赖
 在使用 中文Git 前，请确保你有以下依赖，否则 中文Git 将变成废物。  
