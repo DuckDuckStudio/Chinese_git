@@ -28,6 +28,7 @@ winget install DuckStudio.ChineseGit
 支持 _winget_ 安装的版本有:  
 - v2.5 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.5) | [PR](https://github.com/microsoft/winget-pkgs/pull/156224)
 - v2.6 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.6) | [PR](https://github.com/microsoft/winget-pkgs/pull/158058)
+- v2.7 - [Releases](https://github.com/DuckDuckStudio/Chinese_git/releases/tag/v2.7) | [PR](https://github.com/microsoft/winget-pkgs/pull/160675)
 
 ## 依赖
 
