@@ -1,0 +1,13 @@
+{
+    "application": {
+        "notice": {
+            "time": "",
+            "leve": "",
+            "content": ""
+        },
+        "run": {
+            "auto_update": "True",
+            "auto_get_notice": "True"
+        }
+    }
+}

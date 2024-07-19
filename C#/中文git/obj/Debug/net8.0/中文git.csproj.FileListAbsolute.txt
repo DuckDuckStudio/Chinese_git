@@ -1,0 +1,15 @@
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\bin\Debug\net8.0\中文git.exe
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\bin\Debug\net8.0\中文git.deps.json
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\bin\Debug\net8.0\中文git.runtimeconfig.json
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\bin\Debug\net8.0\中文git.dll
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\bin\Debug\net8.0\中文git.pdb
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\中文git.GeneratedMSBuildEditorConfig.editorconfig
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\中文git.AssemblyInfoInputs.cache
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\中文git.AssemblyInfo.cs
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\中文git.csproj.CoreCompileInputs.cache
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\中文git.sourcelink.json
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\中文git.dll
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\refint\中文git.dll
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\中文git.pdb
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\中文git.genruntimeconfig.cache
+D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\C#\中文git\obj\Debug\net8.0\ref\中文git.dll
