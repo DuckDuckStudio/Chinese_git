@@ -1,0 +1,13 @@
+{
+    "application": {
+        "notice": {
+            "time": "",
+            "leve": "",
+            "content": ""
+        },
+        "run": {
+            "auto_check_update": "True",
+            "auto_get_notice": "Ture"
+        }
+    }
+}
