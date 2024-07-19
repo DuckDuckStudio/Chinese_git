@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import requests
 import subprocess
 from colorama import init, Fore
@@ -10,7 +11,15 @@ full_path = os.path.join(script_path, "中文git.exe")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.7-pack'
+VERSION = 'v2.8-pack'
+
+# --- 读取配置文件 ---
+config_file = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "config.json")
+with open(config_file, 'r') as file:
+    config_data = json.load(file)
+auto_check_update = config_data['application']['run']['auto_check_update']
+auto_get_notice = config_data['application']['run']['auto_get_notice']
+# -------------------
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -465,16 +474,22 @@ def git_command(command, *args):
             else:
                 print(f"{Fore.RED}✕{Fore.RESET} 错误: {result.stderr}")
             
-            always_check()# 自动检查更新
-            display_notice() # 自动公告获取
+            if auto_check_update == "True":
+                always_check()# 自动检查更新
+            if auto_get_notice == "True":
+                display_notice() # 自动公告获取
         except Exception as e:
             print(f"{Fore.RED}✕{Fore.RESET} 执行git命令时出错: {e}")
-            always_check()# 自动检查更新
-            display_notice() # 自动公告获取
+            if auto_check_update == "True":
+                always_check()# 自动检查更新
+            if auto_get_notice == "True":
+                display_notice() # 自动公告获取
     else:
         print("不支持的命令:", command)
-        always_check()# 自动检查更新
-        display_notice() # 自动公告获取
+        if auto_check_update == "True":
+            always_check()# 自动检查更新
+        if auto_get_notice == "True":
+            display_notice() # 自动公告获取
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -483,5 +498,7 @@ if __name__ == "__main__":
         print("使用方法:")
         print("中文git <中文指令> [参数]")
         print("即：中文git <你想干什么> [具体要啥]")
-        always_check()
-        display_notice() # 自动公告获取
+        if auto_check_update == "True":
+            always_check()# 自动检查更新
+        if auto_get_notice == "True":
+            display_notice() # 自动公告获取
