@@ -1,15 +1,16 @@
 [Setup]
 AppName=中文Git
-AppVersion=v2.7
-VersionInfoVersion=2.7
+#define cngitversion "程序版本"
+AppVersion=v{#cngitversion}
+VersionInfoVersion={#cngitversion}
 AppPublisher=DuckStudio
 VersionInfoCopyright=Copyright (c) 鸭鸭「カモ」
 AppPublisherURL=https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/
 DefaultDirName={autopf}\Chinese_git
 DefaultGroupName=中文Git
 UninstallDisplayIcon={app}\中文git.exe
-OutputDir=D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\AutoPack\Releases\v2.7
-OutputBaseFilename=Chinese_git_Setup_v2.7
+OutputDir=D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\AutoPack\Releases\v{#cngitversion}
+OutputBaseFilename=Chinese_git_Setup_v{#cngitversion}
 SetupIconFile=D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\ico.ico
 LicenseFile=D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\发行版\LICENSE
 Compression=lzma2
@@ -21,7 +22,7 @@ Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.i
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 
 [Files]
-Source: "D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\AutoPack\Releases\v2.7\Chinese_git\*"; DestDir: "{app}"
+Source: "D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\AutoPack\Releases\v{#cngitversion}\Chinese_git\*"; DestDir: "{app}"
 
 [Icons]
 Name: "{group}\中文Git"; Filename: "{app}\中文git.exe"
