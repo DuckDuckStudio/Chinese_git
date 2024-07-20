@@ -4,9 +4,6 @@
 
 项目网站：[[点我前往]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)  
 
-> [!TIP]
-> 你可以使用 _winget_ 来安装中文Git了！！！  
-
 这是 中文Git 的用户手册，你可以在这里找到一些关于 中文Git 的使用方法。  
 
 ## 如何获取
@@ -26,7 +23,7 @@ winget install DuckStudio.ChineseGit
 > 使用 _winget_ 获取的不用配置Python。  
 
 > [!TIP]
-> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.7$  
+> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.8(Pre-release)$  
 
 ## 依赖
 
