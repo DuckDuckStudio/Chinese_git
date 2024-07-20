@@ -44,6 +44,7 @@ pack_update = os.path.join(repo_dir, "中文git更新程序.exe")
 py_main = os.path.join(repo_dir, "中文git.py")
 noitce_file = os.path.join(repo_dir, "previous_notice.txt")
 license_file = os.path.join(repo_dir, "LICENSE")
+config_file = os.path.join(repo_dir, "config.json")
 # -----------------------
 
 # --- def ---
@@ -90,6 +91,9 @@ def copy_file():
         # ---
         shutil.copy(license_file, py_releases_dir)
         shutil.copy(license_file, pack_releases_dir)
+        # ---
+        shutil.copy(config_file, py_releases_dir)
+        shutil.copy(config_file, pack_releases_dir)
         # -----
         shutil.copy(pack_main, releases_dir)
         if not rename_file(os.path.basename(pack_main), "Chinese_git.exe", releases_dir):
@@ -105,6 +109,55 @@ def copy_file():
         return True
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 复制文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
+        return False
+
+def generate_iss_file():
+    # releases_version 已在前面定义
+    if releases_version.startswith('v'):
+        iss_version = releases_version[1:]
+    iss_file = '''[Setup]
+AppName=中文Git
+#define cngitversion "程序版本"
+AppVersion=v{#cngitversion}
+VersionInfoVersion={#cngitversion}
+AppPublisher=DuckStudio
+VersionInfoCopyright=Copyright (c) 鸭鸭「カモ」
+AppPublisherURL=https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/
+DefaultDirName={autopf}\\Chinese_git
+DefaultGroupName=中文Git
+UninstallDisplayIcon={app}\\中文git.exe
+OutputDir=D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\AutoPack\\Releases\\v{#cngitversion}
+OutputBaseFilename=Chinese_git_Setup_v{#cngitversion}
+SetupIconFile=D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\ico.ico
+LicenseFile=D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\发行版\\LICENSE
+Compression=lzma2
+SolidCompression=yes
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: "chinesesimplified"; MessagesFile: "compiler:Languages\\ChineseSimplified.isl"
+Name: "japanese"; MessagesFile: "compiler:Languages\\Japanese.isl"
+
+[Files]
+Source: "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\AutoPack\\Releases\\v{#cngitversion}\\Chinese_git\\*"; DestDir: "{app}"
+
+[Icons]
+Name: "{group}\\中文Git"; Filename: "{app}\\中文git.exe"
+
+[Run]
+Filename: "{sys}\\cmd.exe"; Parameters: "/C setx PATH ""{app};%PATH%"" /M"; Flags: runhidden
+
+[UninstallRun]
+Filename: "{sys}\\cmd.exe"; Parameters: "/C setx PATH ""%PATH:{app};=%"" /M"; Flags: runhidden; RunOnceId: UninstallSetPath
+    '''
+    iss_file = iss_file.replace("程序版本", iss_version)
+    try:
+        with open(os.path.join(releases_dir, "pack.iss"), 'w') as file:
+            file.write(iss_file)
+        print(f"{Fore.GREEN}✓{Fore.RESET} 已生成打包用iss文件")
+        return True
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 生成打包用iss文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
         return False
 
 def compress_folder_to_7z(source_folder, target_folder, archive_name):
@@ -146,7 +199,8 @@ def main():
     if clone():
         if get_noitce():
             if copy_file():
-                compress_releases()
+                if generate_iss_file():
+                    compress_releases()
 # ------------
 
 main()
