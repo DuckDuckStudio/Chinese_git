@@ -11,14 +11,47 @@ full_path = os.path.join(script_path, "中文git.exe")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.8-pack'
+VERSION = 'v2.9-pack'
 
 # --- 读取配置文件 ---
 config_file = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "config.json")
-with open(config_file, 'r') as file:
-    config_data = json.load(file)
-auto_check_update = config_data['application']['run']['auto_check_update']
-auto_get_notice = config_data['application']['run']['auto_get_notice']
+if os.path.exists(config_file):
+    # ---- 临时应对 #22 的方案 ----
+    with open(config_file, 'r') as file:
+        config_data = json.load(file)
+    auto_check_update = config_data['application']['run']['auto_check_update']
+    auto_get_notice = config_data['application']['run']['auto_get_notice']
+else:
+    # 没有配置文件就默认都要
+    auto_check_update = True
+    auto_get_notice = True
+    print(f"{Fore.YELLOW}⚠{Fore.RESET} 您的中文Git的安装目录下似乎{Fore.YELLOW}缺少配置文件{Fore.RESET}，程序将尝试自动生成默认配置文件！")
+    try:
+        # 生成一个默认配置文件
+        data = {# 这是默认的配置文件json数据 v2.8-2.9
+            "application": {
+                "notice": {
+                    "time": "",
+                    "level": "",
+                    "content": ""
+                },
+                "run": {
+                    "auto_check_update": "True",
+                    "auto_get_notice": "True"
+                }
+            }
+        }
+
+        # 将数据结构转换为 JSON 格式的字符串
+        json_str = json.dumps(data, indent=4)  # indent 参数用于设置缩进(4空)
+
+        # 将 JSON 字符串写入文件
+        with open(config_file, 'w') as f:
+            f.write(json_str)
+        print(f"{Fore.GREEN}✓{Fore.RESET} 默认配置文件生成成功")
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 默认配置文件生成失败！请{Fore.YELLOW}手动添加{Fore.RESET}配置文件，否则将无法运行一些功能！")
+        print(f"{Fore.BLUE}[!]{Fore.RESET} 如果你觉得这不应该可以提交Issue")
 # -------------------
 
 def always_check():# 每次执行命令都要检查的
