@@ -244,4 +244,4 @@ $ python 中文git.py 推送
 
 ## 已知问题
 
-请见[Issue页](https://github.com/DuckDuckStudio/Chinese_git/issues)。
+请见[Issues页](https://github.com/DuckDuckStudio/Chinese_git/issues)。
