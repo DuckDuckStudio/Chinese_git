@@ -17,7 +17,7 @@ url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
 
 # --- 读取配置文件 ---
 def fetch_json():
-    config_url = "https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/info.json"
+    config_url = "https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/files/json/config.json"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
@@ -120,10 +120,6 @@ else:
         print(f"{Fore.RED}✕{Fore.RESET} 默认配置文件生成失败！请{Fore.YELLOW}手动添加{Fore.RESET}配置文件，否则将无法运行一些功能！")
         print(f"{Fore.BLUE}[!]{Fore.RESET} 如果你觉得这不应该可以提交Issue")
 # -------------------
-
-# For test
-if update_json() == 1:
-    print(f"{Fore.YELLOW}⚠{Fore.RESET} 请手动更新配置文件并提交issue")
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------

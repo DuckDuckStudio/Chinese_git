@@ -1,4 +1,7 @@
 {
+    "information": {
+        "version": "v2.9"
+    },
     "application": {
         "notice": {
             "time": "",
@@ -9,8 +12,5 @@
             "auto_check_update": "True",
             "auto_get_notice": "True"
         }
-    },
-    "information": {
-        "version": "v2.9"
     }
 }
