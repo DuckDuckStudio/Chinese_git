@@ -14,6 +14,68 @@ full_path = os.path.join(script_path, "中文git.exe")
 VERSION = 'v2.9-pack'
 
 # --- 读取配置文件 ---
+def fetch_json():
+    config_url = "https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/files/json/config.json"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+    try:
+        response = requests.get(config_url, headers=headers)
+        if response.status_code == 200:
+            json_data = response.json()
+            print(f"{Fore.GREEN}✓{Fore.RESET} 获取最新默认配置文件成功")
+            return json_data
+        else:
+            print(f"{Fore.RED}✕{Fore.RESET} 无法获取最新默认配置文件\n{Fore.BLUE}[!]{Fore.RESET} 返回状态码: {Fore.YELLOW}{response.status_code}{Fore.RESET}")
+            return None
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 尝试获取最新默认配置文件失败，错误: {Fore.RED}{e}{Fore.RESET}")
+        return None
+    
+def merge_json(old_json, new_json):
+    # 合并两个 JSON 对象
+    updated_json = old_json.copy()
+    
+    # 处理旧 JSON 中的键
+    keys_to_remove = []
+    for key in updated_json:
+        if key not in new_json:
+            keys_to_remove.append(key)
+    
+    for key in keys_to_remove:
+        del updated_json[key]
+    
+    # 合并新 JSON 中的值
+    for key in new_json:
+        if key in updated_json and isinstance(updated_json[key], dict) and isinstance(new_json[key], dict):
+            # 如果是字典类型，递归合并
+            updated_json[key] = merge_json(updated_json[key], new_json[key])
+        else:
+            # 直接更新值
+            updated_json[key] = new_json[key]
+    
+    return updated_json
+
+def update_json():
+    new_json = fetch_json()
+    if not new_json:
+        return 1
+    try:
+        with open(config_file, 'r') as f:
+            old_json = json.load(f)
+        
+        updated_json = merge_json(old_json, new_json)
+        
+        # 将更新后的配置写入文件
+        with open(config_file, 'w') as f:
+            json.dump(updated_json, f, indent=4)
+        
+        print(f"{Fore.GREEN}✓{Fore.RESET} 默认配置文件更新成功")
+        return 0
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 更新配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
+        return 1
+
 config_file = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "config.json")
 if os.path.exists(config_file):
     # ---- 临时应对 #22 的方案 ----
@@ -28,7 +90,11 @@ else:
     print(f"{Fore.YELLOW}⚠{Fore.RESET} 您的中文Git的安装目录下似乎{Fore.YELLOW}缺少配置文件{Fore.RESET}，程序将尝试自动生成默认配置文件！")
     try:
         # 生成一个默认配置文件
-        data = {# 这是默认的配置文件json数据 v2.8-2.9
+        # 将数据结构转换为 JSON 格式的字符串
+        json_str = {
+            "information": {
+                "version": "v2.9"
+            },
             "application": {
                 "notice": {
                     "time": "",
@@ -42,8 +108,7 @@ else:
             }
         }
 
-        # 将数据结构转换为 JSON 格式的字符串
-        json_str = json.dumps(data, indent=4)  # indent 参数用于设置缩进(4空)
+        json_str = json.dumps(json_str, indent=4) # indent 参数用于设置缩进(4空)
 
         # 将 JSON 字符串写入文件
         with open(config_file, 'w') as f:
@@ -98,13 +163,17 @@ def auto_update():
         # 询问用户是否安装更新
         choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否要安装此更新? (是/否): ").lower()
         if choice in ['是','y','yes']:
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 正在更新配置文件...")
+            if update_json() == 1:
+                print(f"{Fore.YELLOW}⚠{Fore.RESET} 请手动更新配置文件并提交issue")
+                return
             print(f"{Fore.BLUE}[!]{Fore.RESET} 正在尝试更新更新程序...")
             new_filename = download_update_file(new_version)
             if new_filename:
                 replace_current_program(new_filename)
             else:
                 return
-            print(f"{Fore.BLUE}[!]{Fore.RESET} 检测到您使用的是打包版，请前往新窗口继续...")
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 由于您使用的是打包版，请前往新窗口继续...")
             print(f"{Fore.BLUE}[!]{Fore.RESET} 正在启动更新程序...")
             try:
                 os.system(f"start {script_path}\\中文git更新程序.exe --version {new_version}")
@@ -197,9 +266,9 @@ def read_previous_notice():
         with open(previous_notice_file, 'r') as file:
             return file.read()
     except FileNotFoundError:
-        return ""
+        return None
     except Exception:
-        return "" # 以防出现像 microsoft/winget-pkgs #156224 中的错误
+        return None # 以防出现像 microsoft/winget-pkgs #156224 中的错误
 
 def display_notice(manual=False):
     if manual == True:
@@ -209,7 +278,7 @@ def display_notice(manual=False):
 
     if manual == "本地":
         content = read_previous_notice()
-        if content == "":
+        if not content:
             print(f"{Fore.RED}✕{Fore.RESET} 没有本地公告")
             return
     else:
