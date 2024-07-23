@@ -78,11 +78,15 @@ def update_json():
 
 config_file = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "config.json")
 if os.path.exists(config_file):
-    # ---- 临时应对 #22 的方案 ----
-    with open(config_file, 'r') as file:
-        config_data = json.load(file)
-    auto_check_update = config_data['application']['run']['auto_check_update']
-    auto_get_notice = config_data['application']['run']['auto_get_notice']
+    try:
+        with open(config_file, 'r') as file:
+            config_data = json.load(file)
+        auto_check_update = config_data['application']['run']['auto_check_update']
+        auto_get_notice = config_data['application']['run']['auto_get_notice']
+    except Exception as e:
+        auto_check_update = True
+        auto_get_notice = True
+        print(f"{Fore.RED}✕{Fore.RESET} 读取配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}\n{Fore.BLUE}[!]{Fore.RESET} 请检查配置文件是否正确，您可以先删除配置文件然后运行任意中文git的命令来重新生成默认配置文件。")
 else:
     # 没有配置文件就默认都要
     auto_check_update = True
