@@ -1,6 +1,6 @@
 import os
 import sys
-import json
+import json # 没配置文件也可以import json
 import requests
 import subprocess
 from colorama import init, Fore
@@ -11,16 +11,118 @@ full_path = os.path.join(script_path, "中文git.py")
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.8'
+VERSION = 'v2.9'
 # GitHub releases API URL
 url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
 
 # --- 读取配置文件 ---
+def fetch_json():
+    config_url = "https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/files/json/config.json"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+    try:
+        response = requests.get(config_url, headers=headers)
+        if response.status_code == 200:
+            json_data = response.json()
+            print(f"{Fore.GREEN}✓{Fore.RESET} 获取最新默认配置文件成功")
+            return json_data
+        else:
+            print(f"{Fore.RED}✕{Fore.RESET} 无法获取最新默认配置文件\n{Fore.BLUE}[!]{Fore.RESET} 返回状态码: {Fore.YELLOW}{response.status_code}{Fore.RESET}")
+            return None
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 尝试获取最新默认配置文件失败，错误: {Fore.RED}{e}{Fore.RESET}")
+        return None
+    
+def merge_json(old_json, new_json):
+    # 合并两个 JSON 对象
+    updated_json = old_json.copy()
+    
+    # 处理旧 JSON 中的键
+    keys_to_remove = []
+    for key in updated_json:
+        if key not in new_json:
+            keys_to_remove.append(key)
+    
+    for key in keys_to_remove:
+        del updated_json[key]
+    
+    # 合并新 JSON 中的值
+    for key in new_json:
+        if key in updated_json and isinstance(updated_json[key], dict) and isinstance(new_json[key], dict):
+            # 如果是字典类型，递归合并
+            updated_json[key] = merge_json(updated_json[key], new_json[key])
+        else:
+            # 直接更新值
+            updated_json[key] = new_json[key]
+    
+    return updated_json
+
+def update_json():
+    new_json = fetch_json()
+    if not new_json:
+        return 1
+    try:
+        with open(config_file, 'r') as f:
+            old_json = json.load(f)
+        
+        updated_json = merge_json(old_json, new_json)
+        
+        # 将更新后的配置写入文件
+        with open(config_file, 'w') as f:
+            json.dump(updated_json, f, indent=4)
+        
+        print(f"{Fore.GREEN}✓{Fore.RESET} 默认配置文件更新成功")
+        return 0
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 更新配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
+        return 1
+
 config_file = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "config.json")
-with open(config_file, 'r') as file:
-    config_data = json.load(file)
-auto_check_update = config_data['application']['run']['auto_check_update']
-auto_get_notice = config_data['application']['run']['auto_get_notice']
+if os.path.exists(config_file):
+    try:
+        with open(config_file, 'r') as file:
+            config_data = json.load(file)
+        auto_check_update = config_data['application']['run']['auto_check_update']
+        auto_get_notice = config_data['application']['run']['auto_get_notice']
+    except Exception as e:
+        auto_check_update = True
+        auto_get_notice = True
+        print(f"{Fore.RED}✕{Fore.RESET} 读取配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}\n{Fore.BLUE}[!]{Fore.RESET} 请检查配置文件是否正确，您可以先删除配置文件然后运行任意中文git的命令来重新生成默认配置文件。")
+else:
+    # 没有配置文件就默认都要
+    auto_check_update = True
+    auto_get_notice = True
+    print(f"{Fore.YELLOW}⚠{Fore.RESET} 您的中文Git的安装目录下似乎{Fore.YELLOW}缺少配置文件{Fore.RESET}，程序将尝试自动生成默认配置文件！")
+    try:
+        # 生成一个默认配置文件
+        # 将数据结构转换为 JSON 格式的字符串
+        json_str = {
+            "information": {
+                "version": "v2.9"
+            },
+            "application": {
+                "notice": {
+                    "time": "",
+                    "level": "",
+                    "content": ""
+                },
+                "run": {
+                    "auto_check_update": "True",
+                    "auto_get_notice": "True"
+                }
+            }
+        }
+
+        json_str = json.dumps(json_str, indent=4) # indent 参数用于设置缩进(4空)
+
+        # 将 JSON 字符串写入文件
+        with open(config_file, 'w') as f:
+            f.write(json_str)
+        print(f"{Fore.GREEN}✓{Fore.RESET} 默认配置文件生成成功")
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 默认配置文件生成失败！请{Fore.YELLOW}手动添加{Fore.RESET}配置文件，否则将无法运行一些功能！")
+        print(f"{Fore.BLUE}[!]{Fore.RESET} 如果你觉得这不应该可以提交Issue")
 # -------------------
 
 def always_check():# 每次执行命令都要检查的
@@ -58,8 +160,8 @@ def check_for_updates():
 def download_update_file(version):
     # 根据版本确定下载 URL
     download_url = f'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{version}/Chinese_git.py'
-    spare_download_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
-    spare_download_version_url = f'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/info.json'
+    spare_download_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
+    spare_download_version_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/info.json'
 
     try:
         response = requests.get(download_url)
@@ -82,7 +184,7 @@ def download_update_file(version):
                 data = spare_download_version.json()
                 spare_download_version = data['version']# 获取备用路线的程序的版本号
             except Exception as e:
-                print(f"{Fore.RED}✕{Fore.RESET} 获取备用路线版本信息时出错: {e}")
+                print(f"{Fore.RED}✕{Fore.RESET} 获取备用路线版本信息时出错: {Fore.RED}{e}{Fore.RESET}")
                 return None
             if spare_download_version == version:
                 try:
@@ -108,6 +210,8 @@ def replace_current_program(new_filename):
     try:
         # 用下载的文件替换当前程序
         os.replace(new_filename, sys.argv[0])
+        if update_json() == 1:
+            print(f"{Fore.YELLOW}⚠{Fore.RESET} 请手动更新配置文件并提交issue")
         print(f"{Fore.GREEN}✓{Fore.RESET} 程序已成功更新。")
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 替换当前程序时出错: {e}")
