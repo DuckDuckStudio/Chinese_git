@@ -1,13 +1,16 @@
 {
+    "information": {
+        "version": "v2.9"
+    },
     "application": {
         "notice": {
             "time": "",
-            "leve": "",
+            "level": "",
             "content": ""
         },
         "run": {
             "auto_check_update": "True",
-            "auto_get_notice": "Ture"
+            "auto_get_notice": "True"
         }
     }
 }

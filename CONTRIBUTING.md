@@ -104,5 +104,4 @@ python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico 
 
 ## 已知问题
 
-以下是 中文Git 目前的已知问题：  
-* 在使用 中文Git 执行部分命令时不会有输出，但命令成功执行
+请见[Issues页](https://github.com/DuckDuckStudio/Chinese_git/issues)。
