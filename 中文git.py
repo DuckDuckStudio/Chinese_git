@@ -1,6 +1,6 @@
 import os
 import sys
-import json # 没配置文件也可以import json
+import json
 import requests
 import subprocess
 from colorama import init, Fore
@@ -8,6 +8,7 @@ from colorama import init, Fore
 init(autoreset=True)
 script_path = os.path.dirname(os.path.abspath(__file__))
 full_path = os.path.join(script_path, "中文git.py")
+exit_code = 0 # 只有不正常退出需要定义
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
@@ -17,6 +18,7 @@ url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
 
 # --- 读取配置文件 ---
 def fetch_json():
+    global exit_code
     config_url = "https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/files/json/config.json"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -29,9 +31,11 @@ def fetch_json():
             return json_data
         else:
             print(f"{Fore.RED}✕{Fore.RESET} 无法获取最新默认配置文件\n{Fore.BLUE}[!]{Fore.RESET} 返回状态码: {Fore.YELLOW}{response.status_code}{Fore.RESET}")
+            exit_code = 1
             return None
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 尝试获取最新默认配置文件失败，错误: {Fore.RED}{e}{Fore.RESET}")
+        exit_code = 1
         return None
     
 def merge_json(old_json, new_json):
@@ -59,6 +63,7 @@ def merge_json(old_json, new_json):
     return updated_json
 
 def update_json():
+    global exit_code
     new_json = fetch_json()
     if not new_json:
         return 1
@@ -76,6 +81,7 @@ def update_json():
         return 0
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 更新配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
+        exit_code = 1
         return 1
 
 config_file = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "config.json")
@@ -89,6 +95,7 @@ if os.path.exists(config_file):
         auto_check_update = True
         auto_get_notice = True
         print(f"{Fore.RED}✕{Fore.RESET} 读取配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}\n{Fore.BLUE}[!]{Fore.RESET} 请检查配置文件是否正确，您可以先删除配置文件然后运行任意中文git的命令来重新生成默认配置文件。")
+        exit_code = 1
 else:
     # 没有配置文件就默认都要
     auto_check_update = True
@@ -122,6 +129,7 @@ else:
         print(f"{Fore.GREEN}✓{Fore.RESET} 默认配置文件生成成功")
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 默认配置文件生成失败！请{Fore.YELLOW}手动添加{Fore.RESET}配置文件，否则将无法运行一些功能！")
+        exit_code = 1
         print(f"{Fore.BLUE}[!]{Fore.RESET} 如果你觉得这不应该可以提交Issue")
 # -------------------
 
@@ -139,6 +147,7 @@ def always_check():# 每次执行命令都要检查的
         pass
 
 def check_for_updates():
+    global exit_code
     # 提取版本号
     current_version = VERSION.split('-')[0]  # 分离可能的 '-pack' 后缀
 
@@ -155,9 +164,11 @@ def check_for_updates():
             return None
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 检查更新时出错: {e}")
+        exit_code = 1
         return None
 
 def download_update_file(version):
+    global exit_code
     # 根据版本确定下载 URL
     download_url = f'https://github.com/DuckDuckStudio/Chinese_git/releases/download/{version}/Chinese_git.py'
     spare_download_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/Spare-Download/Chinese_git.py'
@@ -177,6 +188,7 @@ def download_update_file(version):
         return new_filename
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
+        exit_code = 1
         choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否切换备用下载路线(是/否): ").lower()
         if choice in ['是', 'y', 'yes']:
             try:
@@ -185,6 +197,7 @@ def download_update_file(version):
                 spare_download_version = data['version']# 获取备用路线的程序的版本号
             except Exception as e:
                 print(f"{Fore.RED}✕{Fore.RESET} 获取备用路线版本信息时出错: {Fore.RED}{e}{Fore.RESET}")
+                exit_code = 1
                 return None
             if spare_download_version == version:
                 try:
@@ -200,13 +213,16 @@ def download_update_file(version):
                     return new_filename
                 except Exception as e:
                     print(f"{Fore.RED}✕{Fore.RESET} 下载更新文件时出错: {e}")
+                    exit_code = 1
                     return None
             else:
                 print(f"{Fore.RED}✕{Fore.RESET} 备用路线{Fore.YELLOW}版本不一致{Fore.RESET}\n备用路线版本为{Fore.BLUE}{spare_download_version}{Fore.RESET}，而GitHub Releases上的最新版为{Fore.BLUE}{version}{Fore.BLUE}\n{Fore.YELLOW}如果你遇到了这个错误，请前往GitHub提交Issue，感谢！{Fore.RESET}")
+                exit_code = 1
                 return None
         return None
 
 def replace_current_program(new_filename):
+    global exit_code
     try:
         # 用下载的文件替换当前程序
         os.replace(new_filename, sys.argv[0])
@@ -215,6 +231,7 @@ def replace_current_program(new_filename):
         print(f"{Fore.GREEN}✓{Fore.RESET} 程序已成功更新。")
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 替换当前程序时出错: {e}")
+        exit_code = 1
 
 # 自动检查更新并提示用户安装
 def auto_update():
@@ -236,6 +253,7 @@ notice_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_g
 previous_notice_file = os.path.join(script_path, 'previous_notice.txt')# 显示过的公告
 
 def get_notice_content(url, manual=False):
+    global exit_code
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -247,6 +265,8 @@ def get_notice_content(url, manual=False):
                 t = input(f"{Fore.BLUE}?{Fore.RESET} 是否读取本地最新公告({Fore.GREEN}是{Fore.RESET}/{Fore.RED}否{Fore.RESET}):").lower()
                 if t in ['是', 'y', 'yes']:
                     display_notice('本地')
+                else:
+                    exit_code = 1
             return None
     except Exception as e:
         if manual:
@@ -254,6 +274,8 @@ def get_notice_content(url, manual=False):
             t = input(f"{Fore.BLUE}?{Fore.RESET} 是否读取本地最新公告({Fore.GREEN}是{Fore.RESET}/{Fore.RED}否{Fore.RESET}):").lower()
             if t in ['是', 'y', 'yes']:
                 display_notice('本地')
+            else:
+                exit_code = 1
         return None
 
 def save_previous_notice(content):
@@ -270,6 +292,7 @@ def read_previous_notice():
         return "" # 以防出现像 microsoft/winget-pkgs #156224 中的错误
 
 def display_notice(manual=False):
+    global exit_code
     if manual == True:
         content = get_notice_content(notice_url, True)
     elif manual == False:
@@ -279,6 +302,7 @@ def display_notice(manual=False):
         content = read_previous_notice()
         if content == "":
             print(f"{Fore.RED}✕{Fore.RESET} 没有本地公告")
+            exit_code = 1
             return
     else:
         previous_notice = read_previous_notice()
@@ -325,8 +349,6 @@ def check_git_stash():
     git_stash = subprocess.run(["git", "stash", "show"], capture_output=True, text=True)
     output_lines = git_stash.stdout.split('\n')
 
-    print(output_lines)
-
     if output_lines != ['']:
         staged_changes = True
 
@@ -335,8 +357,6 @@ def check_git_stash():
     git_stash = subprocess.run(["git", "diff", "--name-only"], capture_output=True, text=True)
     output_lines = git_stash.stdout.split('\n')
 
-    print(output_lines)
-
     if output_lines != ['']:
         unstaged_changes = True
 
@@ -344,6 +364,7 @@ def check_git_stash():
 # ------------------------------------------
 
 def git_command(command, *args):
+    global exit_code
     git_command_mapping = {
         "拉取": "pull",
         "推送": "push",
@@ -393,8 +414,6 @@ def git_command(command, *args):
         try:
             if command == "提交":
                 staged, unstaged = check_git_stash()
-                print("暂存的更改:", staged)
-                print("未暂存的更改:", unstaged)
                 if staged:
                     print(f"{Fore.BLUE}[!]{Fore.BLUE} 将提交暂存区的内容")
                 elif unstaged:
@@ -404,17 +423,17 @@ def git_command(command, *args):
                         print(f"{Fore.GREEN}✓{Fore.RESET} 已暂存所有更改")
                     else:
                         print(f"{Fore.RED}✕{Fore.RESET} 没有已暂存的更改")
-                        return
+                        exit_code = 1
                 else:
                     print(f"{Fore.RED}✕{Fore.RESET} 没有更改")
-                    return
+                    exit_code = 1
 
                 if not args:
                     commit_message = input("请输入提交信息: ")
                     if not commit_message:
                         # 还不输提交信息？玩我呢
                         print(f"{Fore.RED}✕{Fore.RESET} 请提供提交信息")
-                        return
+                        exit_code = 1
                     result = subprocess.run('git ' + git_command + ' -m "' + commit_message + '"', capture_output=True, text=True)
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
@@ -423,6 +442,7 @@ def git_command(command, *args):
                     result = subprocess.run('git ' + git_command + ' --all', capture_output=True, text=True)
                 elif not args:
                     print(f"{Fore.RED}✕{Fore.RESET} 你要暂存什么你没告诉我啊")
+                    exit_code = 1
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "切换分支" or command == "签出到":
@@ -433,6 +453,7 @@ def git_command(command, *args):
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
                 else:
                     print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
+                    exit_code = 1
             elif command == "新建分支":
                 if not args:
                     new_branch = input("请输入新分支名称: ")
@@ -444,16 +465,16 @@ def git_command(command, *args):
             elif command == "删除分支":
                 if not args:
                     print(f"{Fore.RED}✕{Fore.RESET} 删除分支命令需要指定要删除的分支名称")
-                    return
+                    exit_code = 1
                 elif len(args) > 2:
                     print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
-                    return
+                    exit_code = 1
                 elif len(args) == 2:
                     if args[1] == "+确认":
                         git_command = "branch -d"
                     else:
                         print(f"{Fore.RED}✕{Fore.RESET} 无效的附加参数")
-                        return
+                        exit_code = 1
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "版本":
@@ -467,6 +488,7 @@ def git_command(command, *args):
             elif command == "还原":
                 if not args:
                     print(f"{Fore.RED}✕{Fore.RESET} 还原命令需要参数")
+                    exit_code = 1
                 else:
                     if args[0] == "最新提交":
                         result = subprocess.run('git ' + git_command + ' HEAD', capture_output=True, text=True)
@@ -480,7 +502,7 @@ def git_command(command, *args):
                             result = subprocess.run(['git ', git_command, f'HEAD~{num}'], capture_output=True, text=True)
                         except ValueError:
                             print(f"{Fore.RED}✕{Fore.RESET} 参数错误，请输入倒数第n个提交，n为正整数。")
-                            return
+                            exit_code = 1
                     else:
                         result = subprocess.run('git ' + git_command + ' ' + args[0], capture_output=True, text=True)
             elif command == "克隆":
@@ -494,7 +516,7 @@ def git_command(command, *args):
                     file = input("请输入需要检查的文件/文件夹：")
                     if not file:
                         print(f"{Fore.RED}✕{Fore.RESET} 文件/文件夹名不能为空")
-                        return
+                        exit_code = 1
                     result = subprocess.run('git ' + git_command + ' ' + file, capture_output=True, text=True)
                     print (result)
                 else:
@@ -502,14 +524,14 @@ def git_command(command, *args):
             elif command == "查看本地分支":
                 if len(args) > 2:
                     print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
-                    return
+                    exit_code = 1
                 elif args[0] == "+最后提交":
                     git_command = "branch -v"
                 elif (args[0] == "+最后提交" and args[1] == "+与上游分支关系") or (args[0] == "+与上游分支关系" and args[1] == "+最后提交"):
                     git_command = "branch -vv"
                 else:
                     print(f"{Fore.RED}✕{Fore.RESET} 无效的参数")
-                    return
+                    exit_code = 1
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "合并":
                 if not args:
@@ -523,11 +545,11 @@ def git_command(command, *args):
                     new_branch = input("请输入新分支名:")
                     if old_branch == new_branch:
                         print(f"{Fore.RED}✕{Fore.RESET} 新旧分支名称相同")
-                        return
+                        exit_code = 1
                     result = subprocess.run('git ' + git_command + ' ' + old_branch + ' ' + new_branch, capture_output=True, text=True)
                 if args < 2:
                     print(f"{Fore.RED}✕{Fore.RESET} 缺少参数")
-                    return
+                    exit_code = 1
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "更新":
@@ -539,10 +561,10 @@ def git_command(command, *args):
             elif command == "重置":
                 if not args:
                     print(f"{Fore.RED}✕{Fore.RESET} 重置指令需要具体的参数。")
-                    return
+                    exit_code = 1
                 elif len(args) > 2:
                     print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
-                    return
+                    exit_code = 1
                 elif len(args) == 2:
                     if args[1] == "+保留更改":# 默认
                         git_command = "reset --mixed"
@@ -550,7 +572,7 @@ def git_command(command, *args):
                         git_command = "reset --hard"
                     else:
                         print(f"{Fore.RED}✕{Fore.RESET} 无效的附加参数")
-                        return
+                        exit_code = 1
                     
                 if args[0] in ["最新提交", "HEAD"]:
                     print(f"{Fore.YELLOW}⚠{Fore.RESET} 虽然您这样做不会出错，但这样做有意义吗(思考)")
@@ -565,16 +587,17 @@ def git_command(command, *args):
                         result = subprocess.run(['git ', git_command, f'HEAD~{num}'], capture_output=True, text=True)
                     except ValueError:
                         print(f"{Fore.RED}✕{Fore.RESET} 参数错误，请输入倒数第n个提交，n为正整数。")
-                        return
+                        exit_code = 1
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             else:
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
 
-            if result.returncode == 0:
-                print(result.stdout)
-            else:
+            if result.returncode == 0 and exit_code == 0:# 习惯性用 && 了...
+                print(result)
+            elif exit_code != 1:# 已设置错误代码的都已输出错误信息
                 print(f"{Fore.RED}✕{Fore.RESET} 错误: {result.stderr}")
+                exit_code = 1
             
             if auto_check_update == "True":
                 always_check()# 自动检查更新
@@ -586,12 +609,14 @@ def git_command(command, *args):
                 always_check()# 自动检查更新
             if auto_get_notice == "True":
                 display_notice() # 自动公告获取
+            exit_code = 1
     else:
         print("不支持的命令:", command)
         if auto_check_update == "True":
             always_check()# 自动检查更新
         if auto_get_notice == "True":
             display_notice() # 自动公告获取
+            exit_code = 1
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -603,4 +628,8 @@ if __name__ == "__main__":
         if auto_check_update == "True":
             always_check()# 自动检查更新
         if auto_get_notice == "True":
-            display_notice() # 自动公告获取
+            display_notice()# 自动公告获取
+        exit_code = 1
+        
+exit_code = 1# 如果没有 __name__ == "__main__"
+sys.exit(exit_code)
