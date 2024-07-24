@@ -432,7 +432,7 @@ def git_command(command, *args):
                     print(f"{Fore.RED}✕{Fore.RESET} 没有更改")
                     exit_code = 1
 
-                if not args:
+                if not args and exit_code != 1:
                     commit_message = input("请输入提交信息: ")
                     if not commit_message:
                         # 还不输提交信息？玩我呢
