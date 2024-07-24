@@ -518,7 +518,6 @@ def git_command(command, *args):
                         print(f"{Fore.RED}✕{Fore.RESET} 文件/文件夹名不能为空")
                         exit_code = 1
                     result = subprocess.run('git ' + git_command + ' ' + file, capture_output=True, text=True)
-                    print (result)
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
             elif command == "查看本地分支":
@@ -594,7 +593,7 @@ def git_command(command, *args):
                 result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
 
             if result.returncode == 0 and exit_code == 0:# 习惯性用 && 了...
-                print(result)
+                print(result.stdout)
             elif exit_code != 1:# 已设置错误代码的都已输出错误信息
                 print(f"{Fore.RED}✕{Fore.RESET} 错误: {result.stderr}")
                 exit_code = 1
