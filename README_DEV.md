@@ -30,7 +30,7 @@ winget install DuckStudio.ChineseGit
 > 使用 _winget_ 获取的不用配置Python。  
 
 > [!TIP]
-> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.8(Pre-release)$  
+> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.9$  
 
 ## 项目依赖
 
