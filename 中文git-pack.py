@@ -369,6 +369,7 @@ def check_git_stash():
 # ------------------------------------------
 
 def git_command(command, *args):
+    global exit_code
     git_command_mapping = {
         "拉取": "pull",
         "推送": "push",
