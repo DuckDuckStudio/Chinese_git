@@ -35,7 +35,7 @@ winget install DuckStudio.ChineseGit
 ![1718315176839](https://duckduckstudio.github.io/Chinese_git/image/README/1718315176839.png)  
 
 > [!TIP]
-> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.8(Pre-release)$  
+> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.9$  
 
 ## 项目依赖
 在使用 中文Git 前，请确保你有以下依赖，否则 中文Git 将变成废物。  
