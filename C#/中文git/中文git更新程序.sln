@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "中文git", "中文git.csproj", "{9F7FAED8-EF81-4AF5-B38C-6725C11CAD37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "中文git更新程序", "中文git更新程序.csproj", "{9F7FAED8-EF81-4AF5-B38C-6725C11CAD37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
