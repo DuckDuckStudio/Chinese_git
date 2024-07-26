@@ -159,10 +159,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Visual Studio
-.vs/
-.vscode/
-
 # Releases
 发行版/
 AutoPack/Releases/
@@ -179,4 +175,33 @@ Script/
 psc.py
 
 # csharp
+# .NET Core and Visual Studio Code specific
+.vscode/
+bin/
+obj/
 
+# Rider specific
+.idea/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio 2019 directories which contain build results, logs, or module files
+.vs/
