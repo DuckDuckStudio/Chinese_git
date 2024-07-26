@@ -4,8 +4,6 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-// When return, ReadKey()
-
 class Program
 {
     static async Task Main(string[] args)
@@ -96,18 +94,13 @@ class Program
         {
             string currentPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string currentDir = Path.GetDirectoryName(currentPath);
-
-            for (int i = 0; i < 5; i++)// For TEST
-            {
-                currentDir = Directory.GetParent(currentDir).FullName;
-            }
+            // Path.GetDirectoryName() = os.path.dirname()
 
             string newFilePath = Path.Combine(currentDir, "中文git.exe");
-            
-            Console.WriteLine(newFilePath);// For TEST
-            Console.ReadKey();//For TEST
+            // Path.Combine() = os.path.join()
 
             File.Replace(newFilename, newFilePath, null);
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("✓ 程序已成功更新。");
             Console.ResetColor();
