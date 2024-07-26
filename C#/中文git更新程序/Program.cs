@@ -9,7 +9,6 @@ class Program
     static async Task Main(string[] args)
     {
         string version = ParseCommandLineArguments(args); // 解析命令行参数获取版本号
-        version = "v2.9";
         if (version == null)
         {
             Console.ForegroundColor = ConsoleColor.Red;

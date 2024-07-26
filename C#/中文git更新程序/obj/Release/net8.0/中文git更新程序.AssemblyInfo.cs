@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("中文git更新程序")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b197110d543ffc700f9254463ab674fa41dcc7c7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ee63efcc9215465dfb91c3752fe8b5c1c15b3d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("中文git更新程序")]
 [assembly: System.Reflection.AssemblyTitleAttribute("中文git更新程序")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
