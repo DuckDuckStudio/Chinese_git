@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git\\中文git更新程序.csproj": {}
+    "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git更新程序\\中文git更新程序.csproj": {}
   },
   "projects": {
-    "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git\\中文git更新程序.csproj": {
+    "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git更新程序\\中文git更新程序.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git\\中文git更新程序.csproj",
+        "projectUniqueName": "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git更新程序\\中文git更新程序.csproj",
         "projectName": "中文git更新程序",
-        "projectPath": "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git\\中文git更新程序.csproj",
+        "projectPath": "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git更新程序\\中文git更新程序.csproj",
         "packagesPath": "C:\\Users\\鸭鸭\\.nuget\\packages\\",
-        "outputPath": "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git\\obj\\",
+        "outputPath": "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git更新程序\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\鸭鸭\\AppData\\Roaming\\NuGet\\NuGet.Config",
