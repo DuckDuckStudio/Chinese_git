@@ -115,21 +115,21 @@ def generate_iss_file():
     # releases_version 已在前面定义
     if releases_version.startswith('v'):
         iss_version = releases_version[1:]
-    iss_file = '''[Setup]
+    iss_file = f'''[Setup]
 AppName=中文Git
-#define cngitversion "程序版本"
-AppVersion=v{#cngitversion}
-VersionInfoVersion={#cngitversion}
+#define cngitversion "{iss_version}"
+AppVersion=v{{#cngitversion}}
+VersionInfoVersion={{#cngitversion}}
 AppPublisher=DuckStudio
 VersionInfoCopyright=Copyright (c) 鸭鸭「カモ」
 AppPublisherURL=https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/
-DefaultDirName={autopf}\\Chinese_git
+DefaultDirName={{autopf}}\\Chinese_git
 DefaultGroupName=中文Git
-UninstallDisplayIcon={app}\\中文git.exe
-OutputDir=D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\AutoPack\\Releases\\v{#cngitversion}
-OutputBaseFilename=Chinese_git_Setup_v{#cngitversion}
-SetupIconFile=D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\ico.ico
-LicenseFile=D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\发行版\\LICENSE
+UninstallDisplayIcon={{app}}\\中文git.exe
+OutputDir={releases_dir}
+OutputBaseFilename=Chinese_git_Setup_v{{#cngitversion}}
+SetupIconFile={os.path.join(os.path.dirname(script_dir), "ico.ico")}
+LicenseFile={os.path.join(os.path.dirname(script_dir), "LICENSE")}
 Compression=lzma2
 SolidCompression=yes
 
@@ -139,18 +139,17 @@ Name: "chinesesimplified"; MessagesFile: "compiler:Languages\\ChineseSimplified.
 Name: "japanese"; MessagesFile: "compiler:Languages\\Japanese.isl"
 
 [Files]
-Source: "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\AutoPack\\Releases\\v{#cngitversion}\\Chinese_git\\*"; DestDir: "{app}"
+Source: "{pack_releases_dir}\\*"; DestDir: "{{app}}"
 
 [Icons]
-Name: "{group}\\中文Git"; Filename: "{app}\\中文git.exe"
+Name: "{{group}}\\中文Git"; Filename: "{{app}}\\中文git.exe"
 
 [Run]
-Filename: "{sys}\\cmd.exe"; Parameters: "/C setx PATH ""{app};%PATH%"" /M"; Flags: runhidden
+Filename: "{{sys}}\\cmd.exe"; Parameters: "/C setx PATH ""{{app}};%PATH%"" /M"; Flags: runhidden
 
 [UninstallRun]
-Filename: "{sys}\\cmd.exe"; Parameters: "/C setx PATH ""%PATH:{app};=%"" /M"; Flags: runhidden; RunOnceId: UninstallSetPath
+Filename: "{{sys}}\\cmd.exe"; Parameters: "/C setx PATH ""%PATH:{{app}};=%"" /M"; Flags: runhidden; RunOnceId: UninstallSetPath
     '''
-    iss_file = iss_file.replace("程序版本", iss_version)
     try:
         with open(os.path.join(releases_dir, "pack.iss"), 'w') as file:
             file.write(iss_file)

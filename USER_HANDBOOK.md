@@ -23,7 +23,7 @@ winget install DuckStudio.ChineseGit
 > 使用 _winget_ 获取的不用配置Python。  
 
 > [!TIP]
-> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.8(Pre-release)$  
+> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.9$  
 
 ## 依赖
 
@@ -207,26 +207,32 @@ pip install -r requirements.txt
 > 如果你使用`v2.4`及以上版本的**打包版**中文Git，则你可以`cd`到安装目录后运行`.\Pack_Version_Update.exe --version vx.y`手动更新中文Git到指定版本，请将命令中的`vx.y`替换为你需要更新到的版本。  
 
 ## 配置文件说明
-默认配置文件 *(v2.8)* 如下:  
+默认配置文件 *(v2.9)* 如下:  
 ```json
 {
+    "information": {
+        "version": "v2.9"
+    },
     "application": {
         "notice": {
             "time": "",
-            "leve": "",
+            "level": "",
             "content": ""
         },
         "run": {
             "auto_check_update": "True",
-            "auto_get_notice": "Ture"
+            "auto_get_notice": "True"
         }
     }
 }
 ```
+
+- `information` → 关于程序与配置文件的信息
+  - `version` → 配置文件对应的程序版本 *(暂未使用)*
 - `application` → 关于程序的设置
   - `notice` → 关于公告的信息 *(暂未使用)*
     - `time` → 最新公告的发布时间 *(暂未使用)*
-    - `leve` → 最新公告的等级 *(暂未使用)*
+    - `level` → 最新公告的等级 *(暂未使用)*
     - `content` → 最新公告的内容 *(暂未使用)*
   - `run` → 关于运行时的设置
     - `auto_check_update` → 是否在每次执行完命令后都检查更新 (默认为`True`，不为`True`时不自动检查) - 禁用该功能可大幅提升运行速度，但将失去自动更新检查功能
