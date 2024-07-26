@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "HpUB+F4/XsI=",
+  "dgSpecHash": "dA02uPBkhTA=",
   "success": true,
   "projectFilePath": "D:\\Duckhome\\projects\\MSVS\\Source\\Repos\\Chinese_git\\C#\\中文git更新程序\\中文git更新程序.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\鸭鸭\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.17763.31\\microsoft.windows.sdk.net.ref.10.0.17763.31.nupkg.sha512"
+  ],
   "logs": []
 }
