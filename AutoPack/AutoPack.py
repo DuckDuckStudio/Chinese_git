@@ -21,7 +21,7 @@ repo_dir = os.path.join(script_dir, repo)
 # -------------------
 
 # --- releases config ---
-releases_version = input("请输入Releases版本: ")
+releases_version = input("请输入Release版本: ")
 
 ## --- uniform tag ---
 if releases_version.startswith("v."):
