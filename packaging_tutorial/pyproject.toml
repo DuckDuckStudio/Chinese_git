@@ -1,6 +1,6 @@
 [project]
 name = "ChineseGit"
-version = "2.9"
+version = "2.10.1"
 authors = [
   { name="鸭鸭「カモ」", email="Yzcbs123@163.com" },
 ]
@@ -9,7 +9,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GNU General Public License v2.0",
+    "License :: OSI Approved :: GNU General Public License (GPL)",
     "Operating System :: OS Independent",
 ]
 dependencies = [
@@ -31,12 +31,12 @@ Source = "https://github.com/DuckDuckStudio/Chinese_git/"
 #packages = ["中文git"]
 
 #[project.scripts]
-# ??? -No edit
+# ???
 #"中文git" = "中文git.中:中"
 
 #[tool.setuptools.dynamic]
 # ???
-#version = {attr = "中文git.__2.9__"}
+#version = {attr = "中文git.__2.10__"}
 
 [build-system]
 # https://packaging.python.org/en/latest/tutorials/packaging-projects/#choosing-a-build-backend
