@@ -1,0 +1,44 @@
+[project]
+name = "ChineseGit"
+version = "2.9"
+authors = [
+  { name="鸭鸭「カモ」", email="Yzcbs123@163.com" },
+]
+description = "一个让你可以使用中文命令操作 Git 的简单工具，旨在使不熟悉英文的用户更轻松地使用 Git。"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v2.0",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests",
+    "colorama",
+]
+
+[project.urls]
+# 议题
+Issues = "https://github.com/DuckDuckStudio/Chinese_git/issues"
+# 项目主页
+Homepage = "https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/"
+# 源码
+Source = "https://github.com/DuckDuckStudio/Chinese_git/"
+# 修改历史
+#Changelog = "https://github.com/DuckDuckStudio/Chinese_git/commits/main/"
+
+#[tool.setuptools]
+#packages = ["中文git"]
+
+#[project.scripts]
+# ??? -No edit
+#"中文git" = "中文git.中:中"
+
+#[tool.setuptools.dynamic]
+# ???
+#version = {attr = "中文git.__2.9__"}
+
+[build-system]
+# https://packaging.python.org/en/latest/tutorials/packaging-projects/#choosing-a-build-backend
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
