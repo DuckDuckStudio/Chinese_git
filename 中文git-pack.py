@@ -539,7 +539,7 @@ def git_command(command, *args):
                     result = subprocess.run('git ' + git_command + ' ' + file, capture_output=True, text=True)
                 else:
                     result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
-            elif command == "查看本地分支":
+            elif command == "本地分支":
                 if len(args) > 2:
                     print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
                     exit_code = 1
