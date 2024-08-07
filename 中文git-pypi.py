@@ -5,16 +5,7 @@ import requests
 import subprocess
 from colorama import init, Fore
 
-init(autoreset=True)
-script_path = os.path.dirname(os.path.abspath(__file__))
-full_path = os.path.join(script_path, "中文git.py")
-exit_code = 0 # 只有不正常退出需要定义
-
-# ---------- 版本定义及更新 ----------
-# 定义版本号
-VERSION = 'v2.10'
-# GitHub releases API URL
-url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
+# ----------- 此代码为PyPi专用，非函数代码请写在main()函数中！ -----------
 
 # --- 读取配置文件 ---
 def fetch_json():
@@ -83,55 +74,6 @@ def update_json():
         print(f"{Fore.RED}✕{Fore.RESET} 更新配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
         exit_code = 1
         return 1
-
-config_file = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "config.json")
-if os.path.exists(config_file):
-    try:
-        with open(config_file, 'r') as file:
-            config_data = json.load(file)
-        auto_check_update = config_data['application']['run']['auto_check_update']
-        auto_get_notice = config_data['application']['run']['auto_get_notice']
-    except Exception as e:
-        auto_check_update = True
-        auto_get_notice = True
-        print(f"{Fore.RED}✕{Fore.RESET} 读取配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}\n{Fore.BLUE}[!]{Fore.RESET} 请检查配置文件是否正确，您可以先删除配置文件然后运行任意中文git的命令来重新生成默认配置文件。")
-        exit_code = 1
-else:
-    # 没有配置文件就默认都要
-    auto_check_update = True
-    auto_get_notice = True
-    print(f"{Fore.YELLOW}⚠{Fore.RESET} 您的中文Git的安装目录下似乎{Fore.YELLOW}缺少配置文件{Fore.RESET}，程序将尝试自动生成默认配置文件！")
-    try:
-        # 生成一个默认配置文件
-        # 将数据结构转换为 JSON 格式的字符串
-        json_str = {
-            "information": {
-                "version": "v2.10"
-            },
-            "application": {
-                "notice": {
-                    "time": "",
-                    "level": "",
-                    "content": ""
-                },
-                "run": {
-                    "auto_check_update": "True",
-                    "auto_get_notice": "True"
-                }
-            }
-        }
-
-        json_str = json.dumps(json_str, indent=4) # indent 参数用于设置缩进(4空)
-
-        # 将 JSON 字符串写入文件
-        with open(config_file, 'w') as f:
-            f.write(json_str)
-        print(f"{Fore.GREEN}✓{Fore.RESET} 默认配置文件生成成功")
-    except Exception as e:
-        print(f"{Fore.RED}✕{Fore.RESET} 默认配置文件生成失败！请{Fore.YELLOW}手动添加{Fore.RESET}配置文件，否则将无法运行一些功能！")
-        exit_code = 1
-        print(f"{Fore.BLUE}[!]{Fore.RESET} 如果你觉得这不应该可以提交Issue")
-# -------------------
 
 def always_check():# 每次执行命令都要检查的
     # ----------- 检查更新 ----------
@@ -249,8 +191,6 @@ def auto_update():
 
 # ---------- 版本...更新 结束 ----------
 # ---------- 公告获取 -----------------
-notice_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/notice/notice.txt'
-previous_notice_file = os.path.join(script_path, 'previous_notice.txt')# 显示过的公告
 
 def get_notice_content(url, manual=False):
     global exit_code
@@ -633,7 +573,71 @@ def git_command(command, *args):
             display_notice() # 自动公告获取
             exit_code = 1
 
-if __name__ == "__main__":
+def main():
+    init(autoreset=True)
+    #--- 公用变量 ---
+    global notice_url,previous_notice_file,VERSION,url,config_file,full_path,auto_get_notice,auto_check_update
+    #---------------
+    script_path = os.path.dirname(os.path.abspath(__file__))
+    full_path = os.path.join(script_path, "中文git.py")
+    exit_code = 0 # 只有不正常退出需要定义
+    notice_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/notice/notice.txt'
+    previous_notice_file = os.path.join(script_path, 'previous_notice.txt')# 显示过的公告
+
+    # ---------- 版本定义及更新 ----------
+    # 定义版本号
+    VERSION = 'v2.10'
+    # GitHub releases API URL
+    url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
+
+    config_file = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "config.json")
+    if os.path.exists(config_file):
+        try:
+            with open(config_file, 'r') as file:
+                config_data = json.load(file)
+            auto_check_update = config_data['application']['run']['auto_check_update']
+            auto_get_notice = config_data['application']['run']['auto_get_notice']
+        except Exception as e:
+            auto_check_update = True
+            auto_get_notice = True
+            print(f"{Fore.RED}✕{Fore.RESET} 读取配置文件时出错:\n{Fore.RED}{e}{Fore.RESET}\n{Fore.BLUE}[!]{Fore.RESET} 请检查配置文件是否正确，您可以先删除配置文件然后运行任意中文git的命令来重新生成默认配置文件。")
+            exit_code = 1
+    else:
+        # 没有配置文件就默认都要
+        auto_check_update = True
+        auto_get_notice = True
+        print(f"{Fore.YELLOW}⚠{Fore.RESET} 您的中文Git的安装目录下似乎{Fore.YELLOW}缺少配置文件{Fore.RESET}，程序将尝试自动生成默认配置文件！")
+        try:
+            # 生成一个默认配置文件
+            # 将数据结构转换为 JSON 格式的字符串
+            json_str = {
+                "information": {
+                    "version": "v2.10"
+                },
+                "application": {
+                    "notice": {
+                        "time": "",
+                        "level": "",
+                        "content": ""
+                    },
+                    "run": {
+                        "auto_check_update": "True",
+                        "auto_get_notice": "True"
+                    }
+                }
+            }
+
+            json_str = json.dumps(json_str, indent=4) # indent 参数用于设置缩进(4空)
+
+            # 将 JSON 字符串写入文件
+            with open(config_file, 'w') as f:
+                f.write(json_str)
+            print(f"{Fore.GREEN}✓{Fore.RESET} 默认配置文件生成成功")
+        except Exception as e:
+            print(f"{Fore.RED}✕{Fore.RESET} 默认配置文件生成失败！请{Fore.YELLOW}手动添加{Fore.RESET}配置文件，否则将无法运行一些功能！")
+            exit_code = 1
+            print(f"{Fore.BLUE}[!]{Fore.RESET} 如果你觉得这不应该可以提交Issue")
+    # -------------------
     if len(sys.argv) > 1:
         git_command(sys.argv[1], *sys.argv[2:])
     else:
@@ -645,6 +649,4 @@ if __name__ == "__main__":
         if auto_get_notice == "True":
             display_notice()# 自动公告获取
         exit_code = 1
-        
-exit_code = 1# 如果没有 __name__ == "__main__"
-sys.exit(exit_code)
+    sys.exit(exit_code)

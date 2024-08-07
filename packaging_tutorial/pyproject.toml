@@ -1,6 +1,6 @@
 [project]
 name = "ChineseGit" # 项目名称
-version = "2.10.3" # 项目版本号
+version = "2.10.10" # 项目版本号
 authors = [ # 作者信息列表
   { name="鸭鸭「カモ」", email="Yzcbs123@163.com" }, # 作者的姓名和邮箱
 ]
@@ -26,5 +26,8 @@ Source = "https://github.com/DuckDuckStudio/Chinese_git/" # 项目源代码仓�
 requires = ["setuptools>=61.0"] # 构建系统需要的 setuptools 最低版本
 build-backend = "setuptools.build_meta" # 使用 setuptools 作为构建后端
 
-[project.scripts]
-"中文git" = "中文git:main" # 注册的命令行入口，允许用户通过 "中文Git" 命令来执行程序入口中的 main 函数
+[tool.setuptools]
+packages = ["中文git"]
+
+[tool.scripts]
+"中文git" = "中文git.中文git_pypi:main"
