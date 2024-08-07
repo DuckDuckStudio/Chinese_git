@@ -1,6 +1,6 @@
 [project]
 name = "ChineseGit" # 项目名称
-version = "2.10.10" # 项目版本号
+version = "2.10.13" # 项目版本号
 authors = [ # 作者信息列表
   { name="鸭鸭「カモ」", email="Yzcbs123@163.com" }, # 作者的姓名和邮箱
 ]
