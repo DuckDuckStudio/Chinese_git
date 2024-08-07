@@ -12,7 +12,7 @@ exit_code = 0 # 只有不正常退出需要定义
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.9'
+VERSION = 'v2.10'
 # GitHub releases API URL
 url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
 
@@ -106,7 +106,7 @@ else:
         # 将数据结构转换为 JSON 格式的字符串
         json_str = {
             "information": {
-                "version": "v2.9"
+                "version": "v2.10"
             },
             "application": {
                 "notice": {
@@ -308,9 +308,24 @@ def display_notice(manual=False):
         previous_notice = read_previous_notice()
 
     if content:
-        lines = content.split('\n')
-        level_line = lines[0].strip()
-        level = int(level_line.split(':')[1])
+        try:
+            lines = content.split('\n')
+
+            # ---- 值提取 ----
+            level_line = lines[0].strip()
+            level = int(level_line.split(':')[1])
+            # -- 等级↑ 是否强制↓ --
+            force_line = lines[1].strip()
+            force = bool(force_line.split(':')[1])
+            # ----------------
+        except Exception as e:
+            if not manual:
+                return
+            else:
+                print(f"{Fore.RED}✕{Fore.RESET} 最新公告{Fore.YELLOW}不符合{Fore.RESET}规范，请联系开发者反馈！")
+                print(f"{Fore.RED}✕{Fore.RESET} 反馈时{Fore.YELLOW}请带上错误信息{Fore.RESET}:\n{Fore.RED}{e} | {Fore.CYAN}{level_line} {Fore.RED}|{Fore.CYAN} {force_line}{Fore.RESET}")
+                exit_code = 1
+                return
 
         if level == 1:
             color = Fore.RED
@@ -325,20 +340,21 @@ def display_notice(manual=False):
 
         if manual == True:
             print(f"{color}[!最新公告({level}级)!]{Fore.RESET}")
-            for line in lines[1:]:
+            for line in lines[2:]:
                 print(line)
             print(f"{color}[!------------!]{Fore.RESET}")
         elif manual == "本地":
             print(f"{color}[!最新本地公告({level}级)!]{Fore.RESET}")
-            for line in lines[1:]:
+            for line in lines[2:]:
                 print(line)
             print(f"{color}[!------------!]{Fore.RESET}")
         else:
             if content != previous_notice:
-                print(f"\n{color}[!有新公告({level}级)!]{Fore.RESET}")
-                for line in lines[1:]:
-                    print(line)
-                print(f"{color}[!------------!]{Fore.RESET}")
+                if force:
+                    print(f"\n{color}[!有新公告({level}级)!]{Fore.RESET}")
+                    for line in lines[2:]:
+                        print(line)
+                    print(f"{color}[!------------!]{Fore.RESET}")
                 save_previous_notice(content)
 # ---------- 公告获取 结束 ------------
 # ---------- 各命令函数 ---------------
@@ -388,7 +404,7 @@ def git_command(command, *args):
         "强推": "push --force",
         "更名分支": "branch -m",
         # --- 特殊功能 ---
-        "版本": "-v",
+        "版本": "--version",
         "更新": "update",
         "公告": "notice",
         # --- 结束 ---
@@ -481,7 +497,7 @@ def git_command(command, *args):
                 print("中文Git by 鸭鸭「カモ」")
                 print(f"版本：{Fore.BLUE}{VERSION}{Fore.RESET}")
                 print(f"安装在: {Fore.BLUE}{full_path}{Fore.RESET}")
-                result = subprocess.run('git ' + git_command + ' ' + ' '.join(args), capture_output=True, text=True)
+                result = subprocess.run('git ' + '--version', capture_output=True, text=True)
             elif command == "公告":
                 display_notice(True)
                 return
