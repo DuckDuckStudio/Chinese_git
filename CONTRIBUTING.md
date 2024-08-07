@@ -74,7 +74,8 @@ git push
 
 感谢您的支持和贡献！
 
-## 如何打包
+## 如何打包/编译
+### Python
 
 本项目有两种从py到exe的打包方式：  
 1. pyinstaller  
@@ -90,10 +91,16 @@ python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico 
 python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git更新程序.py
 ```
 
+### C#
+*使用Visual Studio*  
+使用Visual Studio打开`C#`文件夹下的程序文件夹中的`.sln`解决方案(例如"中文git更新程序"→`C#/中文git更新程序/中文git更新程序.sln`)  
+在上方选择`生成`→`生成解决方案`，生成完后就可以在程序文件夹中的`bin`文件夹下看到程序本体了。  
+
 ## 关于winget包请求
 如果你发现最新发行版在winget包中不可用，请向[microsoft/winget](https://github.com/microsoft/winget-pkgs)提交程序清单。  
 在提交时还请 @DuckDuckStudio / @Luna-Grace ，感谢。  
 使用`winget search DuckStudio.ChineseGit`来查找可用源。  
+你可以直接提交拉取请求，也可以创建议题让我们添加清单。  
 
 ## 关于翻译
 如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。  
