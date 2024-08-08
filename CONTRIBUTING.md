@@ -66,7 +66,7 @@ git push
 
 ## 报告问题和提出建议
 
-如果你发现了bug或者有任何改进建议，欢迎在GitHub上提交Issues。在提交Issue时，请提供清晰的描述以及复现步骤。
+如果你发现了bug或者有任何改进建议，欢迎在GitHub上提交Issues。在提交Issue时，请提供清晰的描述以及复现步骤。建议使用Issue模板提交您的问题。  
 
 ## 项目许可
 
@@ -88,6 +88,10 @@ pyinstaller --onefile -i ico.ico --distpath=. --name=中文git更新程序.exe �
 ```bash
 python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git-pack.py
 python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git更新程序.py
+```
+3. 使用AutoPack工具
+```bash
+python AutoPack\AutoPack.py
 ```
 
 ## 关于winget包请求
