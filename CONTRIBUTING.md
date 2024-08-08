@@ -89,6 +89,10 @@ pyinstaller --onefile -i ico.ico --distpath=. --name=中文git更新程序.exe �
 python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git-pack.py
 python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git更新程序.py
 ```
+3. 使用AutoPack工具
+```bash
+python AutoPack\AutoPack.py
+```
 
 ## 关于winget包请求
 如果你发现最新发行版在winget包中不可用，请向[microsoft/winget](https://github.com/microsoft/winget-pkgs)提交程序清单。  
