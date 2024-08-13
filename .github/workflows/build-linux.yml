@@ -20,18 +20,36 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pyinstaller
+          pip install -r requirements.txt
+
+      - name: Delete old files
+        run: |
+          if [ -f "中文git更新程序_linux" ]; then
+            echo "找到旧文件【中文git更新程序_linux】，正在删除..."
+            rm 中文git更新程序_linux
+          else
+            echo "未找到旧文件【中文git更新程序_linux】"
+          fi
+
+          if [ -f "中文git_linux" ]; then
+            echo "找到旧文件【中文git_linux】，正在删除..."
+            rm 中文git_linux
+          else
+            echo "未找到旧文件【中文git_linux】"
+          fi
 
       - name: Build executables
         run: |
-          pyinstaller --onefile --distpath=. --name=中文git_pack_linux 中文git-pack.py
+          pyinstaller --onefile --distpath=. --name=中文git_linux 中文git-pack.py
           pyinstaller --onefile --distpath=. --name=中文git更新程序_linux 中文git更新程序.py
 
       - name: Commit Linux executables
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add 中文git_pack_linux 中文git更新程序_linux
-          git commit -m "Add Linux build artifacts"
+          git add 中文git_linux 中文git更新程序_linux
+          git commit -m "添加 Linux 构建文件"
+          git pull
           git push
 
       - name: Upload Linux artifacts
@@ -39,5 +57,5 @@ jobs:
         with:
           name: linux-executables
           path: |
-            中文git_pack_linux
+            中文git_linux
             中文git更新程序_linux

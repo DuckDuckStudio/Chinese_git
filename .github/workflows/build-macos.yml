@@ -15,23 +15,41 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
           pip install pyinstaller
+          pip install -r requirements.txt
+
+      - name: Delete old files
+        run: |
+          if [ -f "中文git更新程序_macos" ]; then
+            echo "找到旧文件【中文git更新程序_macos】，正在删除..."
+            rm 中文git更新程序_macos
+          else
+            echo "未找到旧文件【中文git更新程序_macos】"
+          fi
+
+          if [ -f "中文git_macos" ]; then
+            echo "找到旧文件【中文git_macos】，正在删除..."
+            rm 中文git_macos
+          else
+            echo "未找到旧文件【中文git_macos】"
+          fi
 
       - name: Build executables
         run: |
-          pyinstaller --onefile --distpath=. --name=中文git_pack_macos 中文git-pack.py
+          pyinstaller --onefile --distpath=. --name=中文git_macos 中文git-pack.py
           pyinstaller --onefile --distpath=. --name=中文git更新程序_macos 中文git更新程序.py
 
       - name: Commit macOS executables
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add 中文git_pack_macos 中文git更新程序_macos
-          git commit -m "Add macOS build artifacts"
+          git add 中文git_macos 中文git更新程序_macos
+          git commit -m "添加 macOS 构建文件"
+          git pull
           git push
 
       - name: Upload macOS artifacts
@@ -39,5 +57,5 @@ jobs:
         with:
           name: macos-executables
           path: |
-            中文git_pack_macos
+            中文git_macos
             中文git更新程序_macos
