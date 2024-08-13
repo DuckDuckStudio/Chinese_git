@@ -50,4 +50,4 @@ jobs:
           git checkout -b pack_macos
           git add 中文git_macos 中文git更新程序_macos
           git commit -m "添加 macOS 构建文件"
-          git push --set-upstream origin pack_macos
+          git push --set-upstream origin pack_macos --force
