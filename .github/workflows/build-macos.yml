@@ -1,0 +1,35 @@
+name: Build Python Executables on macOS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+
+      - name: Build executables
+        run: |
+          pyinstaller --onefile --distpath=. --name=中文git_pack_macos 中文git-pack.py
+          pyinstaller --onefile --distpath=. --name=中文git更新程序_macos 中文git更新程序.py
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: macos-executables
+          path: |
+            dist/中文git_pack_macos
+            dist/中文git更新程序_macos
