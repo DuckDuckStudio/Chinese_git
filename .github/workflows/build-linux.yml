@@ -26,6 +26,14 @@ jobs:
           pyinstaller --onefile --distpath=. --name=中文git_pack_linux 中文git-pack.py
           pyinstaller --onefile --distpath=. --name=中文git更新程序_linux 中文git更新程序.py
 
+      - name: Commit Linux executables
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add dist/中文git_pack_linux dist/中文git更新程序_linux
+          git commit -m "Add Linux build artifacts"
+          git push
+
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v2
         with:

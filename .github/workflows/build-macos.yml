@@ -26,6 +26,14 @@ jobs:
           pyinstaller --onefile --distpath=. --name=中文git_pack_macos 中文git-pack.py
           pyinstaller --onefile --distpath=. --name=中文git更新程序_macos 中文git更新程序.py
 
+      - name: Commit macOS executables
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add dist/中文git_pack_macos dist/中文git更新程序_macos
+          git commit -m "Add macOS build artifacts"
+          git push
+
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v2
         with:
