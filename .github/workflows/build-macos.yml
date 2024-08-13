@@ -53,7 +53,7 @@ jobs:
           git push --set-upstream origin pack_macos
 
       - name: Install GitHub CLI
-        uses: cli/cli@v3
+        uses: cli/cli
 
       - name: Create Pull Request for macOS
         run: |
