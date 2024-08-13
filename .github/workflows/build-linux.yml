@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
@@ -52,19 +52,10 @@ jobs:
           git commit -m "添加 Linux 构建文件"
           git push --set-upstream origin pack_linux
 
-      - name: Create Pull Request for Linux
-        uses: repo-sync/pull-request-creator-action@v2
-        with:
-          source_branch: pack_linux
-          target_branch: main
-          title: 'Add Linux build files'
-          body: 'This PR adds the Linux build executables.'
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install GitHub CLI
+        uses: cli/cli@v3
 
-      - name: Upload Linux artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: linux-executables
-          path: |
-            中文git_linux
-            中文git更新程序_linux
+      - name: Create Pull Request for Linux
+        run: |
+          gh auth login --with-token < ${{ secrets.GITHUB_TOKEN }}
+          gh pr create --base main --head pack_linux --title "Add Linux build files" --body "This PR adds the Linux build executables."
