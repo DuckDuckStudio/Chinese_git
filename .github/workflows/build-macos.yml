@@ -17,6 +17,13 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Checkout to other branch
+        run: |
+          git config --global user.name '自动打包流'
+          git config --global user.email 'github-actions@github.com'
+          git checkout -b pack_linux
+          git merge main
+
       - name: Install dependencies
         run: |
           pip install pyinstaller
@@ -45,9 +52,6 @@ jobs:
 
       - name: Commit macOS executables
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git checkout -b pack_macos
           git add 中文git_macos 中文git更新程序_macos
           git commit -m "添加 macOS 构建文件"
           git push --set-upstream origin pack_macos --force
