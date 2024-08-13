@@ -47,10 +47,19 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
+          git checkout -b pack_macos
           git add 中文git_macos 中文git更新程序_macos
           git commit -m "添加 macOS 构建文件"
-          git pull
-          git push
+          git push --set-upstream origin pack_macos
+
+      - name: Create Pull Request for macOS
+        uses: repo-sync/pull-request-creator-action@v2
+        with:
+          source_branch: pack_macos
+          target_branch: main
+          title: 'Add macOS build files'
+          body: 'This PR adds the macOS build executables.'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v2

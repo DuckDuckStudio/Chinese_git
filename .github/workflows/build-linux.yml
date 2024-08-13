@@ -47,10 +47,19 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
+          git checkout -b pack_linux
           git add 中文git_linux 中文git更新程序_linux
           git commit -m "添加 Linux 构建文件"
-          git pull
-          git push
+          git push --set-upstream origin pack_linux
+
+      - name: Create Pull Request for Linux
+        uses: repo-sync/pull-request-creator-action@v2
+        with:
+          source_branch: pack_linux
+          target_branch: main
+          title: 'Add Linux build files'
+          body: 'This PR adds the Linux build executables.'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v2
