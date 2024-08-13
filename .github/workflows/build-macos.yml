@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add dist/中文git_pack_macos dist/中文git更新程序_macos
+          git add 中文git_pack_macos 中文git更新程序_macos
           git commit -m "Add macOS build artifacts"
           git push
 
@@ -39,5 +39,5 @@ jobs:
         with:
           name: macos-executables
           path: |
-            dist/中文git_pack_macos
-            dist/中文git更新程序_macos
+            中文git_pack_macos
+            中文git更新程序_macos
