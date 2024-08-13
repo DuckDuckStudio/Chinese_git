@@ -52,10 +52,7 @@ jobs:
           git commit -m "添加 macOS 构建文件"
           git push --set-upstream origin pack_macos
 
-      - name: Install GitHub CLI
-        uses: cli/cli
-
       - name: Create Pull Request for macOS
         run: |
-          gh auth login --with-token < ${{ secrets.GITHUB_TOKEN }}
+          gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
           gh pr create --base main --head pack_macos --title "Add macOS build files" --body "This PR adds the macOS build executables."
