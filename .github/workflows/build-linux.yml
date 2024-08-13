@@ -51,8 +51,3 @@ jobs:
           git add 中文git_linux 中文git更新程序_linux
           git commit -m "添加 Linux 构建文件"
           git push --set-upstream origin pack_linux
-
-      - name: Create Pull Request for Linux
-        run: |
-          gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
-          gh pr create --base main --head pack_linux --title "Add Linux build files" --body "This PR adds the Linux build executables."
