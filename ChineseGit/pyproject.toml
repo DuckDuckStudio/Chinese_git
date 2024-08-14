@@ -29,5 +29,5 @@ build-backend = "setuptools.build_meta" # 使用 setuptools 作为构建后端
 [tool.setuptools]
 packages = ["中文git"]
 
-[tool.scripts]
+[project.scripts]
 "中文git" = "中文git.中文git_pypi:main"
