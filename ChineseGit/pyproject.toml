@@ -31,3 +31,5 @@ packages = ["中文git"]
 
 [project.scripts]
 "中文git" = "中文git.中文git_pypi:main"
+
+# TEST
