@@ -1,0 +1,29 @@
+name: Verify the release of Chinese git on pypi - Linux
+
+on:
+  pull_request:
+    types: [synchronize, opened, reopened]
+    branches:
+      - main
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install ChineseGit
+        run: |
+          pip install -i https://test.pypi.org/simple/ ChineseGit
+
+      - name: Test command(s)
+        run: |
+          中文git
+          中文git 版本
+          中文git 公告
