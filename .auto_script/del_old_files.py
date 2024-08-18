@@ -22,8 +22,8 @@ else:
 script_path = os.path.dirname(sys.argv[0])
 
 try:
-    os.remove(os.join(os.path.dirname(script_path), main_exe))
-    os.remove(os.join(os.path.dirname(script_path), update_exe))
+    os.remove(os.path.join(os.path.dirname(script_path), main_exe))
+    os.remove(os.path.join(os.path.dirname(script_path), update_exe))
 except FileNotFoundError:
     print("[WARN] 没有需要删除的旧文件")
     sys.exit(0)
