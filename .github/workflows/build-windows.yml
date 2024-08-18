@@ -18,10 +18,25 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: 签出分支
+      - name: 配置 Git
         run: |
           git config --global user.name '自动打包流'
           git config --global user.email 'github-actions@github.com'
+
+      - name: 清理旧分支
+        id: cleanup_branch
+        run: |
+          # Check if the branch exists
+          git fetch origin
+          if git branch -r | findstr "origin/pack_linux" >nul; then
+            echo "[WARN] Branch exists, deleting branch"
+            git push origin --delete pack_linux
+          else
+            echo "Branch does not exist"
+          fi
+
+      - name: 签出分支
+        run: |
           git checkout -b pack_windows
 
       - name: 安装依赖
