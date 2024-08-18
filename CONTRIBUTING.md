@@ -76,10 +76,8 @@ git push
 
 ## 如何打包
 
-### Macos / Linux
-Push 后GitHub Actions会自动打包。
-
-### Windows
+> [!NOTE]
+> 打包前请安装依赖！  
 
 本项目有两种从py到exe的打包方式：  
 1. pyinstaller  
