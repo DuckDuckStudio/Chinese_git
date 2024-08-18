@@ -18,9 +18,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: 修改编码
-        run: chcp 65001
-
       - name: 签出分支
         run: |
           git config --global user.name '自动打包流'
