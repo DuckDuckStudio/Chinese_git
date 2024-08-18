@@ -12,6 +12,6 @@ fs.access(filePath, fs.constants.F_OK, (err) => {
       console.log(`文件【${fileName}】已删除`);
     });
   } else {
-    console.log(`未找到旧文件【${fileName}】`);
+    console.log(`[WARN] 未找到旧文件【${fileName}】`);
   }
 });
