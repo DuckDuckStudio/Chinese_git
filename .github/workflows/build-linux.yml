@@ -17,6 +17,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
       - name: Checkout to other branch
         run: |
           git config --global user.name '自动打包流'
@@ -24,25 +29,14 @@ jobs:
           git checkout -b pack_linux
 
       - name: Install dependencies
+        # 也许不用 npm install ?
         run: |
           pip install pyinstaller
           pip install -r requirements.txt
 
       - name: Delete old files
         run: |
-          if [ -f "中文git更新程序_linux" ]; then
-            echo "找到旧文件【中文git更新程序_linux】，正在删除..."
-            rm 中文git更新程序_linux
-          else
-            echo "未找到旧文件【中文git更新程序_linux】"
-          fi
-
-          if [ -f "中文git_linux" ]; then
-            echo "找到旧文件【中文git_linux】，正在删除..."
-            rm 中文git_linux
-          else
-            echo "未找到旧文件【中文git_linux】"
-          fi
+          node .auto_script/del_old_files.js
 
       - name: Build executables
         run: |
@@ -53,6 +47,7 @@ jobs:
         run: |
           git add 中文git_linux 中文git更新程序_linux
           git commit -m "添加 Linux 构建文件"
+          git pull
           git push --set-upstream origin pack_linux
 
       - name: Create Pull Request
