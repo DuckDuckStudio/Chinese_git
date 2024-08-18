@@ -63,11 +63,4 @@ jobs:
           # 编辑 PR 添加标签
           gh pr edit $pr_number --add-label "工作流-自动打包"
           
-          # 请求审查
-          $body = "
-          {
-            'reviewers': ['Luna-Grace']
-          }
-          "
-
-          gh api -X POST /repos/$env:GITHUB_REPOSITORY/pulls/$pr_number/requested_reviewers --input $body
+          gh pr edit $pr_number --add-reviewer Luna-Grace,DuckDuckStudio
