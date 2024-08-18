@@ -1,6 +1,6 @@
 [project]
 name = "ChineseGit" # 项目名称
-version = "2.10.14" # 项目版本号
+version = "2.10.16" # 项目版本号
 authors = [ # 作者信息列表
   { name="鸭鸭「カモ」", email="Yzcbs123@163.com" }, # 作者的姓名和邮箱
 ]
@@ -30,6 +30,4 @@ build-backend = "setuptools.build_meta" # 使用 setuptools 作为构建后端
 packages = ["中文git"]
 
 [project.scripts]
-"中文git" = "中文git.中文git_pypi:main"
-
-# TEST
+"中文git" = "中文git.中文git_pypi"
