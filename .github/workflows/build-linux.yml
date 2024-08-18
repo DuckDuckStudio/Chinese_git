@@ -17,11 +17,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
       - name: Checkout to other branch
         run: |
           git config --global user.name '自动打包流'
@@ -35,7 +30,7 @@ jobs:
 
       - name: Delete old files
         run: |
-          node .auto_script/del_old_files.js
+          python .auto_script/del_old_files.py
 
       - name: Build executables
         run: |
