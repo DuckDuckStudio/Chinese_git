@@ -1,0 +1,35 @@
+[project]
+name = "ChineseGit" # 项目名称
+version = "2.10.14" # 项目版本号
+authors = [ # 作者信息列表
+  { name="鸭鸭「カモ」", email="Yzcbs123@163.com" }, # 作者的姓名和邮箱
+]
+description = "一个让你可以使用中文命令操作 Git 的简单工具，旨在使不熟悉英文的用户更轻松地使用 Git。" # 项目描述
+readme = "README.md"
+requires-python = ">=3.8" # Python 最低版本要求
+classifiers = [ # 项目分类信息列表
+    "Programming Language :: Python :: 3", # 支持的 Python 版本
+    "License :: OSI Approved :: GNU General Public License (GPL)", # 使用的许可证
+    "Operating System :: OS Independent", # 支持的操作系统
+]
+dependencies = [ # 项目依赖列表
+    "requests", # 依赖的第三方库 requests
+    "colorama", # 依赖的第三方库 colorama
+]
+
+[project.urls]
+Issues = "https://github.com/DuckDuckStudio/Chinese_git/issues" # 项目问题跟踪页面链接
+Homepage = "https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/" # 项目主页链接
+Source = "https://github.com/DuckDuckStudio/Chinese_git/" # 项目源代码仓库链接
+
+[build-system]
+requires = ["setuptools>=61.0"] # 构建系统需要的 setuptools 最低版本
+build-backend = "setuptools.build_meta" # 使用 setuptools 作为构建后端
+
+[tool.setuptools]
+packages = ["中文git"]
+
+[project.scripts]
+"中文git" = "中文git.中文git_pypi:main"
+
+# TEST
