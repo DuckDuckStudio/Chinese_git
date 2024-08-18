@@ -46,13 +46,13 @@ jobs:
 
       - name: 创建拉取请求
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.AUTO_PACK }}
         run: |
           gh pr create --base main --head pack_macos --title "Auto-pack: 添加对于 Macos 的构建文件" --body "添加由工作流自动打包的适用于 Macos 的中文Git"
 
       - name: 配置拉取请求
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.AUTO_PACK }}
         run: |
           # 获取头分支为 pack_macos 的打开pr
           pr_number=$(gh pr list --state open --head pack_macos --json number -q '.[0].number')
