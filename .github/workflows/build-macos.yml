@@ -60,6 +60,6 @@ jobs:
           # 请求审查员
           gh api -X POST /repos/${{ github.repository }}/pulls/$pr_number/requested_reviewers --input - <<EOF
           {
-            "reviewers": ["DuckDuckStudio", "Luna-Grace"]
+            "reviewers": ["Luna-Grace"]
           }
           EOF
