@@ -76,6 +76,9 @@ git push
 
 ## 如何打包
 
+> [!NOTE]
+> 打包前请安装依赖！  
+
 本项目有两种从py到exe的打包方式：  
 1. pyinstaller  
 打包命令为:  
