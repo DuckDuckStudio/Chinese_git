@@ -1,6 +1,9 @@
 import os
+import io
 import sys
 import platform
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 system = platform.system()
 print(f'[WARN] 测试标记: 识别的操作系统为 {system}')
