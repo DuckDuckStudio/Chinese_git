@@ -3,7 +3,7 @@ import sys
 import platform
 
 system = platform.system()
-print(f'[WARN] 测试标记: 识别的操作系统为 {system}')
+print(f'[WARN] Test flag: System is {system}')
 if system == 'Darwin':
     # macOS 系统文件名
     main_exe = '中文git_macos'
@@ -25,10 +25,19 @@ try:
     os.remove(os.path.join(os.path.dirname(script_path), main_exe))
     os.remove(os.path.join(os.path.dirname(script_path), update_exe))
 except FileNotFoundError:
-    print("[WARN] 没有需要删除的旧文件")
+    if system == 'windows':
+        print("[WARN] No file need to del.")
+    else:
+        print("[WARN] 没有需要删除的旧文件")
     sys.exit(0)
 except Exception as e:
-    print(f"[ERROR] 删除文件时出错: {e}")
+    if system == 'windows':
+        print(f"[ERROR] Faild to del file(s): {e}")
+    else:
+        print(f"[ERROR] 删除文件时出错: {e}")
     sys.exit(1)
 
-print("[INFO] 旧文件删除完成！")
+if system == 'windows':
+    print("[INFO] Successfully del old file(s).")
+else:
+    print("[INFO] 旧文件删除完成！")
