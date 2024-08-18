@@ -12,7 +12,7 @@ elif system == 'Linux':
     # Linux 系统文件名
     main_exe = '中文git_linux'
     update_exe = '中文git更新程序_linux'
-elif system == 'windows':
+elif system == 'Windows':
     # Windows 系统文件名
     main_exe = '中文git_windows.exe'
     update_exe = '中文git更新程序_windows.exe'
@@ -25,19 +25,19 @@ try:
     os.remove(os.path.join(os.path.dirname(script_path), main_exe))
     os.remove(os.path.join(os.path.dirname(script_path), update_exe))
 except FileNotFoundError:
-    if system == 'windows':
+    if system == 'Windows':
         print("[WARN] No file need to del.")
     else:
         print("[WARN] 没有需要删除的旧文件")
     sys.exit(0)
 except Exception as e:
-    if system == 'windows':
+    if system == 'Windows':
         print(f"[ERROR] Faild to del file(s): {e}")
     else:
         print(f"[ERROR] 删除文件时出错: {e}")
     sys.exit(1)
 
-if system == 'windows':
+if system == 'Windows':
     print("[INFO] Successfully del old file(s).")
 else:
     print("[INFO] 旧文件删除完成！")
