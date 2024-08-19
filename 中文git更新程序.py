@@ -67,4 +67,5 @@ if __name__ == "__main__":
         replace_current_program(new_filename)
 
     input(f"按{Fore.BLUE}Enter{Fore.RESET}键退出...")
+
 sys.exit(exit_code)
