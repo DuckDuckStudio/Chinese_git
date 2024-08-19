@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      # 仅在特定文件发生变化时触发
+      - '**/中文git-pack.py'
+      - '**/中文git更新程序.py'
   workflow_dispatch:
 
 jobs:
