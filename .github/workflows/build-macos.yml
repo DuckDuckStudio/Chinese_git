@@ -60,6 +60,7 @@ jobs:
         run: |
           # 获取头分支为 pack_macos 的打开pr
           pr_number=$(gh pr list --state open --head pack_macos --json number -q '.[0].number')
+          # 配置PR
           gh pr edit $pr_number --add-label "工作流-自动打包"
-          # 请求审查员
           gh pr edit $pr_number --add-reviewer Luna-Grace,DuckDuckStudio
+          gh pr review $pr_number --approve

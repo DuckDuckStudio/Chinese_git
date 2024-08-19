@@ -60,8 +60,7 @@ jobs:
         run: |
           # 获取头分支为 pack_windows 的打开 PR
           $pr_number = gh pr list --state open --head pack_windows --json number | ConvertFrom-Json | Select-Object -First 1 -ExpandProperty number
-          
-          # 编辑 PR 添加标签
+          # 配置PR
           gh pr edit $pr_number --add-label "工作流-自动打包"
-          
           gh pr edit $pr_number --add-reviewer Luna-Grace,DuckDuckStudio
+          gh pr review $pr_number --approve
