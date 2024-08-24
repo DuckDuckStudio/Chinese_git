@@ -645,6 +645,4 @@ if __name__ == "__main__":
         if auto_get_notice == "True":
             display_notice()# 自动公告获取
         exit_code = 1
-        
-exit_code = 1# 如果没有 __name__ == "__main__"
 sys.exit(exit_code)
