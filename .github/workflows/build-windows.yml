@@ -1,0 +1,65 @@
+name: 在 Windows 上打包 中文Git
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # 仅在特定文件发生变化时触发
+      - '**/中文git-pack.py'
+      - '**/中文git更新程序.py'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 配置 Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: 签出分支
+        run: |
+          git config --global user.name '自动打包流'
+          git config --global user.email 'github-actions@github.com'
+          git checkout -b pack_windows
+
+      - name: 安装依赖
+        run: |
+          pip install pyinstaller
+          pip install -r requirements.txt
+
+      - name: 移除旧文件
+        run: |
+          python .auto_script\del_old_files.py
+
+      - name: 打包构建
+        run: |
+          pyinstaller --onefile --distpath=. --name=中文git.exe 中文git-pack.py
+          pyinstaller --onefile --distpath=. --name=中文git更新程序.exe 中文git更新程序.py
+
+      - name: 提交结果
+        run: |
+          git add 中文git.exe 中文git更新程序.exe
+          git commit -m "添加 Windows 构建文件"
+          git push --set-upstream origin pack_windows
+
+      - name: 创建拉取请求
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create --base main --head pack_windows --title "Auto-pack: 添加对于Windows的构建文件" --body "添加由工作流自动打包的适用于Windows的中文Git"
+
+      - name: 配置拉取请求
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 获取头分支为 pack_windows 的打开 PR
+          $pr_number = gh pr list --state open --head pack_windows --json number | ConvertFrom-Json | Select-Object -First 1 -ExpandProperty number
+          # 配置PR
+          gh pr edit $pr_number --add-label "工作流-自动打包"
+          gh pr edit $pr_number --add-reviewer Luna-Grace,DuckDuckStudio

@@ -1,0 +1,40 @@
+name: 自动验证在 Linux 上的打包版
+
+on:
+  push:
+    branches:
+      - pack_linux
+  workflow_dispatch:
+
+jobs:
+  verify-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 配置 Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: 签出分支
+        run: |
+          git config --global user.name '自动验证流'
+          git config --global user.email 'github-actions@github.com'
+          git checkout pack_linux
+
+      - name: 验证打包版
+        run: |
+          ./中文git_linux 版本
+          ./中文git更新程序_linux --version 2.9
+
+      - name: 配置拉取请求
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 获取头分支为 pack_linux的打开pr
+          pr_number=$(gh pr list --state open --head pack_linux --json number -q '.[0].number')
+          # 配置PR
+          gh pr edit $pr_number --add-label "DEV-自动验证通过"
+          gh pr review $pr_number --approve
