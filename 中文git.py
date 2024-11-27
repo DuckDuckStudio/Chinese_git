@@ -357,27 +357,6 @@ def display_notice(manual=False):
                     print(f"{color}[!------------!]{Fore.RESET}")
                 save_previous_notice(content)
 # ---------- 公告获取 结束 ------------
-# ---------- 各命令函数 ---------------
-def check_git_stash():
-    staged_changes = False
-    unstaged_changes = False
-
-    git_stash = subprocess.run(["git", "stash", "show"], capture_output=True, text=True)
-    output_lines = git_stash.stdout.split('\n')
-
-    if output_lines != ['']:
-        staged_changes = True
-
-    # --------
-
-    git_stash = subprocess.run(["git", "diff", "--name-only"], capture_output=True, text=True)
-    output_lines = git_stash.stdout.split('\n')
-
-    if output_lines != ['']:
-        unstaged_changes = True
-
-    return staged_changes, unstaged_changes
-# ------------------------------------------
 
 def git_command(command, *args):
     global exit_code
@@ -425,22 +404,7 @@ def git_command(command, *args):
     if git_command:
         try:
             if command == "提交":
-                staged, unstaged = check_git_stash()
-                if staged:
-                    print(f"{Fore.BLUE}[!]{Fore.BLUE} 将提交暂存区的内容")
-                elif unstaged:
-                    print(f"{Fore.YELLOW}⚠{Fore.RESET} 没有已暂存的更改，但检测到未暂存的更改")
-                    if input(f"{Fore.BLUE}?{Fore.RESET} 是否暂存所有并提交({Fore.GREEN}是{Fore.RESET}/{Fore.RED}否{Fore.RESET}):").lower() in ['y', 'yes', '是']:
-                        subprocess.run(['git', 'add', '--all'])
-                        print(f"{Fore.GREEN}✓{Fore.RESET} 已暂存所有更改")
-                    else:
-                        print(f"{Fore.RED}✕{Fore.RESET} 没有已暂存的更改")
-                        exit_code = 1
-                else:
-                    print(f"{Fore.RED}✕{Fore.RESET} 没有更改")
-                    exit_code = 1
-
-                if not args and exit_code != 1:
+                if not args:
                     commit_message = input("请输入提交信息: ")
                     if not commit_message:
                         # 还不输提交信息？玩我呢
@@ -448,7 +412,7 @@ def git_command(command, *args):
                         exit_code = 1
                     result = subprocess.run(git_command + [commit_message], capture_output=True, text=True)
                 else:
-                    result = subprocess.run(git_command + args, capture_output=True, text=True) # 没想到这是做啥的 NOTE
+                    result = subprocess.run(git_command + args, capture_output=True, text=True)
             elif command == "暂存":
                 if args and args[0] == "所有":
                     result = subprocess.run(git_command + ['--all'], capture_output=True, text=True)
