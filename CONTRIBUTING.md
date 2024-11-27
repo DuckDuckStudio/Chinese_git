@@ -7,21 +7,51 @@
 中文Git项目的结构如下：
 
 ```
-中文Git/
-├── zh-tw
-├── .gitignore
-├── 中文git-pack.py
-├── 中文git.exe
-├── 中文git.py
-├── 中文git更新程序.py
-├── 中文git更新程序.exe
-├── ABOUT_TRANSLATION.md
-├── CONTRIBUTING.md
-├── ico.ico
-├── LICENSE
-├── README_DEV.md
-├── README.md
-└── USER_HANDBOOK.md
+中文Git
+|   .gitignore
+|   ABOUT_TRANSLATION.md
+|   config.json
+|   CONTRIBUTING.md
+|   ico.ico
+|   LICENSE
+|   README.md
+|   README_DEV.md
+|   requirements.txt
+|   USER_HANDBOOK.md
+|   中文git-pack.py
+|   中文git.exe
+|   中文git.py
+|   中文git更新程序.exe
+|   中文git更新程序.py
+|
++---.auto_script
+|       del_old_files.py
+|
++---.github
+|   |   CODEOWNERS.md
+|   |   dependabot.yml
+|   |   PULL_REQUEST_TEMPLATE.md
+|   |
+|   \---ISSUE_TEMPLATE
+|           bug_feedback.yml
+|           config.yml
+|           feature_request.yml
+|           new_command_request.yml
+|
++---AutoPack
+|       AutoPack.py
+|       AutoPack_CN.py
+|       packinit.iss
+|       requirements.txt
+|
++---docs
+|   \---image
+|       \---README
+|               1718315176839.png
+|
+\---zh-tw
+        中文git-pack.py
+        中文git.py
 ```
 
 * `zh-tw`: 项目的 繁体中文 翻译
@@ -39,30 +69,17 @@
 * `README.md`: 项目的直白话用户指南，用于向用户介绍中文Git。
 * `USER_HANDBOOK.md`: 项目的用户手册，用于向用户详细介绍如何使用
 
-本程序**按原样**提供。  
+> _对于新的文件调整待补充说明_  
 
 ## 如何开始贡献
 
 欢迎各种形式的贡献，无论是提交bug报告、提出改进建议还是直接提交代码修复问题。以下是贡献步骤：
 
 1. fork 本项目
-
-2. 克隆项目到本地：
-
-```bash
-git clone https://github.com/Your_Github_name/Chinese_git.git
-```
-
-3. 在新仓库上进行修改。
-4. 提交你的更改：
-
-```bash
-git add .
-git commit -m "描述你的修改"
-git push
-```
-
-5. 提交Pull Request，描述你的修改并等待审核。
+2. 克隆项目到本地
+3. 在新仓库上进行修改
+4. 提交你的更改
+5. 提交Pull Request，描述你的修改并等待审核
 
 ## 报告问题和提出建议
 
@@ -83,24 +100,24 @@ git push
 1. pyinstaller  
 打包命令为:  
 ```bash
-pyinstaller --onefile -i ico.ico --distpath=. --name=中文git.exe 中文git-pack.py
-pyinstaller --onefile -i ico.ico --distpath=. --name=中文git更新程序.exe 中文git更新程序.py
+pyinstaller --onefile -i ico.ico --distpath=. --name="中文git.exe" "中文git-pack.py"
+pyinstaller --onefile -i ico.ico --distpath=. --name="中文git更新程序.exe" "中文git更新程序.py"
 ```
 2. Nuitka  
 打包命令为:  
 ```bash
-python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git-pack.py
-python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output 中文git更新程序.py
+python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output "中文git-pack.py"
+python -m nuitka --output-dir=. --show-progress --windows-icon-from-ico=ico.ico --onefile --remove-output "中文git更新程序.py"
 ```
 3. 使用AutoPack工具
 ```bash
-python AutoPack\AutoPack.py
+python "AutoPack\AutoPack.py"
 ```
 
 ## 关于winget包请求
 如果你发现最新发行版在winget包中不可用，请向[microsoft/winget](https://github.com/microsoft/winget-pkgs)提交程序清单。  
 在提交时还请 @DuckDuckStudio / @Luna-Grace ，感谢。  
-使用`winget search DuckStudio.ChineseGit`来查找可用源。  
+使用`winget search DuckStudio.ChineseGit --source winget`来查找可用版本。  
 
 ## 关于翻译
 如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。  
