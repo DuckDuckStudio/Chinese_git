@@ -122,7 +122,7 @@ path\to\中文git.exe 命令
 
 #### 源码
 > [!WARNING]
-> 此方法可能仅对只传入一个参数时才有效，更多信息请见[DuckDuckStudio/Fufu_Tools#97](https://github.com/DuckDuckStudio/Fufu_Tools/issue/97)    
+> 此方法可能仅对只传入一个参数时才有效，更多信息请见[DuckDuckStudio/Fufu_Tools#97](https://github.com/DuckDuckStudio/Fufu_Tools/issues/97)    
 
 1. 新建一个文件夹，名称随意(这里假设叫`Chinese_git_Script`。~~很复杂也没事，反正命令用不到~~)
 2. 在文件夹中新建一个叫`中文git.ps1`的脚本，并在脚本中添加以下内容:  
