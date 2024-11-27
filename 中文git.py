@@ -417,8 +417,8 @@ def git_command(command, *args):
     if command == "帮助":
         print("使用方法:")
         print("中文git <中文指令> [参数]")
-        print("即：中文git <你想干什么> [具体要啥]")
-        print("\n支持的中文命令请查看用户手册：https://github.com/DuckDuckStudio/Chinese_git/blob/main/USER_HANDBOOK.md#可用命令")
+        print("即: 中文git <你想干什么> [具体要啥]")
+        print("\n支持的中文命令请查看用户手册: https://github.com/DuckDuckStudio/Chinese_git/blob/main/USER_HANDBOOK.md#可用命令")
         return
 
     git_command = git_command_mapping.get(command)
@@ -459,7 +459,7 @@ def git_command(command, *args):
                     result = subprocess.run(git_command + args, capture_output=True, text=True)
             elif command == "签出到":
                 if not args:
-                    branch = input("请输入需要切换的分支：")
+                    branch = input("请输入需要切换的分支: ")
                     result = subprocess.run(git_command + [branch], capture_output=True, text=True)
                 elif len(args) == 1:
                     result = subprocess.run(git_command + args, capture_output=True, text=True)
@@ -491,7 +491,7 @@ def git_command(command, *args):
                     result = subprocess.run(git_command + args, capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
-                print(f"版本：{Fore.BLUE}{VERSION}{Fore.RESET}")
+                print(f"版本: {Fore.BLUE}{VERSION}{Fore.RESET}")
                 print(f"安装在: {Fore.BLUE}{full_path}{Fore.RESET}")
                 result = subprocess.run(git_command, capture_output=True, text=True)
             elif command == "公告":
@@ -546,7 +546,7 @@ def git_command(command, *args):
                 result = subprocess.run(git_command + args, capture_output=True, text=True)
             elif command == "合并":
                 if not args:
-                    branch = input("请输入需要合并到当前分支的分支：")
+                    branch = input("请输入需要合并到当前分支的分支: ")
                     result = subprocess.run(git_command + [branch], capture_output=True, text=True)
                 else:
                     result = subprocess.run(git_command + args, capture_output=True, text=True)
@@ -565,7 +565,7 @@ def git_command(command, *args):
                     result = subprocess.run(git_command + args, capture_output=True, text=True)
             elif command == "更新":
                 print("中文Git by 鸭鸭「カモ」")
-                print(f"当前版本：{Fore.BLUE}{VERSION}{Fore.RESET}")
+                print(f"当前版本: {Fore.BLUE}{VERSION}{Fore.RESET}")
                 print("正在检查更新...")
                 auto_update()
                 return
@@ -602,7 +602,6 @@ def git_command(command, *args):
                 else:
                     result = subprocess.run(git_command + args, capture_output=True, text=True)
             else:
-                print(git_command + args)
                 result = subprocess.run(git_command + args, capture_output=True, text=True)
 
             if result.returncode == 0 and exit_code == 0:
@@ -636,7 +635,7 @@ if __name__ == "__main__":
     else:
         print("使用方法:")
         print("中文git <中文指令> [参数]")
-        print("即：中文git <你想干什么> [具体要啥]")
+        print("即: 中文git <你想干什么> [具体要啥]")
         if auto_check_update == "True":
             always_check() # 自动检查更新
         if auto_get_notice == "True":
