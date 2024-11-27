@@ -184,7 +184,7 @@ path\to\中文git.exe 命令
 
 > [!NOTE]
 > 如果你使用`v2.4`及以上版本的**打包版**中文Git，则你可以`cd`到安装目录后运行`.\Pack_Version_Update.exe --version vx.y`手动更新中文Git到指定版本，请将命令中的`vx.y`替换为你需要更新到的版本。  
-> 请注意，自 v2.4 起，中文git的更新程序默认认为中文git叫`中文git.py`或`中文git.exe`，并不是GitHub发行版上的`Chinese_git.py`或`Chinese_git.exe`，在首次下载时请手动修正名称。  
+> 请注意，自 v2.4 起，中文git的更新程序默认认为中文git叫`中文git.py`或`中文git.exe`，并不是GitHub发行版上的`Chinese_git.py`或`Chinese_git.exe`。  
 
 ## 可用命令
 
