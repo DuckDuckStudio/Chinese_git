@@ -63,11 +63,22 @@ def get_noitce():
         response.raise_for_status()
         with open(noitce_file, 'wb') as file:
             file.write(response.content)
-        print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件成功")
+        print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法一) 成功")
         return True
     except Exception as e:
-        print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
-        return False
+        print(f"{Fore.YELLOW}⚠{Fore.RESET} 获取公告文件 (方法一) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
+        try:
+            result = subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git"], capture_output=True, text=True)
+            if result.returncode == 0:
+                shutil.copy(".\\yazicbs.github.io\\Tools\\chinese_git\\notice\\notice.txt", noitce_file)
+                print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法二) 成功")
+                return True
+            else:
+                print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件 (方法二) 时出错:\n{Fore.RED}{result.stderr}{Fore.RESET}")
+                return False
+        except Exception as e:
+            print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件 (方法二) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
+            return False
 
 def rename_file(old_name, new_name, dir):
     try:
