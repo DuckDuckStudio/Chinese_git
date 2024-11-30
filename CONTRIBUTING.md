@@ -118,6 +118,7 @@ python "AutoPack\AutoPack.py"
 如果你发现最新发行版在winget包中不可用，请向[microsoft/winget](https://github.com/microsoft/winget-pkgs)提交程序清单。  
 在提交时还请 @DuckDuckStudio / @Luna-Grace ，感谢。  
 使用`winget search DuckStudio.ChineseGit --source winget`来查找可用版本。  
+你可以直接提交拉取请求，也可以创建议题让我们添加清单。  
 
 ## 关于翻译
 如果你希协助 中文Git 进行 繁体中文 本地化，请将您的翻译结果提交到文件夹 `zh-tw` 内。  
