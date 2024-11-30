@@ -56,7 +56,7 @@ namespace DuckStudio.ChineseGit
                 autoCheckUpdate = true;
                 autoGetNotice = true;
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"⚠ 没有找到配置文件，将生成默认配置文件！");
+                Console.WriteLine("⚠ 没有找到配置文件，将生成默认配置文件！");
                 Console.ResetColor();
 
                 try
