@@ -150,7 +150,7 @@ namespace DuckStudio.ChineseGit
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"✕ 无法获取最新默认配置文件");
+                    Console.WriteLine("✕ 无法获取最新默认配置文件");
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine($"[!] 返回状态码: {response.StatusCode}");
                     Console.ResetColor();
