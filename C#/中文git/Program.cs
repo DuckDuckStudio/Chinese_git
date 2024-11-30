@@ -85,7 +85,7 @@ namespace DuckStudio.ChineseGit
                 {
                     // 如果生成默认配置文件时出现错误，显示错误信息
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"✕ 生成默认配置文件时出错！请手动添加配置文件，否则某些功能可能无法正常运行！");
+                    Console.WriteLine("✕ 生成默认配置文件时出错！请手动添加配置文件，否则某些功能可能无法正常运行！");
                     Console.WriteLine($"错误信息: {e}");
                     Console.ResetColor();
                     Environment.ExitCode = 1;
