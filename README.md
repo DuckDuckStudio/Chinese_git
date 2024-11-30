@@ -76,8 +76,7 @@ git -v
 ```
 如果你看到类似这样的输出则表明你不用管他了：  
 ```
-C:\Users\user_name>git -v
-git version 2.42.0.windows.1
+git version 2.47.1.windows.1
 ```
 如果你无法运行命令，请[下载Git](https://git-scm.com/downloads)。如果你已下载Git还无法运行命令，请添加Git到环境变量。(看我干嘛，我又没在[官方文档](https://git-scm.com/book/zh/v2)中找到如何配置，上面的 Python 怎么配置的 Git 就怎么配置)
 > [!IMPORTANT]
@@ -101,6 +100,30 @@ path\to\中文git.exe 命令
 ### 优化
 每次都要输这么多的命令...烦死了。  
 我们来优化一下命令吧！  
+
+#### 打包版
+1. 将程序目录添加到系统环境变量`PATH`中。  
+   类似的具体操作请参阅 [[芙芙工具箱] Q：我该如何添加python到系统PATH环境变量](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/常见问题Q&A/主程序/index.html#add-python-to-path)  
+2. 重启你的设备
+3. 验证  
+   运行以下命令以验证配置:  
+   ```bash
+   中文git 版本
+   ```
+   你应该会看到如下输出:  
+   ```
+   中文Git by 鸭鸭「カモ」
+   版本：v2.x
+   安装在: D:\...\Chinese_git\中文git.exe
+   git version 2.47.1.windows.1
+   
+   ```
+   *(版本不一样没关系)*  
+
+#### 源码
+> [!WARNING]
+> 此方法可能仅对只传入一个参数时才有效，更多信息请见[DuckDuckStudio/Fufu_Tools#97](https://github.com/DuckDuckStudio/Fufu_Tools/issues/97)    
+
 1. 新建一个文件夹，名称随意(这里假设叫`Chinese_git_Script`。~~很复杂也没事，反正命令用不到~~)
 2. 在文件夹中新建一个叫`中文git.ps1`的脚本，并在脚本中添加以下内容:  
   - 对于 **py版** :  
@@ -124,27 +147,9 @@ path\to\中文git.exe 命令
   > $scriptPath = "D:\完整路径\中文git.py"
   > & $venv_python $scriptPath $command $inputArgs
   > ```
-  - 对于 **打包版** :  
-  ```powershell
-  param(
-      [string]$command,
-      [string[]]$inputArgs
-  )
-
-  D:\中文Git的完整路径\中文git.exe $command $inputArgs
-  ```
-  也可以对更新程序的命令进行简化，如果你有需要的话。新建一个`更新中文git.ps1`，并添加以下内容:  
-  ```powershell
-  param(
-      [string]$command,
-      [string[]]$inputArgs
-  )
-
-  D:\打包版中文Git的更新程序的完整路径\中文git更新程序.exe $command $inputArgs
-  ```
 3. 将我们前面新建好的目录添加到系统环境变量`PATH`中。  
    类似的具体操作请参阅 [[芙芙工具箱] Q：我该如何添加python到系统PATH环境变量](https://duckduckstudio.github.io/yazicbs.github.io/Tools/Fufu_Tools/wiki/常见问题Q&A/主程序/index.html#add-python-to-path)  
-4. 重启你的设备。
+4. 重启你的设备
 5. 验证  
    运行以下命令以验证配置:  
    ```bash
@@ -154,8 +159,8 @@ path\to\中文git.exe 命令
    ```
    中文Git by 鸭鸭「カモ」
    版本：v2.x
-   安装在: D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\Script\中文git\中文git.py
-   git version 2.42.0.windows.1
+   安装在: D:\...\Chinese_git\中文git.py
+   git version 2.47.1.windows.1
    
    ```
    *(版本不一样没关系)*  
@@ -171,15 +176,22 @@ path\to\中文git.exe 命令
 - 对于`v2.4`及以上版本:  
   运行命令`中文git 更新`。  
 
+> [!TIP]  
+> 如果 winget 上有可用的新版本的话，你也可以试试这个命令:  
+> ```bash
+> winget update --id DuckStudio.ChineseGit
+> ```
+
 > [!NOTE]
 > 如果你使用`v2.4`及以上版本的**打包版**中文Git，则你可以`cd`到安装目录后运行`.\Pack_Version_Update.exe --version vx.y`手动更新中文Git到指定版本，请将命令中的`vx.y`替换为你需要更新到的版本。  
+> 请注意，自 v2.4 起，中文git的更新程序默认认为中文git叫`中文git.py`或`中文git.exe`，并不是GitHub发行版上的`Chinese_git.py`或`Chinese_git.exe`。  
 
 ## 可用命令
 
 这些是在 中文Git 中可以使用的命令，如果你需要的 Git 命令在这里没有列出...快点[提交Issues](https://github.com/DuckDuckStudio/Chinese_git/issues)听见没！搞快点！  
 
 > [!TIP]
-> 这里的可用命令为仓库中最新版本的可用命令，每个Releases的可用命令请查看对应的tag的README/README_DEV/USER_HANDBOOK。  
+> 这里的可用命令为仓库中最新版本的可用命令，每个Releases的可用命令请查看对应的tag的`README/README_DEV/USER_HANDBOOK`。  
 > 例如(v1.8的可用命令):  
 > [https://github.com/DuckDuckStudio/Chinese_git/blob/**v1.8**/USER_HANDBOOK.md#可用命令](https://github.com/DuckDuckStudio/Chinese_git/blob/v1.8/USER_HANDBOOK.md#可用命令)  
 
@@ -197,6 +209,7 @@ path\to\中文git.exe 命令
 | 删除分支 (+确认) | branch -D(-d) | 这个家没有你(删除的分支)的位置了！ |
 | 远程地址 | remote -v | 你在另一头(远程)叫什么，住哪里(链接) |
 | 远程分支 | branch -r | 你在另一头(远程)有谁(哪些分支) |
+| 所有分支 | branch -a | 列出仓库的所有分支 |
 | 版本 | -v | 如命令所示，显示你使用的 中文Git 版本与 Git 版本 |
 | 克隆 | clone | 你的代码就是我的！我的代码还是我的！ |
 | 图形化日志 | log --graph | 查看图形化的提交日志 |
@@ -227,14 +240,14 @@ $ python 中文git.py 推送
 输出如下：  
 
 ```
-[Powered by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 暂存 所有
+[Powered by 虚空终端] PS D:\...\Chinese_git> python 中文git.py 暂存 所有
 
-[Powered by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 提交 更新README
+[Powered by 虚空终端] PS D:\...\Chinese_git> python 中文git.py 提交 更新README
 [main 11bef48] 更新README
  2 files changed, 200 insertions(+), 1 deletion(-)
  create mode 100644 "\344\270\255\346\226\207git.py"
 
-[Powered by 虚空终端] PS D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git> python 中文git.py 推送
+[Powered by 虚空终端] PS D:\...\Chinese_git> python 中文git.py 推送
 错误: fatal: unable to access 'https://github.com/DuckDuckStudio/Chinese_git.git/': Failure when receiving data from the peer
 ```
 ~~可以看到推送失败了(倒~~  

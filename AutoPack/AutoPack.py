@@ -63,11 +63,22 @@ def get_noitce():
         response.raise_for_status()
         with open(noitce_file, 'wb') as file:
             file.write(response.content)
-        print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件成功")
+        print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法一) 成功")
         return True
     except Exception as e:
-        print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
-        return False
+        print(f"{Fore.YELLOW}⚠{Fore.RESET} 获取公告文件 (方法一) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
+        try:
+            result = subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git"], capture_output=True, text=True)
+            if result.returncode == 0:
+                shutil.copy(".\\yazicbs.github.io\\Tools\\chinese_git\\notice\\notice.txt", noitce_file)
+                print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法二) 成功")
+                return True
+            else:
+                print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件 (方法二) 时出错:\n{Fore.RED}{result.stderr}{Fore.RESET}")
+                return False
+        except Exception as e:
+            print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件 (方法二) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
+            return False
 
 def rename_file(old_name, new_name, dir):
     try:
@@ -186,21 +197,48 @@ def compress_folder_to_zip(source_folder, target_folder, archive_name):
         return False
 
 def compress_releases():
-    compress_folder_to_zip(pack_releases_dir, releases_dir, "Chinese_git")
-    compress_folder_to_zip(py_releases_dir, releases_dir, "Chinese_git_py")
-    compress_folder_to_7z(pack_releases_dir, releases_dir, "Chinese_git")
-    compress_folder_to_7z(py_releases_dir, releases_dir, "Chinese_git_py")
+    try:
+        compress_folder_to_zip(pack_releases_dir, releases_dir, "Chinese_git")
+        compress_folder_to_zip(py_releases_dir, releases_dir, "Chinese_git_py")
+        compress_folder_to_7z(pack_releases_dir, releases_dir, "Chinese_git")
+        compress_folder_to_7z(py_releases_dir, releases_dir, "Chinese_git_py")
+        return True
+    except:
+        return False
 # -----------
 
+def jobs_clean_up(step):
+    # 按照失败的步骤清理工作文件
+    if step == "clone":
+        if os.path.exists(repo_dir):
+            try:
+                shutil.rmtree(pack_releases_dir)
+                shutil.rmtree(py_releases_dir)
+                shutil.rmtree(repo_dir)
+                print(f"{Fore.GREEN}✓{Fore.RESET} 成功清理工作文件")
+            except Exception as e:
+                print(f"{Fore.RED}✕{Fore.RESET} 清理失败，因为:\n{Fore.RED}{e}{Fore.RESET}")
+        else:
+            print(f"{Fore.YELLOW}⚠{Fore.RESET} 跳过清理，因为目录 {Fore.BLUE}{repo_dir}{Fore.RESET} 不存在")
 
 # --- main ---
 def main():
-    if clone():
-        if get_noitce():
-            if copy_file():
-                if generate_iss_file():
-                    compress_releases()
+    try:
+        if clone():
+            if get_noitce():
+                if copy_file():
+                    if generate_iss_file():
+                        if compress_releases():
+                            return 0
+            else:
+                jobs_clean_up("clone")
+        else:
+            jobs_clean_up("clone")
+        # 如果某个操作失败
+        return 1
+    except KeyboardInterrupt:
+        print(f"{Fore.BLUE}[!]{Fore.RESET} 操作取消")
+        return 2
 # ------------
 
-main()
-input("按 Enter 键退出...")
+sys.exit(main())
