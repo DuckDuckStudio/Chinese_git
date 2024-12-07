@@ -35,7 +35,8 @@ winget install DuckStudio.ChineseGit
 ![1718315176839](https://duckduckstudio.github.io/Chinese_git/image/README/1718315176839.png)  
 
 > [!TIP]
-> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.9$  
+> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.10$  
+> winget会错误的将版本2.10显示为版本2.1，更多信息请见[microsoft/winget-pkgs#196868](https://github.com/microsoft/winget-pkgs/issues/196868)  
 
 ## 项目依赖
 在使用 中文Git 前，请确保你有以下依赖，否则 中文Git 将变成废物。  
