@@ -12,7 +12,7 @@ exit_code = 0 # 只有不正常退出需要定义
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v2.10'
+VERSION = 'v3.0'
 # GitHub releases API URL
 url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
 
@@ -106,7 +106,7 @@ else:
         # 将数据结构转换为 JSON 格式的字符串
         json_str = {
             "information": {
-                "version": "v2.10"
+                "version": "v3.0"
             },
             "application": {
                 "notice": {
@@ -391,6 +391,7 @@ def git_command(command, *args):
         "还原": ["git", "revert"],
         "重置": ["git", "reset"],
         "差异": ["git", "diff"],
+        "清理": ["git", "clean"], # TODO: 之后可以添加此命令的参数处理，例如 -n -f -df -xf 等
         "清理引用": ["git", "remote", "prune", "origin"],
     }
     if command == "帮助":
@@ -404,14 +405,24 @@ def git_command(command, *args):
     if git_command:
         try:
             if command == "提交":
-                if not args:
+                result = subprocess.run(['git', 'diff', '--cached', '--quiet'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                if result.returncode == 0: # 0 代表没有修改, 1 代表有修改
+                    print(f"{Fore.YELLOW}⚠{Fore.RESET} 你似乎还没有暂存任何修改")
+                    choice = input(f"{Fore.BLUE}?{Fore.RESET} 是否要先暂存所有修改后直接提交: ").lower()
+                    if choice in ['是', 'y', 'yes']:
+                        subprocess.run(['git', 'add', '--all'], capture_output=True, text=True)
+                    else:
+                        exit_code = 1
+                        print(f"{Fore.RED}✕{Fore.RESET} 请先暂存修改后再提交")
+                if not args and exit_code != 1: # 没有提交信息且前面没出错
                     commit_message = input("请输入提交信息: ")
                     if not commit_message:
-                        # 还不输提交信息？玩我呢
+                        # 还不输提交信息? 玩我呢
                         print(f"{Fore.RED}✕{Fore.RESET} 请提供提交信息")
                         exit_code = 1
                     result = subprocess.run(git_command + [commit_message], capture_output=True, text=True)
                 else:
+                    # 有提交信息就直接提交
                     result = subprocess.run(git_command + args, capture_output=True, text=True)
             elif command == "暂存":
                 if args and args[0] == "所有":

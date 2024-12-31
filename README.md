@@ -224,7 +224,11 @@ path\to\中文git.exe 命令
 | 重置 (+保留更改(默认)/+删除更改) | reset (--mixed/--hard) | 把我推到过去，让我重来一次！ |
 | 公告 | / | 没人比我更懂中文Git |
 | 差异 | diff | 找 不 同 ~ |
+| 清理 | clean | 不要了，扔掉 |
 | 清理引用 | remote prune origin | 清除在远程仓库中不存在的分支 |
+
+> [!TIP]
+> 在 [README_DEV](https://github.com/DuckDuckStudio/Chinese_git/blob/main/README_DEV.md#%E5%8F%AF%E7%94%A8%E5%91%BD%E4%BB%A4) 和 [用户手册](https://github.com/DuckDuckStudio/Chinese_git/blob/main/USER_HANDBOOK.md#%E5%8F%AF%E7%94%A8%E5%91%BD%E4%BB%A4) 中有更详细的说明。~~这里的只是开个玩笑。~~  
 
 > [!NOTE]
 > 对于`提交`命令，如果提交信息带空格请用`"`将提交信息括起来  
