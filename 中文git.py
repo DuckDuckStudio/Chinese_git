@@ -391,6 +391,7 @@ def git_command(command, *args):
         "还原": ["git", "revert"],
         "重置": ["git", "reset"],
         "差异": ["git", "diff"],
+        "清理": ["git", "clean"], # TODO: 之后可以添加此命令的参数处理，例如 -n -f -df -xf 等
         "清理引用": ["git", "remote", "prune", "origin"],
     }
     if command == "帮助":
