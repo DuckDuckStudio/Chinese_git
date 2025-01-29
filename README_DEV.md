@@ -206,6 +206,7 @@ path\to\中文git.exe 命令
 | 新建分支     | checkout -b         | 创建一个全新的分支                 |
 | 切换分支 / 签出到 | checkout        | 切换到另一个分支 ([git文档](https://git-scm.com/docs/git-checkout/zh_HANS-CN)) |
 | 合并         | merge               | 合并分支（可能会产生冲突） ([git文档](https://git-scm.com/docs/git-merge/zh_HANS-CN)) |
+| 变基         | rebase               | 变基合并分支（可能会产生冲突） ([git文档](https://git-scm.com/docs/git-rebase/zh_HANS-CN)) |
 | 暂存         | add                 | 暂存您的修改以备提交 ([git文档](https://git-scm.com/docs/git-add/zh_HANS-CN)) |
 | 状态         | status              | 查看当前仓库状态 ([git文档](https://git-scm.com/docs/git-status/zh_HANS-CN)) |
 | 日志         | log                 | 查看提交日志 ([git文档](https://git-scm.com/docs/git-log/zh_HANS-CN)) |

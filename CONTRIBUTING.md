@@ -81,6 +81,17 @@
 4. 提交你的更改
 5. 提交Pull Request，描述你的修改并等待审核
 
+### 你可以贡献什么
+1. 添加新的可用命令  
+   这非常简单，如果您不想做错误处理，直接在`git_command(command, *args)`函数中添加命令匹配即可。  
+2. 对现有的可用命令的处理进行改进
+   您可以在`git_command(command, *args)`函数中的`if git_command:`后看到对于各个命令的处理，每个命令在一个`if`中，您可以添加新的处理，或者优化现有处理。在添加新的处理时请使用`elif`而不是另外的`if`。
+3. 文档
+   说实话，当初为了好玩把这几个文档弄得这么奇葩...唉，总之，如果您可以帮忙整合/理文档，我非常感谢。  
+   他们几乎都是相同的内容，计划将他们合并成一个文档，但我始终下不了手。  
+4. 自动流
+   目前此软件包还是我自己手动通过[命令](#如何打包)打包的，如果您能帮忙编写有关Linux/Macos系统上的发布流那就太好了！我没有用这两个系统的设备，我对他们几乎一无所知。
+
 ## 报告问题和提出建议
 
 如果你发现了bug或者有任何改进建议，欢迎在GitHub上提交Issues。在提交Issue时，请提供清晰的描述以及复现步骤。建议使用Issue模板提交您的问题。  
@@ -118,7 +129,7 @@ python "AutoPack\AutoPack.py"
 ## 关于winget包请求
 如果你发现最新发行版在winget包中不可用，请向[microsoft/winget](https://github.com/microsoft/winget-pkgs)提交程序清单。  
 在提交时还请 @DuckDuckStudio / @Luna-Grace ，感谢。  
-使用`winget search DuckStudio.ChineseGit --source winget`来查找可用版本。  
+使用`winget show --id DuckStudio.ChineseGit --source winget --exact --versions`来查找可用版本。  
 你可以直接提交拉取请求，也可以创建议题让我们添加清单。  
 
 ## 关于翻译

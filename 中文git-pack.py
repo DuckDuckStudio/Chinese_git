@@ -372,6 +372,7 @@ def git_command(command, *args):
         "提交": ["git", "commit", "-m"],
         "新建分支": ["git", "checkout", "-b"],
         "合并": ["git", "merge"],
+        "变基": ["git", "rebase"],
         "暂存": ["git", "add"],
         "状态": ["git", "status"],
         "日志": ["git", "log"],
