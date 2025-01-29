@@ -12,7 +12,7 @@ exit_code = 0 # 只有不正常退出需要定义
 
 # ---------- 版本定义及更新 ----------
 # 定义版本号
-VERSION = 'v3.0'
+VERSION = 'v3.1'
 # GitHub releases API URL
 url = 'https://api.github.com/repos/DuckDuckStudio/Chinese_git/releases/latest'
 
