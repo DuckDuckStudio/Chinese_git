@@ -398,7 +398,7 @@ def git_command(command, *args):
         "重置": ["git", "reset"],
         "差异": ["git", "diff"],
         "清理": ["git", "clean"], # TODO: 之后可以添加此命令的参数处理，例如 -n -f -df -xf 等
-        "清理引用": ["git", "remote", "prune", "origin"],
+        "清理引用": ["git", "remote", "prune"],
     }
     if command == "帮助":
         print("使用方法:")
@@ -582,6 +582,11 @@ def git_command(command, *args):
                         exit_code = 1
                 else:
                     result = subprocess.run(git_command + args, capture_output=True, text=True)
+            elif command == "清理引用":
+                if not args:
+                    # 默认
+                    git_command.append("origin")
+                result = subprocess.run(git_command + args, capture_output=True, text=True)
             else:
                 result = subprocess.run(git_command + args, capture_output=True, text=True)
 
