@@ -49,7 +49,7 @@ config_file = os.path.join(repo_dir, "config.json")
 
 # --- def ---
 def clone():
-    result = subprocess.run(["git", "clone", repo_git], capture_output=True, text=True)
+    result = subprocess.run(["git", "clone", repo_git, "--depth", "1"], capture_output=True, text=True)
     if result.returncode == 0:
         print(f"{Fore.GREEN}✓{Fore.RESET} 克隆仓库成功")
         return True
@@ -68,7 +68,7 @@ def get_noitce():
     except Exception as e:
         print(f"{Fore.YELLOW}⚠{Fore.RESET} 获取公告文件 (方法一) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
         try:
-            result = subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git"], capture_output=True, text=True)
+            result = subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git", "--depth", "1"], capture_output=True, text=True)
             if result.returncode == 0:
                 shutil.copy(".\\yazicbs.github.io\\Tools\\chinese_git\\notice\\notice.txt", noitce_file)
                 print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法二) 成功")
