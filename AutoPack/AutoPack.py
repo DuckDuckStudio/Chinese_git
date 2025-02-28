@@ -42,14 +42,14 @@ os.makedirs(py_releases_dir, exist_ok=True)
 pack_main = os.path.join(repo_dir, "中文git.exe")
 pack_update = os.path.join(repo_dir, "中文git更新程序.exe")
 py_main = os.path.join(repo_dir, "中文git.py")
-noitce_file = os.path.join(repo_dir, "previous_notice.txt")
+notice_file = os.path.join(repo_dir, "previous_notice.txt")
 license_file = os.path.join(repo_dir, "LICENSE")
 config_file = os.path.join(repo_dir, "config.json")
 # -----------------------
 
 # --- def ---
 def clone():
-    result = subprocess.run(["git", "clone", repo_git], capture_output=True, text=True)
+    result = subprocess.run(["git", "clone", repo_git, "--depth", "1"], capture_output=True, text=True)
     if result.returncode == 0:
         print(f"{Fore.GREEN}✓{Fore.RESET} 克隆仓库成功")
         return True
@@ -57,20 +57,20 @@ def clone():
         print(f"{Fore.RED}✕{Fore.RESET} 克隆仓库时出错:\n{Fore.RED}{result.stderr}{Fore.RESET}")
         return False
 
-def get_noitce():
+def get_notice():
     try:
         response = requests.get("https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/notice/notice.txt")
         response.raise_for_status()
-        with open(noitce_file, 'wb') as file:
+        with open(notice_file, 'wb') as file:
             file.write(response.content)
         print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法一) 成功")
         return True
     except Exception as e:
         print(f"{Fore.YELLOW}⚠{Fore.RESET} 获取公告文件 (方法一) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
         try:
-            result = subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git"], capture_output=True, text=True)
+            result = subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git", "--depth", "1"], capture_output=True, text=True)
             if result.returncode == 0:
-                shutil.copy(".\\yazicbs.github.io\\Tools\\chinese_git\\notice\\notice.txt", noitce_file)
+                shutil.copy(".\\yazicbs.github.io\\Tools\\chinese_git\\notice\\notice.txt", notice_file)
                 print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法二) 成功")
                 return True
             else:
@@ -80,10 +80,10 @@ def get_noitce():
             print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件 (方法二) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
             return False
 
-def rename_file(old_name, new_name, dir):
+def rename_file(old_name, new_name, path):
     try:
-        old_file = os.path.join(dir, old_name)
-        new_file = os.path.join(dir, new_name)
+        old_file = os.path.join(path, old_name)
+        new_file = os.path.join(path, new_name)
         os.rename(old_file, new_file)
         return True
     except Exception as e:
@@ -97,8 +97,8 @@ def copy_file():
         # ---
         shutil.copy(py_main, py_releases_dir)
         # ---
-        shutil.copy(noitce_file, py_releases_dir)
-        shutil.copy(noitce_file, pack_releases_dir)
+        shutil.copy(notice_file, py_releases_dir)
+        shutil.copy(notice_file, pack_releases_dir)
         # ---
         shutil.copy(license_file, py_releases_dir)
         shutil.copy(license_file, pack_releases_dir)
@@ -126,6 +126,8 @@ def generate_iss_file():
     # releases_version 已在前面定义
     if releases_version.startswith('v'):
         iss_version = releases_version[1:]
+    else:
+        iss_version = releases_version
     iss_file = f'''[Setup]
 AppName=中文Git
 #define cngitversion "{iss_version}"
@@ -225,7 +227,7 @@ def jobs_clean_up(step):
 def main():
     try:
         if clone():
-            if get_noitce():
+            if get_notice():
                 if copy_file():
                     if generate_iss_file():
                         if compress_releases():

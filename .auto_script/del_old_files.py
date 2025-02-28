@@ -32,7 +32,7 @@ except FileNotFoundError:
     sys.exit(0)
 except Exception as e:
     if system == 'Windows':
-        print(f"[ERROR] Faild to del file(s): {e}")
+        print(f"[ERROR] Failed to del file(s): {e}")
     else:
         print(f"[ERROR] 删除文件时出错: {e}")
     sys.exit(1)

@@ -159,10 +159,16 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# IDE
+.vs/
+.vscode/
+.idea/
+
 # Releases
-发行版/
 AutoPack/Releases/
 AutoPack/Chinese_git/
+AutoPack/ReleaseNotes.md
+yazicbs.github.io/
 
 # copyright
 软著/
@@ -171,9 +177,6 @@ AutoPack/Chinese_git/
 previous_notice.txt
 Script/
 C#/
-
-# winget
-psc.py
 
 # csharp
 # .NET Core and Visual Studio Code specific
@@ -203,6 +206,3 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-
-# Visual Studio 2019 directories which contain build results, logs, or module files
-.vs/

@@ -35,7 +35,8 @@ winget install DuckStudio.ChineseGit
 ![1718315176839](https://duckduckstudio.github.io/Chinese_git/image/README/1718315176839.png)  
 
 > [!TIP]
-> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.9$  
+> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.10$  
+> winget会错误的将版本2.10显示为版本2.1，更多信息请见[microsoft/winget-pkgs#196868](https://github.com/microsoft/winget-pkgs/issues/196868)  
 
 ## 项目依赖
 在使用 中文Git 前，请确保你有以下依赖，否则 中文Git 将变成废物。  
@@ -195,35 +196,41 @@ path\to\中文git.exe 命令
 > 例如(v1.8的可用命令):  
 > [https://github.com/DuckDuckStudio/Chinese_git/blob/**v1.8**/USER_HANDBOOK.md#可用命令](https://github.com/DuckDuckStudio/Chinese_git/blob/v1.8/USER_HANDBOOK.md#可用命令)  
 
-| 现在叫啥 | 原来长啥样 | 干啥的 |
-|-----|-----|-----|
-| 拉取 | pull | 从远程仓库拉取源码 |
-| 推送 | push | 将本地仓库中的提交推送到远程仓库中 |
-| 提交 | commit -m | 提交你的更改 |
-| 新建分支 | checkout -b | 创建一个全新的分支 |
-| 切换分支 / 签出到 | checkout | 我不在这个分支写了！我要去另一个分支写！ |
-| 合并 | merge | 混合在一起~ (可能有问题) |
-| 暂存 | add | ~~我就只暂存，就是不提交。欸~就是玩~~ 将你的修改暂时存起来以备提交 |
-| 状态 | status | 让我看看！看看你是什么状态！ |
-| 日志 | log | 让我看看！看看你之前都提交了什么玩意 |
-| 删除分支 (+确认) | branch -D(-d) | 这个家没有你(删除的分支)的位置了！ |
-| 远程地址 | remote -v | 你在另一头(远程)叫什么，住哪里(链接) |
-| 远程分支 | branch -r | 你在另一头(远程)有谁(哪些分支) |
-| 所有分支 | branch -a | 列出仓库的所有分支 |
-| 版本 | -v | 如命令所示，显示你使用的 中文Git 版本与 Git 版本 |
-| 克隆 | clone | 你的代码就是我的！我的代码还是我的！ |
-| 图形化日志 | log --graph | 查看图形化的提交日志 |
-| 是否忽略 | check-ignore -v | 看看我有没有把你丢掉 |
-| 初始化 | init | 新 宠 |
-| 本地分支 (+最新提交 +与上游分支关系) | branch (-v/-vv) | 列出所有本地分支(+最新提交 +与上游分支关系) |
-| 强推 | push --force | 让我先拉取再推送？我就不！ |
-| 更名分支 | branch -m | 我不叫旧分支名了，我要叫新分支名！ |
-| 更新 | / | 我要玩新的中文Git嘛~ |
-| 还原 | revert | 还是以前的好 |
-| 重置 (+保留更改(默认)/+删除更改) | reset (--mixed/--hard) | 把我推到过去，让我重来一次！ |
-| 公告 | / | 没人比我更懂中文Git |
-| 差异 | diff | 找 不 同 ~ |
-| 清理引用 | remote prune origin | 清除在远程仓库中不存在的分支 |
+| 现在叫啥                  | 原来长啥样                  | 干啥的                                  |
+|-----------------------|------------------------|--------------------------------------|
+| 拉取                    | pull                   | 从远程仓库拉取源码                            |
+| 推送                    | push                   | 将本地仓库中的提交推送到远程仓库中                    |
+| 提交                    | commit -m              | 提交你的更改                               |
+| 新建分支                  | checkout -b            | 创建一个全新的分支                            |
+| 切换分支 / 签出到            | checkout               | 我不在这个分支写了！我要去另一个分支写！                 |
+| 合并                    | merge                  | 混合在一起~                               |
+| 变基                    | rebase                 | 变基合并分支                               |
+| 暂存                    | add                    | ~~我就只暂存，就是不提交。欸~就是玩~~ 将你的修改暂时存起来以备提交 |
+| 状态                    | status                 | 让我看看！看看你是什么状态！                       |
+| 日志                    | log                    | 让我看看！看看你之前都提交了什么玩意                   |
+| 删除分支 (+确认)            | branch -D(-d)          | 这个家没有你(删除的分支)的位置了！                   |
+| 远程地址                  | remote -v              | 你在另一头(远程)叫什么，住哪里(链接)                 |
+| 远程分支                  | branch -r              | 你在另一头(远程)有谁(哪些分支)                    |
+| 所有分支                  | branch -a              | 列出仓库的所有分支                            |
+| 版本                    | -v                     | 如命令所示，显示你使用的 中文Git 版本与 Git 版本        |
+| 克隆                    | clone                  | 你的代码就是我的！我的代码还是我的！                   |
+| 图形化日志                 | log --graph            | 查看图形化的提交日志                           |
+| 是否忽略                  | check-ignore -v        | 看看我有没有把你丢掉                           |
+| 初始化                   | init                   | 新 宠                                  |
+| 本地分支 (+最新提交 +与上游分支关系) | branch (-v/-vv)        | 列出所有本地分支(+最新提交 +与上游分支关系)             |
+| 强推                    | push --force           | 让我先拉取再推送？我就不！                        |
+| 更名分支                  | branch -m              | 我不叫旧分支名了，我要叫新分支名！                    |
+| 更新                    | /                      | 我要玩新的中文Git嘛~                         |
+| 还原                    | revert                 | 还是以前的好                               |
+| 重置 (+保留更改(默认)/+删除更改)  | reset (--mixed/--hard) | 把我推到过去，让我重来一次！                       |
+| 公告                    | /                      | 没人比我更懂中文Git                          |
+| 差异                    | diff                   | 找 不 同 ~                              |
+| 清理                    | clean                  | 不要了，扔掉                               |
+| 清理引用                  | remote prune           | 清除在远程仓库中不存在的分支                       |
+| 配置                    | config                 | 让我调调                                 |
+
+> [!TIP]
+> 在 [README_DEV](https://github.com/DuckDuckStudio/Chinese_git/blob/main/README_DEV.md#%E5%8F%AF%E7%94%A8%E5%91%BD%E4%BB%A4) 和 [用户手册](https://github.com/DuckDuckStudio/Chinese_git/blob/main/USER_HANDBOOK.md#%E5%8F%AF%E7%94%A8%E5%91%BD%E4%BB%A4) 中有更详细的说明。~~这里的只是开个玩笑。~~  
 
 > [!NOTE]
 > 对于`提交`命令，如果提交信息带空格请用`"`将提交信息括起来  
