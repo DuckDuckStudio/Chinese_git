@@ -4,7 +4,7 @@
 
 项目网站：[[点我前往]](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)  
 
-这是 中文Git 的用户手册，你可以在这里找到一些关于 中文Git 的使用方法。  
+这是 中文Git 的用户手册，你可以在这里找到一些有关 中文Git 的使用方法。  
 
 ## 如何获取
 请前往[仓库发行版页](https://github.com/DuckDuckStudio/Chinese_git/releases/)下载最新版中文Git。  
@@ -165,37 +165,38 @@ pip install -r requirements.txt
 > 例如(v1.8的可用命令):  
 > [https://github.com/DuckDuckStudio/Chinese_git/blob/**v1.8**/USER_HANDBOOK.md#可用命令](https://github.com/DuckDuckStudio/Chinese_git/blob/v1.8/USER_HANDBOOK.md#可用命令)  
 
-| 在中文Git中的命令 | 在Git中的命令    | 用途                               |
-| ------------ | ------------------- | ---------------------------------- |
-| 拉取         | pull                | 从远程仓库拉取源码 ([git文档](https://git-scm.com/docs/git-pull/zh_HANS-CN)) |
-| 推送         | push                | 将本地仓库中的提交推送到远程仓库中 ([git文档](https://git-scm.com/docs/git-push/zh_HANS-CN)) |
-| 提交         | commit -m           | 提交您的更改                       |
-| 新建分支     | checkout -b         | 创建一个全新的分支                 |
-| 切换分支 / 签出到 | checkout        | 切换到另一个分支 ([git文档](https://git-scm.com/docs/git-checkout/zh_HANS-CN)) |
-| 合并         | merge               | 合并分支（可能会产生冲突） ([git文档](https://git-scm.com/docs/git-merge/zh_HANS-CN)) |
-| 变基         | rebase               | 变基合并分支（可能会产生冲突） ([git文档](https://git-scm.com/docs/git-rebase/zh_HANS-CN)) |
-| 暂存         | add                 | 暂存您的修改以备提交 ([git文档](https://git-scm.com/docs/git-add/zh_HANS-CN)) |
-| 状态         | status              | 查看当前仓库状态 ([git文档](https://git-scm.com/docs/git-status/zh_HANS-CN)) |
-| 日志         | log                 | 查看提交日志 ([git文档](https://git-scm.com/docs/git-log/zh_HANS-CN)) |
-| 删除分支 (+确认) | branch -D(-d)   | 删除指定分支(+合并检查)             |
-| 远程地址     | remote -v           | 查看远程仓库地址                   |
-| 远程分支      | branch -r          | 查看远程仓库的分支列表               |
-| 所有分支      | branch -a          | 查看仓库的所有分支列表               |
-| 版本         | -v                  | 显示中文Git版本和Git版本           |
-| 克隆         | clone               | 克隆远程仓库到本地 ([git文档](https://git-scm.com/docs/git-clone/zh_HANS-CN)) |
-| 图形化日志   | log --graph         | 查看图形化的提交日志                |
-| 是否忽略      | check-ignore -v    | 检查文件/文件夹是否被`.gitignore`忽略 |
-| 初始化        | init               | 初始化一个新的 Git 仓库 ([git文档](https://git-scm.com/docs/git-init/zh_HANS-CN)) |
-| 本地分支 (+最新提交 +与上游分支关系) | branch (-v/-vv) | 列出所有本地分支(+最新提交 +与上游分支关系) |
-| 强推          | push --force       | 将本地仓库的提交**强制**推送到远程仓库中 |
-| 更名分支      | branch -m          | 修改本地仓库分支名                  |
-| 更新          | /                  | 更新 中文Git                       |
-| 还原          | revert             | 还原某些现有提交 ([git文档](https://git-scm.com/docs/git-revert/zh_HANS-CN)) |
-| 重置 (+保留更改(默认)/+删除更改) | reset (--mixed/--hard) | 移动 HEAD 指针以及修改暂存区和工作目录中的文件状态 |
-| 公告         | /                  | 显示中文Git版本的最新公告           |
-| 差异         | diff                | 显示提交和工作区等变化 ([git文档](https://git-scm.com/docs/git-diff/zh_HANS-CN)) |
-| 清理引用     | remote prune origin | 清除在远程仓库中不存在的分支        |
-| 清理         | clean               | 删除工作目录树中未跟踪的文件 ([git文档](https://git-scm.com/docs/git-clean/zh_HANS-CN)) |
+| 在中文Git中的命令            | 在Git中的命令               | 用途                                                                        |
+|-----------------------|------------------------|---------------------------------------------------------------------------|
+| 拉取                    | pull                   | 从远程仓库拉取源码 ([git文档](https://git-scm.com/docs/git-pull/zh_HANS-CN))         |
+| 推送                    | push                   | 将本地仓库中的提交推送到远程仓库中 ([git文档](https://git-scm.com/docs/git-push/zh_HANS-CN)) |
+| 提交                    | commit -m              | 提交您的更改                                                                    |
+| 新建分支                  | checkout -b            | 创建一个全新的分支                                                                 |
+| 切换分支 / 签出到            | checkout               | 切换到另一个分支 ([git文档](https://git-scm.com/docs/git-checkout/zh_HANS-CN))      |
+| 合并                    | merge                  | 合并分支（可能会产生冲突） ([git文档](https://git-scm.com/docs/git-merge/zh_HANS-CN))    |
+| 变基                    | rebase                 | 变基合并分支（可能会产生冲突） ([git文档](https://git-scm.com/docs/git-rebase/zh_HANS-CN)) |
+| 暂存                    | add                    | 暂存您的修改以备提交 ([git文档](https://git-scm.com/docs/git-add/zh_HANS-CN))         |
+| 状态                    | status                 | 查看当前仓库状态 ([git文档](https://git-scm.com/docs/git-status/zh_HANS-CN))        |
+| 日志                    | log                    | 查看提交日志 ([git文档](https://git-scm.com/docs/git-log/zh_HANS-CN))             |
+| 删除分支 (+确认)            | branch -D(-d)          | 删除指定分支(+合并检查)                                                             |
+| 远程地址                  | remote -v              | 查看远程仓库地址                                                                  |
+| 远程分支                  | branch -r              | 查看远程仓库的分支列表                                                               |
+| 所有分支                  | branch -a              | 查看仓库的所有分支列表                                                               |
+| 版本                    | -v                     | 显示中文Git版本和Git版本                                                           |
+| 克隆                    | clone                  | 克隆远程仓库到本地 ([git文档](https://git-scm.com/docs/git-clone/zh_HANS-CN))        |
+| 图形化日志                 | log --graph            | 查看图形化的提交日志                                                                |
+| 是否忽略                  | check-ignore -v        | 检查文件/文件夹是否被`.gitignore`忽略                                                 |
+| 初始化                   | init                   | 初始化一个新的 Git 仓库 ([git文档](https://git-scm.com/docs/git-init/zh_HANS-CN))    |
+| 本地分支 (+最新提交 +与上游分支关系) | branch (-v/-vv)        | 列出所有本地分支(+最新提交 +与上游分支关系)                                                  |
+| 强推                    | push --force           | 将本地仓库的提交**强制**推送到远程仓库中                                                    |
+| 更名分支                  | branch -m              | 修改本地仓库分支名                                                                 |
+| 更新                    | /                      | 更新 中文Git                                                                  |
+| 还原                    | revert                 | 还原某些现有提交 ([git文档](https://git-scm.com/docs/git-revert/zh_HANS-CN))        |
+| 重置 (+保留更改(默认)/+删除更改)  | reset (--mixed/--hard) | 移动 HEAD 指针以及修改暂存区和工作目录中的文件状态                                              |
+| 公告                    | /                      | 显示中文Git版本的最新公告                                                            |
+| 差异                    | diff                   | 显示提交和工作区等变化 ([git文档](https://git-scm.com/docs/git-diff/zh_HANS-CN))       |
+| 清理引用                  | remote prune origin    | 清除在远程仓库中不存在的分支                                                            |
+| 清理                    | clean                  | 删除工作目录树中未跟踪的文件 ([git文档](https://git-scm.com/docs/git-clean/zh_HANS-CN))   |
+| 配置                    | config                 | 获取和设置仓库或全局选项 ([git文档](https://git-scm.com/docs/git-config/zh_HANS-CN))    |
 
 > [!NOTE]
 > 对于`提交`命令，如果提交信息带空格请用`"`将提交信息括起来  

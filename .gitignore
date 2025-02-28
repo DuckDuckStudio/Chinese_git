@@ -159,14 +159,15 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Visual Studio
+# IDE
 .vs/
 .vscode/
+.idea/
 
 # Releases
-发行版/
 AutoPack/Releases/
 AutoPack/Chinese_git/
+AutoPack/ReleaseNotes.md
 yazicbs.github.io/
 
 # copyright
@@ -176,6 +177,3 @@ yazicbs.github.io/
 previous_notice.txt
 Script/
 C#/
-
-# winget
-psc.py

@@ -244,6 +244,7 @@ def download_update_file(version):
         return None
     
 def replace_current_program(new_filename):
+    global exit_code
     try:
         # 用下载的文件替换当前程序
         os.replace(new_filename, os.path.join(os.path.dirname(sys.argv[0]), "中文git更新程序.exe"))
@@ -298,9 +299,9 @@ def read_previous_notice():
 
 def display_notice(manual=False):
     global exit_code
-    if manual == True:
+    if manual:
         content = get_notice_content(notice_url, True)
-    elif manual == False:
+    elif not manual:
         content = get_notice_content(notice_url)
 
     if manual == "本地":
@@ -343,7 +344,7 @@ def display_notice(manual=False):
         else:
             color = ''
 
-        if manual == True:
+        if manual:
             print(f"{color}[!最新公告({level}级)!]{Fore.RESET}")
             for line in lines[2:]:
                 print(line)
@@ -399,6 +400,7 @@ def git_command(command, *args):
         "差异": ["git", "diff"],
         "清理": ["git", "clean"], # TODO: 之后可以添加此命令的参数处理，例如 -n -f -df -xf 等
         "清理引用": ["git", "remote", "prune"],
+        "配置": ["git", "config"],
     }
     if command == "帮助":
         print("使用方法:")
@@ -460,17 +462,10 @@ def git_command(command, *args):
                 if not args:
                     print(f"{Fore.RED}✕{Fore.RESET} 删除分支命令需要指定要删除的分支名称")
                     exit_code = 1
-                elif len(args) > 2:
-                    print(f"{Fore.RED}✕{Fore.RESET} 多余的参数")
-                    exit_code = 1
                 elif len(args) == 2:
                     if args[1] == "+确认":
                         git_command = ["git", "branch", "-d"]
-                    else:
-                        print(f"{Fore.RED}✕{Fore.RESET} 无效的附加参数")
-                        exit_code = 1
-                else:
-                    result = subprocess.run(git_command + args, capture_output=True, text=True)
+                result = subprocess.run(git_command + args, capture_output=True, text=True)
             elif command == "版本":
                 print("中文Git by 鸭鸭「カモ」")
                 print(f"版本: {Fore.BLUE}{VERSION}{Fore.RESET}")
