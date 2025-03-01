@@ -175,7 +175,7 @@ Filename: "{{sys}}\\cmd.exe"; Parameters: "/C setx PATH ""%PATH:{{app}};=%"" /M"
 def compress_folder_to_7z(source_folder, target_folder, archive_name):
     try:        
         # 压缩文件夹为7z格式
-        with py7zr.SevenZipFile(os.path.join(target_folder, archive_name + '.7z'), 'w') as archive:
+        with py7zr.SevenZipFile(str(os.path.join(target_folder, archive_name + '.7z')), 'w') as archive:
             archive.writeall(source_folder, arcname=os.path.basename(source_folder))
         
         print(f"{Fore.GREEN}✓{Fore.RESET} 压缩7z发行版 {Fore.BLUE}{archive_name}{Fore.RESET} 成功")
@@ -187,10 +187,10 @@ def compress_folder_to_7z(source_folder, target_folder, archive_name):
 def compress_folder_to_zip(source_folder, target_folder, archive_name):
     try:
         # 压缩文件夹为zip格式
-        with zipfile.ZipFile(os.path.join(target_folder, archive_name + '.zip'), 'w', zipfile.ZIP_DEFLATED) as archive:
+        with zipfile.ZipFile(str(os.path.join(target_folder, archive_name + '.zip')), 'w', zipfile.ZIP_DEFLATED) as archive:
             for root, dirs, files in os.walk(source_folder):
                 for file in files:
-                    archive.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), source_folder))
+                    archive.write(str(os.path.join(root, file)), os.path.relpath(str(os.path.join(root, file)), source_folder))
         
         print(f"{Fore.GREEN}✓{Fore.RESET} 压缩zip发行版 {Fore.BLUE}{archive_name}{Fore.RESET} 成功")
         return True
@@ -204,8 +204,9 @@ def compress_releases():
         compress_folder_to_zip(py_releases_dir, releases_dir, "Chinese_git_py")
         compress_folder_to_7z(pack_releases_dir, releases_dir, "Chinese_git")
         compress_folder_to_7z(py_releases_dir, releases_dir, "Chinese_git_py")
+        subprocess.run(["iscc", os.path.join(releases_dir, "pack.iss")], check=True)
         return True
-    except:
+    except Exception:
         return False
 # -----------
 
@@ -218,10 +219,54 @@ def jobs_clean_up(step):
                 shutil.rmtree(py_releases_dir)
                 shutil.rmtree(repo_dir)
                 print(f"{Fore.GREEN}✓{Fore.RESET} 成功清理工作文件")
+                return True
             except Exception as e:
                 print(f"{Fore.RED}✕{Fore.RESET} 清理失败，因为:\n{Fore.RED}{e}{Fore.RESET}")
+                return False
         else:
             print(f"{Fore.YELLOW}⚠{Fore.RESET} 跳过清理，因为目录 {Fore.BLUE}{repo_dir}{Fore.RESET} 不存在")
+            return True
+    elif step == "finish":
+        if os.path.exists(repo_dir):
+            # Chinese_git 仓库
+            try:
+                # 移除非空目录 repo_dir
+                shutil.rmtree(repo_dir)
+                print(f"{Fore.GREEN}✓{Fore.RESET} 成功清理 Chinese_git 仓库文件")
+            # 权限
+            except PermissionError:
+                print(f"{Fore.RED}✕{Fore.RESET} 清理 Chinese_git 仓库文件失败: {Fore.YELLOW}权限不足{Fore.RESET}")
+                return False
+            except Exception as e:
+                print(f"{Fore.RED}✕{Fore.RESET} 清理 Chinese_git 仓库文件失败: {Fore.RED}{e}{Fore.RESET}")
+                return False
+        if os.path.exists(os.path.join(script_dir, "yazicbs.github.io")):
+            # (方法二) 公告文件所在仓库
+            try:
+                shutil.rmtree(os.path.join(script_dir, "yazicbs.github.io"))
+                print(f"{Fore.GREEN}✓{Fore.RESET} 成功清理 yazicbs.github.io 仓库文件")
+            except PermissionError:
+                print(f"{Fore.RED}✕{Fore.RESET} 清理 yazicbs.github.io 仓库文件失败: {Fore.YELLOW}权限不足{Fore.RESET}")
+                return False
+            except Exception as e:
+                print(f"{Fore.RED}✕{Fore.RESET} 清理 yazicbs.github.io 仓库文件失败: {Fore.RED}{e}{Fore.RESET}")
+                return False
+        if os.path.exists(os.path.join(releases_dir, "pack.iss")):
+            # 移除单文件
+            try:
+                os.remove(os.path.join(releases_dir, "pack.iss"))
+                print(f"{Fore.GREEN}✓{Fore.RESET} 成功清理 pack.iss 文件")
+            except PermissionError:
+                print(f"{Fore.RED}✕{Fore.RESET} 清理 pack.iss 文件失败: {Fore.YELLOW}权限不足{Fore.RESET}")
+                return False
+            except Exception as e:
+                print(f"{Fore.RED}✕{Fore.RESET} 清理 pack.iss 文件失败: {Fore.RED}{e}{Fore.RESET}")
+                return False
+        print(f"{Fore.GREEN}✓{Fore.RESET} 成功清理工作区！")
+        return True
+    else:
+        print(f"{Fore.RED}✕{Fore.RESET} 未知步骤 {Fore.BLUE}{step}{Fore.RESET}")
+        return False
 
 # --- main ---
 def main():
@@ -231,7 +276,8 @@ def main():
                 if copy_file():
                     if generate_iss_file():
                         if compress_releases():
-                            return 0
+                            if jobs_clean_up("finish"):
+                                return 0
             else:
                 jobs_clean_up("clone")
         else:
