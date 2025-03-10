@@ -247,116 +247,7 @@ def auto_update():
         else:
             print(f"{Fore.BLUE}[!]{Fore.RESET} 已跳过更新。")
 
-# ---------- 版本...更新 结束 ----------
-# ---------- 公告获取 -----------------
-notice_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/notice/notice.txt'
-previous_notice_file = os.path.join(script_path, 'previous_notice.txt')# 显示过的公告
-
-def get_notice_content(url, manual=False):
-    global exit_code
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            content = response.text
-            return content
-        else:
-            if manual:
-                print(f"{Fore.RED}✕{Fore.RESET} 获取最新公告失败！\n状态码: {Fore.BLUE}{response.status_code}{Fore.RESET}")
-                t = input(f"{Fore.BLUE}?{Fore.RESET} 是否读取本地最新公告({Fore.GREEN}是{Fore.RESET}/{Fore.RED}否{Fore.RESET}):").lower()
-                if t in ['是', 'y', 'yes']:
-                    display_notice('本地')
-                else:
-                    exit_code = 1
-            return None
-    except Exception as e:
-        if manual:
-            print(f"{Fore.RED}✕{Fore.RESET} 获取最新公告失败！\n错误信息: {Fore.RED}{e}{Fore.RESET}")
-            t = input(f"{Fore.BLUE}?{Fore.RESET} 是否读取本地最新公告({Fore.GREEN}是{Fore.RESET}/{Fore.RED}否{Fore.RESET}):").lower()
-            if t in ['是', 'y', 'yes']:
-                display_notice('本地')
-            else:
-                exit_code = 1
-        return None
-
-def save_previous_notice(content):
-    with open(previous_notice_file, 'w') as file:
-        file.write(content)
-
-def read_previous_notice():
-    try:
-        with open(previous_notice_file, 'r') as file:
-            return file.read()
-    except FileNotFoundError:
-        return ""
-    except Exception:
-        return "" # 以防出现像 microsoft/winget-pkgs #156224 中的错误
-
-def display_notice(manual=False):
-    global exit_code
-    if manual:
-        content = get_notice_content(notice_url, True)
-    elif not manual:
-        content = get_notice_content(notice_url)
-
-    if manual == "本地":
-        content = read_previous_notice()
-        if content == "":
-            print(f"{Fore.RED}✕{Fore.RESET} 没有本地公告")
-            exit_code = 1
-            return
-    else:
-        previous_notice = read_previous_notice()
-
-    if content:
-        try:
-            lines = content.split('\n')
-
-            # ---- 值提取 ----
-            level_line = lines[0].strip()
-            level = int(level_line.split(':')[1])
-            # -- 等级↑ 是否强制↓ --
-            force_line = lines[1].strip()
-            force = bool(force_line.split(':')[1])
-            # ----------------
-        except Exception as e:
-            if not manual:
-                return
-            else:
-                print(f"{Fore.RED}✕{Fore.RESET} 最新公告{Fore.YELLOW}不符合{Fore.RESET}规范，请联系开发者反馈！")
-                print(f"{Fore.RED}✕{Fore.RESET} 反馈时{Fore.YELLOW}请带上错误信息{Fore.RESET}:\n{Fore.RED}{e} | {Fore.CYAN}{level_line} {Fore.RED}|{Fore.CYAN} {force_line}{Fore.RESET}")
-                exit_code = 1
-                return
-
-        if level == 1:
-            color = Fore.RED
-        elif level == 2:
-            color = Fore.YELLOW
-        elif level == 3:
-            color = Fore.GREEN
-        elif level == 4:
-            color = Fore.BLUE
-        else:
-            color = ''
-
-        if manual:
-            print(f"{color}[!最新公告({level}级)!]{Fore.RESET}")
-            for line in lines[2:]:
-                print(line)
-            print(f"{color}[!------------!]{Fore.RESET}")
-        elif manual == "本地":
-            print(f"{color}[!最新本地公告({level}级)!]{Fore.RESET}")
-            for line in lines[2:]:
-                print(line)
-            print(f"{color}[!------------!]{Fore.RESET}")
-        else:
-            if content != previous_notice:
-                if force:
-                    print(f"\n{color}[!有新公告({level}级)!]{Fore.RESET}")
-                    for line in lines[2:]:
-                        print(line)
-                    print(f"{color}[!------------!]{Fore.RESET}")
-                save_previous_notice(content)
-# ---------- 公告获取 结束 ------------
+# ---------- 版本更新 结束 ----------
 
 def git_command(command, *args):
     global exit_code
@@ -387,7 +278,6 @@ def git_command(command, *args):
         # --- 特殊功能 ---
         "版本": ["git", "--version"],
         "更新": ["update"], # 没用到git
-        "公告": ["notice"], # 没用到git
         # --- 结束 ---
         "还原": ["git", "revert"],
         "重置": ["git", "reset"],
@@ -464,9 +354,6 @@ def git_command(command, *args):
                 print(f"版本: {Fore.BLUE}{VERSION}{Fore.RESET}")
                 print(f"安装在: {Fore.BLUE}{full_path}{Fore.RESET}")
                 result = subprocess.run(git_command, capture_output=True, text=True)
-            elif command == "公告":
-                display_notice(True)
-                return
             elif command == "还原":
                 if not args:
                     print(f"{Fore.RED}✕{Fore.RESET} 还原命令需要参数")
@@ -587,22 +474,16 @@ def git_command(command, *args):
             
             if auto_check_update == "True":
                 always_check() # 自动检查更新
-            if auto_get_notice == "True":
-                display_notice() # 自动公告获取
         except Exception as e:
             print(f"{Fore.RED}✕{Fore.RESET} 执行命令时出错: {e}")
             if auto_check_update == "True":
                 always_check() # 自动检查更新
-            if auto_get_notice == "True":
-                display_notice() # 自动公告获取
             exit_code = 1
     else:
         print("不支持的命令:", command)
         if auto_check_update == "True":
             always_check() # 自动检查更新
-        if auto_get_notice == "True":
-            display_notice() # 自动公告获取
-            exit_code = 1
+        exit_code = 1
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -613,7 +494,5 @@ if __name__ == "__main__":
         print("即: 中文git <你想干什么> [具体要啥]")
         if auto_check_update == "True":
             always_check() # 自动检查更新
-        if auto_get_notice == "True":
-            display_notice() # 自动公告获取
         exit_code = 1
 sys.exit(exit_code)
