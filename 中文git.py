@@ -250,7 +250,7 @@ def auto_update():
 # ---------- 版本...更新 结束 ----------
 # ---------- 公告获取 -----------------
 notice_url = 'https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/notice/notice.txt'
-previous_notice_file = os.path.join(script_path, 'previous_notice.txt')# 显示过的公告
+previous_notice_file = os.path.join(script_path, 'previous_notice.txt') # 显示过的公告
 
 def get_notice_content(url, manual=False):
     global exit_code
@@ -293,7 +293,7 @@ def read_previous_notice():
 
 def display_notice(manual=False):
     global exit_code
-    if manual:
+    if manual and manual != "本地":
         content = get_notice_content(notice_url, True)
     elif not manual:
         content = get_notice_content(notice_url)
