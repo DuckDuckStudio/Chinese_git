@@ -284,7 +284,6 @@ def git_command(command, *args):
         # --- 特殊功能 ---
         "版本": ["git", "--version"],
         "更新": ["update"], # 没用到git
-        "公告": ["notice"], # 没用到git
         # --- 结束 ---
         "还原": ["git", "revert"],
         "重置": ["git", "reset"],
