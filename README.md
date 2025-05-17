@@ -1,6 +1,6 @@
 # 中文Git
 
-[![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/project_photos/Chinese_git.png)](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)  
+[![项目展示图](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/photos/展示图.png)](https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/)  
 
 [![GitHub Release](https://img.shields.io/github/release/DuckDuckStudio/Chinese_git?style=flat)](https://github.com/DuckDuckStudio/Chinese_git/releases/latest) [![Github All Releases](https://img.shields.io/github/downloads/DuckDuckStudio/Chinese_git/total.svg?style=flat)]() [![Github LICENSE](https://img.shields.io/github/license/DuckDuckStudio/Chinese_git?style=flat)]()  
 
