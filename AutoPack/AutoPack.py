@@ -9,9 +9,9 @@ from colorama import init, Fore
 # 中文Git发行版自动打包程序
 
 # --- init ---
-init(autoreset=True)# 颜色显示
-script_dir = os.path.dirname(os.path.abspath(sys.argv[0]))# 所在目录
-os.chdir(script_dir)# 确保命令执行位置
+init(autoreset=True) # 颜色显示
+script_dir = os.path.dirname(os.path.abspath(sys.argv[0])) # 所在目录
+os.chdir(script_dir) # 确保命令执行位置
 # ------------
 
 # --- repo config ---
@@ -49,12 +49,12 @@ config_file = os.path.join(repo_dir, "config.json")
 
 # --- def ---
 def clone():
-    result = subprocess.run(["git", "clone", repo_git, "--depth", "1"], capture_output=True, text=True)
-    if result.returncode == 0:
+    try:
+        subprocess.run(["git", "clone", repo_git, "--depth", "1"], check=True)
         print(f"{Fore.GREEN}✓{Fore.RESET} 克隆仓库成功")
         return True
-    else:
-        print(f"{Fore.RED}✕{Fore.RESET} 克隆仓库时出错:\n{Fore.RED}{result.stderr}{Fore.RESET}")
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 克隆仓库时出错:\n{Fore.RED}{e}{Fore.RESET}")
         return False
 
 def get_notice():
@@ -68,14 +68,10 @@ def get_notice():
     except Exception as e:
         print(f"{Fore.YELLOW}⚠{Fore.RESET} 获取公告文件 (方法一) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
         try:
-            result = subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git", "--depth", "1"], capture_output=True, text=True)
-            if result.returncode == 0:
-                shutil.copy(".\\yazicbs.github.io\\Tools\\chinese_git\\notice\\notice.txt", notice_file)
-                print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法二) 成功")
-                return True
-            else:
-                print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件 (方法二) 时出错:\n{Fore.RED}{result.stderr}{Fore.RESET}")
-                return False
+            subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git", "--depth", "1"], check=True)
+            shutil.copy(".\\yazicbs.github.io\\Tools\\chinese_git\\notice\\notice.txt", notice_file)
+            print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法二) 成功")
+            return True
         except Exception as e:
             print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件 (方法二) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
             return False
@@ -206,7 +202,8 @@ def compress_releases():
         compress_folder_to_7z(py_releases_dir, releases_dir, "Chinese_git_py")
         subprocess.run(["iscc", os.path.join(releases_dir, "pack.iss")], check=True)
         return True
-    except Exception:
+    except Exception as e:
+        print(f"{Fore.RED}✕{Fore.RESET} 制作发行文件时出错:\n{Fore.RED}{e}{Fore.RESET}")
         return False
 # -----------
 
