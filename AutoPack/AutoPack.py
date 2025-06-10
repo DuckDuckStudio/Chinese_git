@@ -151,7 +151,7 @@ Name: "japanese"; MessagesFile: "compiler:Languages\\Japanese.isl"
 Source: "{pack_releases_dir}\\*"; DestDir: "{{app}}"
 
 [Icons]
-Name: "{{group}}\\中文Git"; Filename: "{{app}}\\中文git.exe"
+Name: "{{group}}\\中文Git"; Filename: "{{app}}\\中文git.exe"; Comment:"用中文运行 Git 命令"
 
 [Run]
 Filename: "{{sys}}\\cmd.exe"; Parameters: "/C setx PATH ""{{app}};%PATH%"" /M"; Flags: runhidden
