@@ -42,7 +42,6 @@ os.makedirs(py_releases_dir, exist_ok=True)
 pack_main = os.path.join(repo_dir, "中文git.exe")
 pack_update = os.path.join(repo_dir, "中文git更新程序.exe")
 py_main = os.path.join(repo_dir, "中文git.py")
-notice_file = os.path.join(repo_dir, "previous_notice.txt")
 license_file = os.path.join(repo_dir, "LICENSE")
 config_file = os.path.join(repo_dir, "config.json")
 # -----------------------
@@ -56,25 +55,6 @@ def clone():
     except Exception as e:
         print(f"{Fore.RED}✕{Fore.RESET} 克隆仓库时出错:\n{Fore.RED}{e}{Fore.RESET}")
         return False
-
-def get_notice():
-    try:
-        response = requests.get("https://duckduckstudio.github.io/yazicbs.github.io/Tools/chinese_git/notice/notice.txt")
-        response.raise_for_status()
-        with open(notice_file, 'wb') as file:
-            file.write(response.content)
-        print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法一) 成功")
-        return True
-    except Exception as e:
-        print(f"{Fore.YELLOW}⚠{Fore.RESET} 获取公告文件 (方法一) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
-        try:
-            subprocess.run(["git", "clone", "https://github.com/DuckDuckStudio/yazicbs.github.io.git", "--depth", "1"], check=True)
-            shutil.copy(".\\yazicbs.github.io\\Tools\\chinese_git\\notice\\notice.txt", notice_file)
-            print(f"{Fore.GREEN}✓{Fore.RESET} 获取公告文件 (方法二) 成功")
-            return True
-        except Exception as e:
-            print(f"{Fore.RED}✕{Fore.RESET} 获取公告文件 (方法二) 时出错:\n{Fore.RED}{e}{Fore.RESET}")
-            return False
 
 def rename_file(old_name, new_name, path):
     try:
@@ -92,9 +72,6 @@ def copy_file():
         shutil.copy(pack_update, pack_releases_dir)
         # ---
         shutil.copy(py_main, py_releases_dir)
-        # ---
-        shutil.copy(notice_file, py_releases_dir)
-        shutil.copy(notice_file, pack_releases_dir)
         # ---
         shutil.copy(license_file, py_releases_dir)
         shutil.copy(license_file, pack_releases_dir)
@@ -237,17 +214,6 @@ def jobs_clean_up(step):
             except Exception as e:
                 print(f"{Fore.RED}✕{Fore.RESET} 清理 Chinese_git 仓库文件失败: {Fore.RED}{e}{Fore.RESET}")
                 return False
-        if os.path.exists(os.path.join(script_dir, "yazicbs.github.io")):
-            # (方法二) 公告文件所在仓库
-            try:
-                shutil.rmtree(os.path.join(script_dir, "yazicbs.github.io"))
-                print(f"{Fore.GREEN}✓{Fore.RESET} 成功清理 yazicbs.github.io 仓库文件")
-            except PermissionError:
-                print(f"{Fore.RED}✕{Fore.RESET} 清理 yazicbs.github.io 仓库文件失败: {Fore.YELLOW}权限不足{Fore.RESET}")
-                return False
-            except Exception as e:
-                print(f"{Fore.RED}✕{Fore.RESET} 清理 yazicbs.github.io 仓库文件失败: {Fore.RED}{e}{Fore.RESET}")
-                return False
         if os.path.exists(os.path.join(releases_dir, "pack.iss")):
             # 移除单文件
             try:
@@ -269,14 +235,11 @@ def jobs_clean_up(step):
 def main():
     try:
         if clone():
-            if get_notice():
-                if copy_file():
-                    if generate_iss_file():
-                        if compress_releases():
-                            if jobs_clean_up("finish"):
-                                return 0
-            else:
-                jobs_clean_up("clone")
+            if copy_file():
+                if generate_iss_file():
+                    if compress_releases():
+                        if jobs_clean_up("finish"):
+                            return 0
         else:
             jobs_clean_up("clone")
         # 如果某个操作失败
