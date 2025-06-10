@@ -255,9 +255,8 @@ def replace_current_program(new_filename):
 
 # ---------- 版本更新 结束 ----------
 
-def git_command(command, *args):
+def git_command(command: str, args: list[str]):
     global exit_code
-    args = list(args) # 统一类型
     git_command_mapping = {
         "拉取": ["git", "pull"],
         "推送": ["git", "push"],
@@ -422,7 +421,7 @@ def git_command(command, *args):
                         print(f"{Fore.RED}✕{Fore.RESET} 新旧分支名称相同")
                         exit_code = 1
                     result = subprocess.run(git_command + [old_branch, new_branch], capture_output=True, text=True)
-                if args < 2:
+                if len(args) < 2:
                     print(f"{Fore.RED}✕{Fore.RESET} 缺少参数")
                     exit_code = 1
                 else:
@@ -493,7 +492,7 @@ def git_command(command, *args):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        git_command(sys.argv[1], *sys.argv[2:])
+        git_command(sys.argv[1], sys.argv[2:])
     else:
         print("使用方法:")
         print("中文git <中文指令> [参数]")
