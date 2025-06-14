@@ -22,10 +22,6 @@ winget install DuckStudio.ChineseGit
 > [!TIP]
 > 使用 _winget_ 获取的不用配置Python。  
 
-> [!TIP]
-> 设支持的版本号为n，则 $2.4 \leqslant n \leqslant 2.10$  
-> winget会错误的将版本2.10显示为版本2.1，更多信息请见[microsoft/winget-pkgs#196868](https://github.com/microsoft/winget-pkgs/issues/196868)  
-
 ## 依赖
 
 ### Git
