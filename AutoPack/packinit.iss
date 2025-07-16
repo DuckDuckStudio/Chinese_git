@@ -15,6 +15,7 @@ SetupIconFile=D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\ico.ico
 LicenseFile=D:\Duckhome\projects\MSVS\Source\Repos\Chinese_git\发行版\LICENSE
 Compression=lzma2
 SolidCompression=yes
+ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

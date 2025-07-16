@@ -118,6 +118,7 @@ SetupIconFile={os.path.join(os.path.dirname(script_dir), "ico.ico")}
 LicenseFile={os.path.join(os.path.dirname(script_dir), "LICENSE")}
 Compression=lzma2
 SolidCompression=yes
+ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
